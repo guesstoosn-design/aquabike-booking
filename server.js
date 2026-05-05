@@ -284,8 +284,101 @@ app.post('/api/payment/webhook', async (req, res) => {
 app.post('/api/admin/validate-payment', auth, async (req, res) => {
   if (req.user.role !== 'admin') return res.status(403).json({ ok:false });
   const { subscription_id } = req.body;
-  await pool.query("UPDATE subscriptions SET status='active',starts_at=NOW() WHERE id=$1", [subscription_id]);
+  const now = new Date();
+  // Get plan duration to set correct expiry
+  const subRes = await pool.query('SELECT * FROM subscriptions WHERE id=$1', [subscription_id]);
+  if (!subRes.rows.length) return res.json({ ok:false, error:'Abonnement non trouvé.' });
+  const sub = subRes.rows[0];
+  const plan = PLANS.find(p => p.id === sub.plan_id);
+  const duration = plan ? plan.duration_days : 30;
+  const expires = new Date(now.getTime() + duration * 86400000);
+  await pool.query("UPDATE subscriptions SET status='active',starts_at=$1,expires_at=$2 WHERE id=$3", [now, expires, subscription_id]);
+  broadcast('payment_validated', { subscription_id });
   res.json({ ok:true });
+});
+
+// GET /api/admin/dashboard — stats for admin
+app.get('/api/admin/dashboard', auth, async (req, res) => {
+  if (req.user.role !== 'admin') return res.status(403).json({ ok:false });
+  try {
+    // Today's bookings by slot
+    const today = new Date().toISOString().split('T')[0];
+    const todayBookings = await pool.query(
+      `SELECT s.date_slot, s.hour_start, s.activity, s.max_capacity,
+        COUNT(b.id) FILTER(WHERE b.status=1) AS booked,
+        (s.max_capacity - COUNT(b.id) FILTER(WHERE b.status=1)) AS remaining
+       FROM slots s LEFT JOIN bookings b ON b.slot_id=s.id
+       WHERE s.date_slot=$1 AND s.status=1
+       GROUP BY s.id ORDER BY s.hour_start`, [today]
+    );
+
+    // Bookings for selected period with participant names
+    const weekStart = new Date();
+    weekStart.setDate(weekStart.getDate() - ((weekStart.getDay() + 6) % 7));
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekEnd.getDate() + 6);
+
+    const weekBookings = await pool.query(
+      `SELECT s.date_slot, s.hour_start, s.activity,
+        b.id as booking_id, b.booking_code, b.status as booking_status, b.created_at,
+        u.full_name, u.phone
+       FROM bookings b
+       JOIN slots s ON s.id=b.slot_id
+       JOIN users u ON u.id=b.user_id
+       WHERE s.date_slot>=$1 AND s.date_slot<=$2
+       ORDER BY s.date_slot, s.hour_start, b.created_at`,
+      [weekStart.toISOString().split('T')[0], weekEnd.toISOString().split('T')[0]]
+    );
+
+    // All subscriptions with user info
+    const subscriptions = await pool.query(
+      `SELECT sub.*, u.full_name, u.phone
+       FROM subscriptions sub JOIN users u ON u.id=sub.user_id
+       ORDER BY sub.created_at DESC LIMIT 50`
+    );
+
+    // Pending cash payments
+    const pendingPayments = await pool.query(
+      `SELECT sub.*, u.full_name, u.phone
+       FROM subscriptions sub JOIN users u ON u.id=sub.user_id
+       WHERE sub.status='pending' AND sub.payment_method='cash'
+       ORDER BY sub.created_at DESC`
+    );
+
+    // Stats
+    const totalUsers = await pool.query('SELECT COUNT(*) as nb FROM users');
+    const totalActiveSubs = await pool.query("SELECT COUNT(*) as nb FROM subscriptions WHERE status='active'");
+    const todayBookingsCount = await pool.query(
+      `SELECT COUNT(*) as nb FROM bookings b JOIN slots s ON s.id=b.slot_id WHERE s.date_slot=$1 AND b.status=1`, [today]
+    );
+
+    res.json({
+      ok: true,
+      stats: {
+        total_users: parseInt(totalUsers.rows[0].nb),
+        active_subscriptions: parseInt(totalActiveSubs.rows[0].nb),
+        today_bookings: parseInt(todayBookingsCount.rows[0].nb),
+      },
+      today_slots: todayBookings.rows,
+      week_bookings: weekBookings.rows,
+      subscriptions: subscriptions.rows,
+      pending_payments: pendingPayments.rows,
+    });
+  } catch(e) { res.status(500).json({ ok:false, error:e.message }); }
+});
+
+// GET /api/slot/:id/participants — who booked a specific slot
+app.get('/api/slot/:id/participants', auth, async (req, res) => {
+  try {
+    const r = await pool.query(
+      `SELECT b.id, b.booking_code, b.status, b.created_at,
+        u.full_name, u.phone
+       FROM bookings b JOIN users u ON u.id=b.user_id
+       WHERE b.slot_id=$1 ORDER BY b.created_at`,
+      [req.params.id]
+    );
+    res.json({ ok:true, participants:r.rows });
+  } catch(e) { res.status(500).json({ ok:false, error:e.message }); }
 });
 
 // ─── SLOTS ──────────────────────────────────────────────
