@@ -27,6 +27,8 @@ const CONFIG = {
   MAX_CAPACITY: 8,
   CANCEL_HOURS: 2,
   ADMIN_CODE: process.env.ADMIN_CODE || 'admin2026',
+  ADMIN_PHONE: process.env.ADMIN_PHONE || '',
+  ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || '',
   WAVE_API_KEY: process.env.WAVE_API_KEY || '',
   WAVE_API_URL: 'https://api.wave.com/v1/checkout/sessions',
   OM_MERCHANT_KEY: process.env.OM_MERCHANT_KEY || '',
@@ -128,6 +130,24 @@ async function initDB() {
       CREATE INDEX IF NOT EXISTS idx_subs_user ON subscriptions(user_id) WHERE status='active';
     `);
     console.log('[DB] Tables ready');
+
+    // Auto-create admin account if configured
+    if (CONFIG.ADMIN_PHONE && CONFIG.ADMIN_PASSWORD) {
+      const exists = await client.query('SELECT id FROM users WHERE phone=$1', [CONFIG.ADMIN_PHONE]);
+      if (!exists.rows.length) {
+        const hash = await bcrypt.hash(CONFIG.ADMIN_PASSWORD, 10);
+        await client.query(
+          "INSERT INTO users(full_name,phone,pin_hash,role) VALUES('Admin Aquabike',$1,$2,'admin')",
+          [CONFIG.ADMIN_PHONE, hash]
+        );
+        console.log('[DB] Admin account created: ' + CONFIG.ADMIN_PHONE);
+      } else {
+        // Update to admin role + update password in case it changed
+        const hash = await bcrypt.hash(CONFIG.ADMIN_PASSWORD, 10);
+        await client.query("UPDATE users SET role='admin', pin_hash=$1 WHERE phone=$2", [hash, CONFIG.ADMIN_PHONE]);
+        console.log('[DB] Admin account updated: ' + CONFIG.ADMIN_PHONE);
+      }
+    }
   } finally { client.release(); }
 }
 
@@ -138,7 +158,7 @@ function genCode() { return 'AQ' + crypto.randomBytes(4).toString('hex').toUpper
 // POST /api/register
 app.post('/api/register', async (req, res) => {
   const { full_name, phone, email, pin } = req.body;
-  if (!full_name || !phone || !pin || pin.length < 4) return res.status(400).json({ ok:false, error:'Nom, téléphone et PIN (4+ chiffres) requis.' });
+  if (!full_name || !phone || !pin || pin.length < 4) return res.status(400).json({ ok:false, error:'Nom, téléphone et mot de passe (4+ caractères) requis.' });
   try {
     const exists = await pool.query('SELECT id FROM users WHERE phone=$1', [phone]);
     if (exists.rows.length) return res.json({ ok:false, error:'Ce numéro est déjà inscrit.' });
