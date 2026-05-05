@@ -6,136 +6,108 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#050B18">
 <title>Aquabike Evolution Dakar</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{--bg:#050B18;--bg2:#0A1628;--bg3:#0F1D32;--card:#111F38;--border:#1A2D4D;--accent:#00D4AA;--accent2:#00B4D8;--accentDim:rgba(0,212,170,.1);--danger:#FF5757;--dangerDim:rgba(255,87,87,.1);--warn:#FFB830;--warnDim:rgba(255,184,48,.1);--text:#EDF2F7;--muted:#8899B0;--dim:#4A5B73;--glass:rgba(15,29,50,.75)}
+:root{--bg:#050B18;--bg2:#0A1628;--bg3:#0F1D32;--card:#111F38;--border:#1A2D4D;--accent:#00D4AA;--accent2:#00B4D8;--accentDim:rgba(0,212,170,.1);--danger:#FF5757;--dangerDim:rgba(255,87,87,.1);--warn:#FFB830;--warnDim:rgba(255,184,48,.1);--text:#EDF2F7;--muted:#8899B0;--dim:#4A5B73;--glass:rgba(15,29,50,.8)}
 html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.5}
 h1,h2,h3{font-family:'Outfit',sans-serif;font-weight:700;line-height:1.2}
-button{font-family:inherit;cursor:pointer;border:none;outline:none;-webkit-appearance:none}
-input,select{font-family:inherit;outline:none;-webkit-appearance:none}
-a{color:var(--accent);text-decoration:none}
-
+button{font-family:inherit;cursor:pointer;border:none;outline:none}
+input,select{font-family:inherit;outline:none}
 #root{height:100%;display:flex;flex-direction:column}
 .app{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .page{flex:1;overflow-y:auto;overflow-x:hidden;padding:16px 16px 100px;-webkit-overflow-scrolling:touch}
 .page::-webkit-scrollbar{display:none}
-
-/* Header */
-.hdr{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);position:sticky;top:0;z-index:20}
+.hdr{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--glass);backdrop-filter:blur(16px);position:sticky;top:0;z-index:20}
 .hdr-logo{display:flex;align-items:center;gap:10px}
 .hdr-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Outfit';font-weight:800;font-size:16px;color:#000}
-.hdr h1{font-size:15px;font-weight:700;letter-spacing:-.3px}
-.hdr p{font-size:10px;color:var(--muted);font-weight:500}
-.hdr-user{font-size:12px;color:var(--muted);text-align:right}
-.hdr-user b{color:var(--text);display:block;font-size:13px}
-
-/* Bottom Nav */
-.bnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:6px 8px;padding-bottom:max(6px,env(safe-area-inset-bottom));z-index:20}
-.bnav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;background:none;color:var(--dim);font-size:10px;font-weight:600;border-radius:10px;transition:all .2s}
+.hdr h1{font-size:14px;font-weight:700}.hdr p{font-size:10px;color:var(--muted)}
+.hdr-user{font-size:11px;color:var(--muted);text-align:right;cursor:pointer}.hdr-user b{color:var(--text);display:block;font-size:12px}
+.bnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--glass);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:4px 6px;padding-bottom:max(4px,env(safe-area-inset-bottom));z-index:20}
+.bnav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;background:none;color:var(--dim);font-size:9px;font-weight:600;border-radius:8px;transition:all .2s}
 .bnav button.active{color:var(--accent)}
-.bnav button .icon{font-size:20px;line-height:1}
-
-/* Cards */
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px}
-.card-glass{background:var(--glass);backdrop-filter:blur(12px);border:1px solid rgba(0,212,170,.15);border-radius:16px;padding:16px;margin-bottom:12px}
-
-/* Buttons */
-.btn{display:block;width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700;text-align:center;transition:all .15s;letter-spacing:.3px}
-.btn-primary{background:linear-gradient(135deg,var(--accent),#00B89C);color:#000;box-shadow:0 4px 20px rgba(0,212,170,.25)}
+.bnav .icon{font-size:18px;line-height:1}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}
+.btn{display:block;width:100%;padding:13px;border-radius:12px;font-size:14px;font-weight:700;text-align:center;transition:all .15s}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#00B89C);color:#000;box-shadow:0 4px 16px rgba(0,212,170,.2)}
 .btn-primary:active{transform:scale(.97)}
 .btn-danger{background:var(--dangerDim);color:var(--danger);border:1px solid rgba(255,87,87,.2)}
-.btn-outline{background:transparent;color:var(--accent);border:1px solid rgba(0,212,170,.3)}
+.btn-outline{background:transparent;color:var(--accent);border:1px solid rgba(0,212,170,.25)}
 .btn-wave{background:linear-gradient(135deg,#1DC3F5,#1BA0D8);color:#fff}
 .btn-om{background:linear-gradient(135deg,#FF6B00,#E55D00);color:#fff}
-.btn-sm{padding:8px 16px;font-size:13px;width:auto;display:inline-block;border-radius:8px}
+.btn-sm{padding:8px 14px;font-size:12px;width:auto;display:inline-block;border-radius:8px}
+.btn-validate{background:var(--accentDim);color:var(--accent);border:1px solid rgba(0,212,170,.25);padding:10px 18px;font-size:13px;font-weight:700;border-radius:10px;cursor:pointer;width:100%}
 .btn:disabled{opacity:.4;pointer-events:none}
-
-/* Forms */
-.input-group{margin-bottom:14px}
-.input-group label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px;letter-spacing:.5px}
-.input-group input,.input-group select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:15px}
-.input-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accentDim)}
-
-/* Slot Grid */
-.slots-grid{display:grid;grid-template-columns:52px repeat(auto-fill,minmax(68px,1fr));gap:3px}
-.slot-hour{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--dim);font-family:'Outfit'}
-.slot{border-radius:10px;padding:8px 4px;text-align:center;transition:all .15s;min-height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;border:1.5px solid transparent}
-.slot:active:not(.past){transform:scale(.95)}
-.slot .cnt{font-size:14px;font-weight:700;font-family:'Outfit'}.slot .lbl{font-size:9px;font-weight:600;opacity:.85;margin-top:1px}
-.slot.avail{background:rgba(0,212,170,.08);color:var(--accent);border-color:rgba(0,212,170,.2)}
-.slot.limited{background:var(--warnDim);color:var(--warn);border-color:rgba(255,184,48,.2)}
-.slot.full{background:var(--dangerDim);color:var(--danger);border-color:rgba(255,87,87,.15);cursor:not-allowed;opacity:.6}
+.input-group{margin-bottom:12px}
+.input-group label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:4px;letter-spacing:.5px}
+.input-group input,.input-group select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:14px}
+.input-group input:focus{border-color:var(--accent)}
+.act-tabs{display:flex;gap:5px;margin-bottom:10px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.act-tabs::-webkit-scrollbar{display:none}
+.act-tab{padding:7px 12px;border-radius:18px;font-size:11px;font-weight:600;white-space:nowrap;background:var(--bg3);color:var(--muted);border:1px solid var(--border);flex-shrink:0}
+.act-tab.active{background:var(--accentDim);color:var(--accent);border-color:rgba(0,212,170,.3)}
+.week-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.week-nav button{background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:7px 10px;border-radius:8px;font-size:11px;font-weight:600}
+.week-label{font-size:13px;font-weight:700;font-family:'Outfit'}
+.cal-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}.cal-wrap::-webkit-scrollbar{display:none}
+.cal{display:grid;gap:2px}
+.day-head{text-align:center;padding:4px 0;border-radius:6px}
+.day-head.today{background:rgba(0,180,216,.1)}
+.day-head .dow{font-size:9px;font-weight:600;color:var(--muted);letter-spacing:1px}
+.day-head .dn{font-size:16px;font-weight:800;font-family:'Outfit'}
+.day-head.today .dn{color:var(--accent2)}
+.slot-hour{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--dim);font-family:'Outfit'}
+.slot{border-radius:8px;padding:6px 2px;text-align:center;transition:all .15s;min-height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;border:1.5px solid transparent}
+.slot:active:not(.past):not(.full){transform:scale(.93)}
+.slot .cnt{font-size:13px;font-weight:700;font-family:'Outfit'}.slot .lbl{font-size:8px;font-weight:600;opacity:.85;margin-top:1px}
+.slot.avail{background:rgba(0,212,170,.07);color:var(--accent);border-color:rgba(0,212,170,.15)}
+.slot.limited{background:var(--warnDim);color:var(--warn);border-color:rgba(255,184,48,.15)}
+.slot.full{background:var(--dangerDim);color:var(--danger);border-color:rgba(255,87,87,.1);opacity:.6}
 .slot.mine{background:var(--accentDim);color:var(--accent);border-color:var(--accent)}
 .slot.past{background:rgba(10,22,40,.5);color:var(--dim);cursor:not-allowed;opacity:.3}
-.slot.flash{animation:flash .5s ease}
-@keyframes flash{0%{box-shadow:0 0 0 0 rgba(0,212,170,.4)}50%{box-shadow:0 0 0 6px rgba(0,212,170,.08)}100%{box-shadow:none}}
-
-/* Day Headers */
-.day-head{text-align:center;padding:4px 0;border-radius:8px}
-.day-head.today{background:rgba(0,180,216,.1)}
-.day-head .dow{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:1px}
-.day-head .dn{font-size:17px;font-weight:800;font-family:'Outfit'}
-.day-head.today .dn{color:var(--accent2)}
-
-/* Week nav */
-.week-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.week-nav button{background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:8px 12px;border-radius:8px;font-size:12px;font-weight:600}
-.week-nav button:active{background:var(--card)}
-.week-label{font-size:14px;font-weight:700;font-family:'Outfit'}
-
-/* Activity tabs */
-.act-tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
-.act-tabs::-webkit-scrollbar{display:none}
-.act-tab{padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;background:var(--bg3);color:var(--muted);border:1px solid var(--border);transition:all .2s;flex-shrink:0}
-.act-tab.active{background:var(--accentDim);color:var(--accent);border-color:rgba(0,212,170,.3)}
-
-/* Modal */
-.modal-bg{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;padding:0}
-.modal{background:var(--bg2);border-top-left-radius:24px;border-top-right-radius:24px;padding:24px 20px 36px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;border:1px solid var(--border);border-bottom:none;animation:slideUp .3s ease}
+.slot.flash{animation:flash .5s}
+@keyframes flash{0%{box-shadow:0 0 0 0 rgba(0,212,170,.4)}50%{box-shadow:0 0 0 5px rgba(0,212,170,.08)}100%{box-shadow:none}}
+.modal-bg{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center}
+.modal{background:var(--bg2);border-top-left-radius:22px;border-top-right-radius:22px;padding:20px 18px 32px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;border:1px solid var(--border);border-bottom:none;animation:slideUp .25s ease}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--dim);margin:0 auto 16px}
-
-/* Plan cards */
-.plan{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:16px;margin-bottom:10px;transition:all .2s}
+.modal-handle{width:32px;height:4px;border-radius:2px;background:var(--dim);margin:0 auto 14px}
+.cap-bar{height:5px;border-radius:3px;background:var(--bg);overflow:hidden;margin:6px 0 14px}
+.cap-fill{height:100%;border-radius:3px;transition:width .3s}
+.plan{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:14px;margin-bottom:8px;transition:all .15s}
 .plan:active{transform:scale(.98)}
-.plan.selected{border-color:var(--accent);background:rgba(0,212,170,.05)}
-.plan-price{font-size:22px;font-weight:800;font-family:'Outfit';color:var(--accent)}
-.plan-price span{font-size:12px;font-weight:500;color:var(--muted)}
-.plan-name{font-size:15px;font-weight:700;margin-top:4px}
-.plan-desc{font-size:12px;color:var(--muted);margin-top:2px}
-.plan-badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700;margin-top:6px}
-
-/* Booking row */
-.brow{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;background:var(--card);border:1px solid var(--border);margin-bottom:8px}
+.plan.selected{border-color:var(--accent);background:rgba(0,212,170,.04)}
+.plan-price{font-size:20px;font-weight:800;font-family:'Outfit';color:var(--accent)}
+.plan-name{font-size:14px;font-weight:700;margin-top:3px}
+.plan-desc{font-size:11px;color:var(--muted);margin-top:2px}
+.plan-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-top:4px}
+.brow{display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;background:var(--card);border:1px solid var(--border);margin-bottom:6px}
 .brow.cancelled{opacity:.4}
-.brow-info{flex:1}
-.brow-info h4{font-size:14px;font-weight:700;font-family:'Outfit'}
-.brow-info p{font-size:12px;color:var(--muted);margin-top:2px}
-.brow-code{font-family:'Outfit';font-size:11px;color:var(--accent2);background:rgba(0,180,216,.1);padding:3px 8px;border-radius:6px;margin-top:4px;display:inline-block}
-
-/* Sub card */
-.sub-card{padding:14px;border-radius:14px;background:var(--card);border:1px solid var(--border);margin-bottom:8px}
-.sub-card .status{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700}
-.sub-card .status.active{background:rgba(0,212,170,.15);color:var(--accent)}
-.sub-card .status.pending{background:var(--warnDim);color:var(--warn)}
-.sub-card .status.expired{background:var(--dangerDim);color:var(--danger)}
-.sub-counter{display:flex;gap:4px;margin-top:8px}
-.sub-dot{width:20px;height:6px;border-radius:3px;background:var(--border)}
+.brow-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.brow-info{flex:1}.brow-info h4{font-size:13px;font-weight:700;font-family:'Outfit'}.brow-info p{font-size:11px;color:var(--muted);margin-top:1px}
+.brow-code{font-family:'Outfit';font-size:10px;color:var(--accent2);background:rgba(0,180,216,.1);padding:2px 7px;border-radius:5px;display:inline-block;margin-top:3px}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat-card{padding:12px;border-radius:12px;background:var(--card);border:1px solid var(--border);text-align:center}
+.stat-val{font-size:22px;font-weight:800;font-family:'Outfit'}
+.stat-lbl{font-size:10px;color:var(--muted);margin-top:2px}
+.sub-card{padding:12px;border-radius:12px;background:var(--card);border:1px solid var(--border);margin-bottom:6px}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.badge-ok{background:rgba(0,212,170,.12);color:var(--accent)}
+.badge-pending{background:var(--warnDim);color:var(--warn)}
+.badge-expired{background:var(--dangerDim);color:var(--danger)}
+.sub-dots{display:flex;gap:3px;margin-top:6px}
+.sub-dot{width:18px;height:5px;border-radius:3px;background:var(--border)}
 .sub-dot.used{background:var(--accent)}
-
-/* Toast */
-.toast{position:fixed;top:16px;left:16px;right:16px;z-index:100;padding:14px 16px;border-radius:14px;font-size:13px;font-weight:600;text-align:center;animation:fadeDown .3s ease;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.pending-card{padding:14px;border-radius:12px;background:var(--card);border:1px solid var(--warn);margin-bottom:8px}
+.section-title{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.5px;margin:16px 0 8px}
+.part-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.part-row:last-child{border:none}
+.toast{position:fixed;top:14px;left:14px;right:14px;z-index:100;padding:12px 14px;border-radius:12px;font-size:13px;font-weight:600;text-align:center;animation:fadeD .25s;box-shadow:0 8px 24px rgba(0,0,0,.4)}
 .toast-ok{background:rgba(0,212,170,.15);color:var(--accent);border:1px solid rgba(0,212,170,.3)}
 .toast-err{background:var(--dangerDim);color:var(--danger);border:1px solid rgba(255,87,87,.3)}
-@keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
-
-.empty-state{text-align:center;padding:40px 20px;color:var(--dim)}
-.empty-state .em{font-size:40px;margin-bottom:10px}
-
-@media(min-width:600px){.page{max-width:480px;margin:0 auto}.bnav{max-width:480px;margin:0 auto;border-radius:16px 16px 0 0}}
+@keyframes fadeD{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.empty{text-align:center;padding:32px 16px;color:var(--dim)}.empty .em{font-size:36px;margin-bottom:8px}
+@media(min-width:600px){.page{max-width:480px;margin:0 auto}.bnav{max-width:480px;margin:0 auto;border-radius:14px 14px 0 0}}
 </style>
 </head>
 <body>
@@ -144,401 +116,215 @@ a{color:var(--accent);text-decoration:none}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.2/babel.min.js"></script>
 <script type="text/babel">
-const{useState,useEffect,useCallback,useMemo,useRef}=React;
+const{useState,useEffect,useCallback,useMemo}=React;
 const DAYS=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
-const MONTHS=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
-const MONTHS_FULL=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-const fmtDate=d=>`${DAYS[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]}`;
-const fmtPrice=n=>n.toLocaleString('fr-FR')+'F';
+const MF=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const fmtD=d=>`${DAYS[d.getDay()]} ${d.getDate()} ${MF[d.getMonth()].slice(0,3)}`;
+const fmtP=n=>n.toLocaleString('fr-FR')+'F';
+const fmtDate=s=>{const d=new Date(s+'T00:00:00');return fmtD(d)};
 
-const api={
-  token:null,
+const api={token:null,
   async get(u){const r=await fetch(u,{headers:this.token?{Authorization:'Bearer '+this.token}:{}});return r.json()},
-  async post(u,b){const r=await fetch(u,{method:'POST',headers:{'Content-Type':'application/json',...(this.token?{Authorization:'Bearer '+this.token}:{})},body:JSON.stringify(b)});return r.json()}
-};
-
-function getWeekDays(off){const n=new Date();n.setDate(n.getDate()+off*7);const d=n.getDay();const m=new Date(n);m.setDate(n.getDate()-(d===0?6:d-1));const a=[];for(let i=0;i<7;i++){const x=new Date(m);x.setDate(m.getDate()+i);a.push(x)}return a}
+  async post(u,b){const r=await fetch(u,{method:'POST',headers:{'Content-Type':'application/json',...(this.token?{Authorization:'Bearer '+this.token}:{})},body:JSON.stringify(b)});return r.json()}};
+function getWD(off){const n=new Date();n.setDate(n.getDate()+off*7);const d=n.getDay();const m=new Date(n);m.setDate(n.getDate()-(d===0?6:d-1));const a=[];for(let i=0;i<7;i++){const x=new Date(m);x.setDate(m.getDate()+i);a.push(x)}return a}
 
 function Toast({msg,type,onDone}){useEffect(()=>{const t=setTimeout(onDone,3000);return()=>clearTimeout(t)},[]);return<div className={`toast toast-${type==='success'?'ok':'err'}`}>{msg}</div>}
 
-// ─── AUTH ───────────────────────────────────────────────
 function AuthScreen({onAuth}){
-  const[mode,setMode]=useState('login');
-  const[phone,setPhone]=useState('');
-  const[pin,setPin]=useState('');
-  const[name,setName]=useState('');
-  const[email,setEmail]=useState('');
-  const[err,setErr]=useState('');
-  const[loading,setLoading]=useState(false);
-
-  const submit=async()=>{
-    setErr('');setLoading(true);
-    const r=mode==='login'?await api.post('/api/login',{phone,pin}):await api.post('/api/register',{full_name:name,phone,pin,email});
-    setLoading(false);
-    if(r.ok){api.token=r.token;localStorage.setItem('aq_token',r.token);localStorage.setItem('aq_user',JSON.stringify(r.user));onAuth(r.user,r.token)}
-    else setErr(r.error||'Erreur');
-  };
-
-  return(
-    <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',justifyContent:'center',padding:'40px 24px',background:'linear-gradient(160deg,#050B18 0%,#0A1628 40%,#0D2137 100%)'}}>
-      <div style={{textAlign:'center',marginBottom:32}}>
-        <div style={{width:56,height:56,borderRadius:16,background:'linear-gradient(135deg,#00D4AA,#00B4D8)',display:'inline-flex',alignItems:'center',justifyContent:'center',fontSize:24,fontWeight:800,color:'#000',fontFamily:'Outfit',marginBottom:12}}>A</div>
-        <h1 style={{fontSize:24,fontFamily:'Outfit'}}>Aquabike Evolution</h1>
-        <p style={{color:'var(--muted)',fontSize:13,marginTop:4}}>Dakar — Réservation en ligne</p>
-      </div>
-
-      <div className="card">
-        <div style={{display:'flex',gap:4,marginBottom:16}}>
-          <button onClick={()=>setMode('login')} className={`btn-sm ${mode==='login'?'btn-primary':'btn-outline'}`} style={{flex:1}}>Connexion</button>
-          <button onClick={()=>setMode('register')} className={`btn-sm ${mode==='register'?'btn-primary':'btn-outline'}`} style={{flex:1}}>Inscription</button>
-        </div>
-
-        {mode==='register'&&<><div className="input-group"><label>NOM COMPLET</label><input value={name} onChange={e=>setName(e.target.value)} placeholder="Fatou Diallo"/></div>
-        <div className="input-group"><label>EMAIL (optionnel)</label><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="fatou@email.com"/></div></>}
-
-        <div className="input-group"><label>TELEPHONE</label><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="77 123 45 67"/></div>
-        <div className="input-group"><label>MOT DE PASSE</label><input type="password" value={pin} onChange={e=>setPin(e.target.value)} placeholder="Votre mot de passe"/></div>
-
-        {err&&<p style={{color:'var(--danger)',fontSize:13,marginBottom:12,textAlign:'center'}}>{err}</p>}
-        <button className="btn btn-primary" onClick={submit} disabled={loading}>{loading?'Chargement...':mode==='login'?'Se connecter':'Créer mon compte'}</button>
-      </div>
-    </div>
-  );
-}
-
-// ─── BOOKING MODAL ──────────────────────────────────────
-function BookingModal({slot,onClose,onBook}){
-  const[loading,setLoading]=useState(false);
-  const remaining=parseInt(slot.remaining);
-  const d=new Date(slot.date_slot+'T00:00:00');
-  const handleBook=async()=>{setLoading(true);await onBook(slot.id);setLoading(false)};
-  return(
-    <div className="modal-bg" onClick={onClose}>
-      <div className="modal" onClick={e=>e.stopPropagation()}>
-        <div className="modal-handle"/>
-        <p style={{fontSize:11,fontWeight:600,color:'var(--muted)',letterSpacing:1}}>{slot.activity?.toUpperCase()}</p>
-        <h2 style={{fontSize:20,marginTop:2,marginBottom:12,fontFamily:'Outfit'}}>{fmtDate(d)} — {slot.hour_start}h00</h2>
-        <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'var(--muted)',marginBottom:4}}>
-          <span>Capacité</span>
-          <span style={{fontWeight:700,color:remaining<=0?'var(--danger)':remaining<=3?'var(--warn)':'var(--accent)'}}>{remaining}/{slot.max_capacity} places</span>
-        </div>
-        <div style={{height:5,borderRadius:3,background:'var(--bg)',overflow:'hidden',marginBottom:16}}>
-          <div style={{height:'100%',borderRadius:3,width:`${(parseInt(slot.booked||0)/slot.max_capacity)*100}%`,background:remaining<=2?'var(--danger)':remaining<=4?'var(--warn)':'var(--accent)',transition:'width .3s'}}/>
-        </div>
-        {remaining<=0?<div className="btn" style={{background:'var(--dangerDim)',color:'var(--danger)'}}>Créneau complet</div>
-        :<button className="btn btn-primary" onClick={handleBook} disabled={loading}>{loading?'Réservation...':'Réserver cette séance'}</button>}
-        <p style={{fontSize:11,color:'var(--dim)',textAlign:'center',marginTop:10}}>Annulation possible jusqu'à 2h avant</p>
-      </div>
-    </div>);
-}
-
-// ─── CALENDAR ───────────────────────────────────────────
-function CalendarView({slots,onBook,myBookings}){
-  const[weekOff,setWeekOff]=useState(0);
-  const[activity,setActivity]=useState('Aquabike');
-  const[modal,setModal]=useState(null);
-
-  const days=useMemo(()=>getWeekDays(weekOff),[weekOff]);
-  const activities=['Aquabike','Aquagym','Rééducation','Natation'];
-  const todayStr=new Date().toISOString().split('T')[0];
-
-  const isReedNat=(activity==='Rééducation'||activity==='Natation');
-  const hours=useMemo(()=>{
-    if(isReedNat) return [13,14,15,16];
-    return [8,9,10,11,12,17,18,19];
-  },[isReedNat]);
-
-  const slotMap=useMemo(()=>{const m={};(slots||[]).filter(s=>s.activity===activity).forEach(s=>{m[`${s.date_slot}_${s.hour_start}`]=s});return m},[slots,activity]);
-  const mySet=useMemo(()=>new Set((myBookings||[]).filter(b=>b.status===1).map(b=>b.slot_id)),[myBookings]);
-
-  const monthLabel=MONTHS_FULL[days[0].getMonth()].toUpperCase()+' '+days[0].getFullYear();
-
-  const handleBook=async(slotId)=>{const ok=await onBook(slotId);if(ok)setModal(null)};
-
-  return(<div>
-    <div className="act-tabs">
-      {activities.map(a=><button key={a} className={`act-tab${activity===a?' active':''}`} onClick={()=>setActivity(a)}>{a==='Rééducation'?'Rééduc.':a}</button>)}
-    </div>
-
-    <div className="week-nav">
-      <button onClick={()=>setWeekOff(w=>w-1)}>&#8249; Préc.</button>
-      <span className="week-label">{monthLabel}</span>
-      <button onClick={()=>setWeekOff(w=>w+1)}>Suiv. &#8250;</button>
-    </div>
-
-    <div style={{overflowX:'auto',WebkitOverflowScrolling:'touch',paddingBottom:4}}>
-      <div className="slots-grid" style={{minWidth:isReedNat?420:560}}>
-        <div/>
-        {days.map((d,i)=>{const iso=d.toISOString().split('T')[0];const isToday=iso===todayStr;
-          return <div key={i} className={`day-head${isToday?' today':''}`}><div className="dow">{DAYS[d.getDay()]}</div><div className="dn">{d.getDate()}</div></div>})}
-
-        {hours.map(h=>{
-          const isWeekendHour=(!isReedNat&&h>=17);
-          return <React.Fragment key={h}>
-            <div className="slot-hour">{String(h).padStart(2,'0')}h</div>
-            {days.map((d,i)=>{
-              const dateStr=d.toISOString().split('T')[0];
-              const dow=d.getDay();
-              const isWeekend=(dow===0||dow===6);
-              // Check if this hour exists for this day
-              let validHour=true;
-              if(!isReedNat){
-                if(isWeekend&&(h<10||h>12)) validHour=false;
-                if(!isWeekend&&h>=13&&h<17) validHour=false;
-              }
-              const k=`${dateStr}_${h}`;
-              const s=slotMap[k];
-              const now=new Date();
-              const slotTime=new Date(`${dateStr}T${String(h).padStart(2,'0')}:00:00`);
-              const isPast=slotTime<now;
-
-              if(!validHour||!s) return <div key={k} className="slot past"><span className="cnt" style={{fontSize:11}}>—</span></div>;
-
-              const rem=parseInt(s.remaining);
-              const isMine=mySet.has(s.id);
-              let cls='slot ';
-              if(isPast)cls+='past';else if(isMine)cls+='mine';else if(rem<=0)cls+='full';else if(rem<=3)cls+='limited';else cls+='avail';
-
-              return <div key={k} className={cls} onClick={()=>!isPast&&rem>0&&!isMine&&setModal(s)}>
-                <span className="cnt">{isPast?'—':isMine?'✓':rem<=0?'✕':`${rem}`}</span>
-                <span className="lbl">{isPast?'':isMine?'Réservé':rem<=0?'Complet':rem<=3?'Dépêchez':''}</span>
-              </div>
-            })}
-          </React.Fragment>})}
-      </div>
-    </div>
-
-    {modal&&<BookingModal slot={slotMap[`${modal.date_slot}_${modal.hour_start}`]||modal} onClose={()=>setModal(null)} onBook={handleBook}/>}
-  </div>);
-}
-
-// ─── PLANS / SUBSCRIBE ──────────────────────────────────
-function PlansView({plans,onSubscribe,toast}){
-  const[sel,setSel]=useState(null);
-  const[payModal,setPayModal]=useState(false);
-  const[loading,setLoading]=useState(false);
-
-  const subscribe=async(method)=>{
-    if(!sel)return;setLoading(true);
-    const r=await api.post('/api/subscribe',{plan_id:sel.id,payment_method:method});
-    setLoading(false);
-    if(r.ok){
-      if(r.payment_url){window.open(r.payment_url,'_blank')}
-      toast(method==='cash'?'Abonnement en attente de validation.':'Abonnement activé ! Ref: '+r.payment_ref,'success');
-      setPayModal(false);setSel(null);onSubscribe();
-    } else toast(r.error||'Erreur','error');
-  };
-
-  return(<div>
-    <h2 style={{fontSize:18,marginBottom:4}}>Nos abonnements</h2>
-    <p style={{fontSize:12,color:'var(--muted)',marginBottom:16}}>Choisissez votre formule puis payez par Wave ou Orange Money</p>
-
-    {plans.map(p=><div key={p.id} className={`plan${sel?.id===p.id?' selected':''}`} onClick={()=>{setSel(p);setPayModal(true)}}>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
-        <div><div className="plan-name">{p.name}</div><div className="plan-desc">{p.desc}</div></div>
-        <div className="plan-price">{fmtPrice(p.price)}</div>
-      </div>
-      <span className="plan-badge" style={{
-        background:p.limit_type==='weekly'?'rgba(0,180,216,.1)':'rgba(255,184,48,.1)',
-        color:p.limit_type==='weekly'?'var(--accent2)':'var(--warn)'
-      }}>{p.limit_type==='weekly'?`${p.limit_value}x/semaine`:`${p.limit_value} séances`} — {p.duration_days}j</span>
-    </div>)}
-
-    {payModal&&sel&&<div className="modal-bg" onClick={()=>setPayModal(false)}>
-      <div className="modal" onClick={e=>e.stopPropagation()}>
-        <div className="modal-handle"/>
-        <h2 style={{fontSize:18,fontFamily:'Outfit',marginBottom:4}}>{sel.name}</h2>
-        <p style={{color:'var(--muted)',fontSize:13,marginBottom:4}}>{sel.desc}</p>
-        <p className="plan-price" style={{marginBottom:16}}>{fmtPrice(sel.price)}</p>
-
-        <p style={{fontSize:12,fontWeight:600,color:'var(--muted)',marginBottom:10,letterSpacing:.5}}>CHOISIR LE MODE DE PAIEMENT</p>
-        <button className="btn btn-wave" onClick={()=>subscribe('wave')} disabled={loading} style={{marginBottom:8}}>Payer avec Wave</button>
-        <button className="btn btn-om" onClick={()=>subscribe('orange_money')} disabled={loading} style={{marginBottom:8}}>Payer avec Orange Money</button>
-        <button className="btn btn-outline" onClick={()=>subscribe('cash')} disabled={loading}>Payer en espèces (sur place)</button>
-        <p style={{fontSize:11,color:'var(--dim)',textAlign:'center',marginTop:10}}>Le paiement en espèces nécessite une validation par l'admin</p>
-      </div>
-    </div>}
-  </div>);
-}
-
-// ─── MY BOOKINGS ────────────────────────────────────────
-function BookingsView({bookings,subscriptions,onCancel,toast}){
-  const now=new Date();
-  const activeBookings=(bookings||[]).filter(b=>b.status===1);
-  const pastBookings=(bookings||[]).filter(b=>b.status!==1);
-  const activeSubs=(subscriptions||[]).filter(s=>s.status==='active');
-
-  const handleCancel=async(id)=>{
-    if(!confirm('Annuler cette réservation ?'))return;
-    const r=await api.post('/api/cancel',{booking_id:id});
-    if(r.ok){toast('Réservation annulée.','success');onCancel()}
-    else toast(r.error||'Erreur','error');
-  };
-
-  return(<div>
-    {activeSubs.length>0&&<>
-      <h3 style={{fontSize:14,fontWeight:600,color:'var(--muted)',marginBottom:8,letterSpacing:.5}}>MES ABONNEMENTS ACTIFS</h3>
-      {activeSubs.map(s=><div key={s.id} className="sub-card">
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-          <div><b style={{fontSize:14}}>{s.plan_name}</b><br/><span style={{fontSize:12,color:'var(--muted)'}}>Expire le {new Date(s.expires_at).toLocaleDateString('fr-FR')}</span></div>
-          <span className={`status ${s.status}`}>{s.status==='active'?'Actif':s.status==='pending'?'En attente':'Expiré'}</span>
-        </div>
-        <div className="sub-counter">
-          {Array.from({length:s.limit_value}).map((_,i)=><div key={i} className={`sub-dot${i<s.sessions_used?' used':''}`}/>)}
-        </div>
-        <p style={{fontSize:11,color:'var(--muted)',marginTop:4}}>{s.sessions_used}/{s.limit_value} séances utilisées</p>
-      </div>)}
-    </>}
-
-    <h3 style={{fontSize:14,fontWeight:600,color:'var(--muted)',marginTop:16,marginBottom:8,letterSpacing:.5}}>MES RÉSERVATIONS</h3>
-    {activeBookings.length===0&&pastBookings.length===0&&<div className="empty-state"><div className="em">📅</div>Aucune réservation<br/><span style={{fontSize:12}}>Réservez depuis le calendrier</span></div>}
-
-    {activeBookings.map(b=>{
-      const d=new Date(b.date_slot+'T00:00:00');
-      const slotTime=new Date(`${b.date_slot}T${String(b.hour_start).padStart(2,'0')}:00:00`);
-      const isPast=slotTime<now;
-      const canCancel=!isPast&&(slotTime-now)>=2*3600000;
-      return<div key={b.id} className="brow">
-        <div style={{width:44,height:44,borderRadius:12,background:'var(--accentDim)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:16,flexShrink:0}}>🏊</div>
-        <div className="brow-info">
-          <h4>{fmtDate(d)} — {b.hour_start}h</h4>
-          <p>{b.activity}</p>
-          <span className="brow-code">{b.booking_code}</span>
-        </div>
-        {canCancel&&<button className="btn-sm btn-danger" onClick={()=>handleCancel(b.id)}>Annuler</button>}
-      </div>})}
-
-    {pastBookings.map(b=>{
-      const d=new Date(b.date_slot+'T00:00:00');
-      return<div key={b.id} className="brow cancelled">
-        <div style={{width:44,height:44,borderRadius:12,background:'var(--dangerDim)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:16,flexShrink:0}}>{b.status===0?'✕':'✓'}</div>
-        <div className="brow-info"><h4>{fmtDate(d)} — {b.hour_start}h</h4><p>{b.activity} — {b.status===0?'Annulée':'Passée'}</p></div>
-      </div>})}
-  </div>);
-}
-
-// ─── ADMIN ──────────────────────────────────────────────
-function AdminView({user,toast}){
-  const[start,setStart]=useState(new Date().toISOString().split('T')[0]);
-  const[end,setEnd]=useState(new Date(Date.now()+30*86400000).toISOString().split('T')[0]);
-  const[loading,setLoading]=useState(false);
-
-  const generate=async()=>{
-    setLoading(true);
-    const r=await api.post('/api/admin/generate-slots',{date_start:start,date_end:end,activities:['Aquabike','Aquagym','Rééducation','Natation']});
-    setLoading(false);
-    if(r.ok) toast(`${r.created} créneaux générés !`,'success');
-    else toast(r.error||'Erreur','error');
-  };
-
-  if(user.role!=='admin') return <div className="card" style={{textAlign:'center',padding:24}}>
-    <p style={{color:'var(--muted)',marginBottom:12}}>Accès réservé aux administrateurs.</p>
-    <p style={{fontSize:12,color:'var(--dim)'}}>Contactez Aquabike Evolution pour devenir admin.</p>
-  </div>;
-
-  return(<div>
-    <h2 style={{fontSize:18,marginBottom:12}}>Administration</h2>
+  const[mode,setMode]=useState('login');const[phone,setPhone]=useState('');const[pin,setPin]=useState('');const[name,setName]=useState('');const[email,setEmail]=useState('');
+  const[err,setErr]=useState('');const[loading,setLoading]=useState(false);
+  const submit=async()=>{setErr('');setLoading(true);const r=mode==='login'?await api.post('/api/login',{phone,pin}):await api.post('/api/register',{full_name:name,phone,pin,email});setLoading(false);
+    if(r.ok){api.token=r.token;localStorage.setItem('aq_token',r.token);localStorage.setItem('aq_user',JSON.stringify(r.user));onAuth(r.user)}else setErr(r.error||'Erreur')};
+  return(<div style={{minHeight:'100vh',display:'flex',flexDirection:'column',justifyContent:'center',padding:'40px 20px',background:'linear-gradient(160deg,#050B18,#0A1628 40%,#0D2137)'}}>
+    <div style={{textAlign:'center',marginBottom:28}}>
+      <div style={{width:52,height:52,borderRadius:14,background:'linear-gradient(135deg,#00D4AA,#00B4D8)',display:'inline-flex',alignItems:'center',justifyContent:'center',fontSize:22,fontWeight:800,color:'#000',fontFamily:'Outfit',marginBottom:10}}>A</div>
+      <h1 style={{fontSize:22}}>Aquabike Evolution</h1><p style={{color:'var(--muted)',fontSize:12,marginTop:3}}>Dakar — Réservation en ligne</p></div>
     <div className="card">
-      <h3 style={{fontSize:14,marginBottom:12}}>Générer les créneaux</h3>
-      <div className="input-group"><label>DATE DEBUT</label><input type="date" value={start} onChange={e=>setStart(e.target.value)}/></div>
-      <div className="input-group"><label>DATE FIN</label><input type="date" value={end} onChange={e=>setEnd(e.target.value)}/></div>
-      <p style={{fontSize:12,color:'var(--muted)',marginBottom:12}}>Génère automatiquement tous les créneaux pour Aquabike, Aquagym, Rééducation et Natation selon les horaires configurés.</p>
-      <button className="btn btn-primary" onClick={generate} disabled={loading}>{loading?'Génération...':'Générer les créneaux'}</button>
-    </div>
+      <div style={{display:'flex',gap:4,marginBottom:14}}>
+        <button onClick={()=>setMode('login')} className={`btn-sm ${mode==='login'?'btn-primary':'btn-outline'}`} style={{flex:1}}>Connexion</button>
+        <button onClick={()=>setMode('register')} className={`btn-sm ${mode==='register'?'btn-primary':'btn-outline'}`} style={{flex:1}}>Inscription</button></div>
+      {mode==='register'&&<><div className="input-group"><label>NOM COMPLET</label><input value={name} onChange={e=>setName(e.target.value)} placeholder="Fatou Diallo"/></div>
+      <div className="input-group"><label>EMAIL (optionnel)</label><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="fatou@email.com"/></div></>}
+      <div className="input-group"><label>TÉLÉPHONE</label><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="77 123 45 67"/></div>
+      <div className="input-group"><label>MOT DE PASSE</label><input type="password" value={pin} onChange={e=>setPin(e.target.value)} placeholder="Votre mot de passe"/></div>
+      {err&&<p style={{color:'var(--danger)',fontSize:12,marginBottom:10,textAlign:'center'}}>{err}</p>}
+      <button className="btn btn-primary" onClick={submit} disabled={loading}>{loading?'...':mode==='login'?'Se connecter':'Créer mon compte'}</button></div></div>);
+}
+
+function SlotModal({slot,myBookings,onClose,onBook,onCancel}){
+  const[loading,setLoading]=useState(false);const[parts,setParts]=useState(null);
+  const rem=parseInt(slot.remaining);const booked=parseInt(slot.booked||0);const d=new Date(slot.date_slot+'T00:00:00');
+  const myB=(myBookings||[]).find(b=>b.status===1&&b.date_slot===slot.date_slot&&parseInt(b.hour_start)===parseInt(slot.hour_start)&&b.activity===slot.activity);
+  useEffect(()=>{api.get('/api/slot/'+slot.id+'/participants').then(r=>{if(r.ok)setParts(r.participants)}).catch(()=>{})},[slot.id]);
+  const doBook=async()=>{setLoading(true);await onBook(slot.id);setLoading(false)};
+  const doCancel=async()=>{if(!myB)return;if(!confirm('Annuler cette réservation ?'))return;setLoading(true);await onCancel(myB.id);setLoading(false)};
+  const st=new Date(slot.date_slot+'T'+String(slot.hour_start).padStart(2,'0')+':00:00');const isPast=st<new Date();const canCancel=myB&&!isPast&&(st-new Date())>=7200000;
+  return(<div className="modal-bg" onClick={onClose}><div className="modal" onClick={e=>e.stopPropagation()}>
+    <div className="modal-handle"/>
+    <p style={{fontSize:10,fontWeight:600,color:'var(--muted)',letterSpacing:1}}>{slot.activity?.toUpperCase()}</p>
+    <h2 style={{fontSize:19,marginTop:2,fontFamily:'Outfit'}}>{fmtD(d)} — {slot.hour_start}h00</h2>
+    <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'var(--muted)',marginTop:10,marginBottom:4}}>
+      <span>Places disponibles</span><span style={{fontWeight:700,color:rem<=0?'var(--danger)':rem<=3?'var(--warn)':'var(--accent)'}}>{rem} / {slot.max_capacity}</span></div>
+    <div className="cap-bar"><div className="cap-fill" style={{width:`${(booked/slot.max_capacity)*100}%`,background:rem<=2?'var(--danger)':rem<=4?'var(--warn)':'var(--accent)'}}/></div>
+    {parts&&parts.filter(p=>p.status===1).length>0&&<div style={{marginBottom:14}}>
+      <p style={{fontSize:11,fontWeight:600,color:'var(--muted)',marginBottom:6}}>PARTICIPANTS ({parts.filter(p=>p.status===1).length})</p>
+      {parts.filter(p=>p.status===1).map(p=><div key={p.id} className="part-row"><span>{p.full_name}</span><span style={{fontSize:11,color:'var(--dim)'}}>{p.phone}</span></div>)}</div>}
+    {isPast?<div className="btn" style={{background:'var(--bg3)',color:'var(--dim)'}}>Créneau passé</div>
+    :myB?<><div style={{background:'var(--accentDim)',border:'1px solid rgba(0,212,170,.2)',borderRadius:12,padding:12,textAlign:'center',marginBottom:10}}>
+      <span style={{color:'var(--accent)',fontWeight:700,fontSize:13}}>✓ Vous avez réservé ce créneau</span><br/><span style={{fontSize:11,color:'var(--muted)'}}>Code : {myB.booking_code}</span></div>
+      {canCancel?<button className="btn btn-danger" onClick={doCancel} disabled={loading}>{loading?'...':'Annuler ma réservation'}</button>
+      :<p style={{textAlign:'center',fontSize:12,color:'var(--dim)'}}>🔒 Annulation impossible (moins de 2h)</p>}</>
+    :rem<=0?<div className="btn" style={{background:'var(--dangerDim)',color:'var(--danger)'}}>Créneau complet</div>
+    :<button className="btn btn-primary" onClick={doBook} disabled={loading}>{loading?'Réservation...':'Réserver (1 séance débitée)'}</button>}
+    <p style={{fontSize:10,color:'var(--dim)',textAlign:'center',marginTop:8}}>Annulation possible jusqu'à 2h avant</p>
+  </div></div>);
+}
+
+function CalendarView({slots,onBook,onCancel,myBookings}){
+  const[wo,setWo]=useState(0);const[act,setAct]=useState('Aquabike');const[modal,setModal]=useState(null);
+  const days=useMemo(()=>getWD(wo),[wo]);const td=new Date().toISOString().split('T')[0];
+  const isRN=(act==='Rééducation'||act==='Natation');const hours=useMemo(()=>isRN?[13,14,15,16]:[8,9,10,11,12,17,18,19],[isRN]);
+  const sm=useMemo(()=>{const m={};(slots||[]).filter(s=>s.activity===act).forEach(s=>{m[s.date_slot+'_'+s.hour_start]=s});return m},[slots,act]);
+  const myMap=useMemo(()=>{const m={};(myBookings||[]).filter(b=>b.status===1).forEach(b=>{m[b.date_slot+'_'+b.hour_start+'_'+b.activity]=b});return m},[myBookings]);
+  const doBook=async id=>{const ok=await onBook(id);if(ok)setModal(null);return ok};
+  const doCancel=async id=>{const ok=await onCancel(id);if(ok)setModal(null);return ok};
+  return(<div>
+    <div className="act-tabs">{['Aquabike','Aquagym','Rééducation','Natation'].map(a=><button key={a} className={'act-tab'+(act===a?' active':'')} onClick={()=>setAct(a)}>{a==='Rééducation'?'Rééduc.':a}</button>)}</div>
+    <div className="week-nav"><button onClick={()=>setWo(w=>w-1)}>◂ Préc.</button><span className="week-label">{MF[days[0].getMonth()].toUpperCase()} {days[0].getFullYear()}</span><button onClick={()=>setWo(w=>w+1)}>Suiv. ▸</button></div>
+    <div className="cal-wrap"><div className="cal" style={{gridTemplateColumns:'42px repeat(7,1fr)',minWidth:isRN?380:520}}>
+      <div/>{days.map((d,i)=>{const iso=d.toISOString().split('T')[0];return<div key={i} className={'day-head'+(iso===td?' today':'')}><div className="dow">{DAYS[d.getDay()]}</div><div className="dn">{d.getDate()}</div></div>})}
+      {hours.map(h=><React.Fragment key={h}><div className="slot-hour">{String(h).padStart(2,'0')}h</div>
+        {days.map((d,i)=>{const ds=d.toISOString().split('T')[0];const dow=d.getDay();const isWE=dow===0||dow===6;let valid=true;if(!isRN){if(isWE&&(h<10||h>12))valid=false;if(!isWE&&h>=13&&h<17)valid=false}
+          const k=ds+'_'+h;const s=sm[k];const now=new Date();const st=new Date(ds+'T'+String(h).padStart(2,'0')+':00:00');const isPast=st<now;
+          if(!valid||!s)return<div key={k} className="slot past"><span className="cnt" style={{fontSize:10}}>—</span></div>;
+          const rem=parseInt(s.remaining);const isMine=!!myMap[ds+'_'+h+'_'+act];
+          let cls='slot ';if(isPast)cls+='past';else if(isMine)cls+='mine';else if(rem<=0)cls+='full';else if(rem<=3)cls+='limited';else cls+='avail';
+          return<div key={k} className={cls} onClick={()=>!isPast&&setModal(s)}><span className="cnt">{isPast?'—':isMine?'✓':rem<=0?'✕':rem}</span><span className="lbl">{isPast?'':isMine?'Réservé':rem<=0?'Complet':rem<=3?rem+' pl.':''}</span></div>})}</React.Fragment>)}
+    </div></div>
+    {modal&&<SlotModal slot={sm[modal.date_slot+'_'+modal.hour_start]||modal} myBookings={myBookings} onClose={()=>setModal(null)} onBook={doBook} onCancel={doCancel}/>}
   </div>);
 }
 
-// ─── APP ────────────────────────────────────────────────
+function PlansView({plans,onSubscribe,toast}){
+  const[sel,setSel]=useState(null);const[pm,setPm]=useState(false);const[ld,setLd]=useState(false);
+  const sub=async m=>{if(!sel)return;setLd(true);const r=await api.post('/api/subscribe',{plan_id:sel.id,payment_method:m});setLd(false);
+    if(r.ok){if(r.payment_url)window.open(r.payment_url,'_blank');toast(m==='cash'?'Demande envoyée ! En attente de validation.':'Abonnement activé ! Réf: '+r.payment_ref,'success');setPm(false);setSel(null);onSubscribe()}else toast(r.error||'Erreur','error')};
+  return(<div><h2 style={{fontSize:17,marginBottom:3}}>Nos abonnements</h2><p style={{fontSize:11,color:'var(--muted)',marginBottom:12}}>Choisissez votre formule</p>
+    {plans.map(p=><div key={p.id} className={'plan'+(sel?.id===p.id?' selected':'')} onClick={()=>{setSel(p);setPm(true)}}>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}><div><div className="plan-name">{p.name}</div><div className="plan-desc">{p.desc}</div></div><div className="plan-price">{fmtP(p.price)}</div></div>
+      <span className="plan-badge" style={{background:p.limit_type==='weekly'?'rgba(0,180,216,.1)':'var(--warnDim)',color:p.limit_type==='weekly'?'var(--accent2)':'var(--warn)'}}>{p.limit_type==='weekly'?p.limit_value+'x/sem':p.limit_value+' séances'} · {p.duration_days}j</span></div>)}
+    {pm&&sel&&<div className="modal-bg" onClick={()=>setPm(false)}><div className="modal" onClick={e=>e.stopPropagation()}>
+      <div className="modal-handle"/><h2 style={{fontSize:17,fontFamily:'Outfit',marginBottom:3}}>{sel.name}</h2><p style={{color:'var(--muted)',fontSize:12,marginBottom:3}}>{sel.desc}</p><p className="plan-price" style={{marginBottom:14}}>{fmtP(sel.price)}</p>
+      <p style={{fontSize:11,fontWeight:600,color:'var(--muted)',marginBottom:8}}>MODE DE PAIEMENT</p>
+      <button className="btn btn-wave" onClick={()=>sub('wave')} disabled={ld} style={{marginBottom:6}}>💳 Payer avec Wave</button>
+      <button className="btn btn-om" onClick={()=>sub('orange_money')} disabled={ld} style={{marginBottom:6}}>📱 Payer avec Orange Money</button>
+      <button className="btn btn-outline" onClick={()=>sub('cash')} disabled={ld}>💵 Payer en espèces (sur place)</button>
+      <p style={{fontSize:10,color:'var(--dim)',textAlign:'center',marginTop:8}}>Le paiement espèces nécessite la validation de l'admin</p></div></div>}
+  </div>);
+}
+
+function MyView({bookings,subs,onCancel,toast}){
+  const now=new Date();const active=(bookings||[]).filter(b=>b.status===1);const past=(bookings||[]).filter(b=>b.status!==1);
+  const aSubs=(subs||[]).filter(s=>s.status==='active');const pSubs=(subs||[]).filter(s=>s.status==='pending');
+  const cancel=async id=>{if(!confirm('Annuler cette réservation ?'))return;const r=await api.post('/api/cancel',{booking_id:id});if(r.ok){toast('Annulée.','success');onCancel()}else toast(r.error||'Erreur','error')};
+  return(<div>
+    {pSubs.length>0&&<><p className="section-title">⏳ EN ATTENTE</p>{pSubs.map(s=><div key={s.id} className="sub-card" style={{borderColor:'var(--warn)'}}><div style={{display:'flex',justifyContent:'space-between'}}><b style={{fontSize:13}}>{s.plan_name}</b><span className="badge badge-pending">En attente</span></div><p style={{fontSize:11,color:'var(--muted)',marginTop:3}}>Paiement {s.payment_method==='cash'?'espèces':'en ligne'} — Validation en cours</p></div>)}</>}
+    {aSubs.length>0&&<><p className="section-title">✅ ABONNEMENTS</p>{aSubs.map(s=><div key={s.id} className="sub-card"><div style={{display:'flex',justifyContent:'space-between'}}><b style={{fontSize:13}}>{s.plan_name}</b><span className="badge badge-ok">Actif</span></div><p style={{fontSize:11,color:'var(--muted)',marginTop:2}}>Expire le {new Date(s.expires_at).toLocaleDateString('fr-FR')}</p><div className="sub-dots">{Array.from({length:s.limit_value}).map((_,i)=><div key={i} className={'sub-dot'+(i<s.sessions_used?' used':'')}/>)}</div><p style={{fontSize:10,color:'var(--muted)',marginTop:3}}>{s.sessions_used}/{s.limit_value} séances</p></div>)}</>}
+    <p className="section-title">📅 À VENIR</p>
+    {active.length===0&&<div className="empty"><div className="em">📅</div>Aucune réservation</div>}
+    {active.map(b=>{const st=new Date(b.date_slot+'T'+String(b.hour_start).padStart(2,'0')+':00:00');const cc=b.status===1&&st>now&&(st-now)>=7200000;
+      return<div key={b.id} className="brow"><div className="brow-icon" style={{background:'var(--accentDim)'}}>🏊</div><div className="brow-info"><h4>{fmtDate(b.date_slot)} — {b.hour_start}h</h4><p>{b.activity}</p><span className="brow-code">{b.booking_code}</span></div>
+      {cc?<button className="btn-sm btn-danger" onClick={()=>cancel(b.id)}>Annuler</button>:<span style={{fontSize:10,color:'var(--dim)'}}>🔒</span>}</div>})}
+    {past.length>0&&<><p className="section-title">HISTORIQUE</p>{past.slice(0,10).map(b=><div key={b.id} className="brow cancelled"><div className="brow-icon" style={{background:'var(--dangerDim)'}}>✕</div><div className="brow-info"><h4>{fmtDate(b.date_slot)} — {b.hour_start}h</h4><p>{b.activity} — Annulée</p></div></div>)}</>}
+  </div>);
+}
+
+function AdminView({user,toast}){
+  const[data,setData]=useState(null);const[ld,setLd]=useState(false);const[tab,setTab]=useState('overview');
+  const[gs,setGs]=useState(new Date().toISOString().split('T')[0]);const[ge,setGe]=useState(new Date(Date.now()+30*86400000).toISOString().split('T')[0]);
+  const fetch_=useCallback(async()=>{const r=await api.get('/api/admin/dashboard');if(r.ok)setData(r)},[]);
+  useEffect(()=>{if(user.role==='admin')fetch_()},[user,fetch_]);
+  const gen=async()=>{setLd(true);const r=await api.post('/api/admin/generate-slots',{date_start:gs,date_end:ge,activities:['Aquabike','Aquagym','Rééducation','Natation']});setLd(false);if(r.ok)toast(r.created+' créneaux !','success');else toast(r.error||'Erreur','error')};
+  const validate=async id=>{const r=await api.post('/api/admin/validate-payment',{subscription_id:id});if(r.ok){toast('Paiement validé !','success');fetch_()}else toast('Erreur','error')};
+  if(user.role!=='admin')return<div className="card" style={{textAlign:'center',padding:20}}><p style={{color:'var(--muted)'}}>Accès admin requis</p></div>;
+  if(!data)return<div className="empty"><div className="em">⏳</div>Chargement...</div>;
+  return(<div>
+    <div className="act-tabs" style={{marginBottom:12}}>{[{id:'overview',l:'Résumé'},{id:'bookings',l:'Réservations'},{id:'subs',l:'Abonnements'},{id:'pending',l:'💵 Espèces ('+data.pending_payments.length+')'},{id:'gen',l:'Créneaux'}].map(t=><button key={t.id} className={'act-tab'+(tab===t.id?' active':'')} onClick={()=>setTab(t.id)}>{t.l}</button>)}</div>
+
+    {tab==='overview'&&<><div className="stat-grid">
+      <div className="stat-card"><div className="stat-val" style={{color:'var(--accent2)'}}>{data.stats.total_users}</div><div className="stat-lbl">Inscrits</div></div>
+      <div className="stat-card"><div className="stat-val" style={{color:'var(--accent)'}}>{data.stats.active_subscriptions}</div><div className="stat-lbl">Abonnés</div></div>
+      <div className="stat-card"><div className="stat-val" style={{color:'var(--warn)'}}>{data.stats.today_bookings}</div><div className="stat-lbl">Résa. today</div></div></div>
+      <p className="section-title">CRÉNEAUX AUJOURD'HUI</p>
+      {data.today_slots.length===0?<p style={{fontSize:12,color:'var(--dim)'}}>Aucun créneau</p>
+      :data.today_slots.map((s,i)=><div key={i} className="brow">
+        <div className="brow-icon" style={{background:parseInt(s.remaining)<=0?'var(--dangerDim)':parseInt(s.remaining)<=3?'var(--warnDim)':'var(--accentDim)',fontSize:13,fontWeight:700,fontFamily:'Outfit',color:parseInt(s.remaining)<=0?'var(--danger)':parseInt(s.remaining)<=3?'var(--warn)':'var(--accent)'}}>{s.booked}/{s.max_capacity}</div>
+        <div className="brow-info"><h4>{s.hour_start}h — {s.activity}</h4><p>{s.remaining} place(s)</p></div></div>)}</>}
+
+    {tab==='bookings'&&<><p className="section-title">RÉSERVATIONS SEMAINE</p>
+      {data.week_bookings.filter(b=>b.booking_status===1).map((b,i)=><div key={i} className="brow"><div className="brow-icon" style={{background:'var(--accentDim)'}}>🏊</div>
+        <div className="brow-info"><h4>{fmtDate(b.date_slot)} {b.hour_start}h · {b.activity}</h4><p>{b.full_name} — {b.phone}</p><span className="brow-code">{b.booking_code}</span></div></div>)}</>}
+
+    {tab==='subs'&&<><p className="section-title">ABONNEMENTS</p>
+      {data.subscriptions.map((s,i)=><div key={i} className="sub-card">
+        <div style={{display:'flex',justifyContent:'space-between'}}><div><b style={{fontSize:13}}>{s.full_name}</b><br/><span style={{fontSize:11,color:'var(--muted)'}}>{s.phone}</span></div>
+        <span className={'badge badge-'+(s.status==='active'?'ok':s.status==='pending'?'pending':'expired')}>{s.status==='active'?'Actif':s.status==='pending'?'Attente':'Expiré'}</span></div>
+        <p style={{fontSize:12,marginTop:4}}>{s.plan_name} — <b>{fmtP(s.price)}</b> · {s.payment_method} · {s.sessions_used}/{s.limit_value}</p></div>)}</>}
+
+    {tab==='pending'&&<><p className="section-title">💵 PAIEMENTS ESPÈCES À VALIDER</p>
+      {data.pending_payments.length===0?<div className="empty"><div className="em">✅</div>Aucun paiement en attente</div>
+      :data.pending_payments.map(p=><div key={p.id} className="pending-card">
+        <div style={{display:'flex',justifyContent:'space-between'}}><div><b style={{fontSize:14}}>{p.full_name}</b><br/><span style={{fontSize:12,color:'var(--muted)'}}>{p.phone}</span></div><span className="badge badge-pending">En attente</span></div>
+        <p style={{fontSize:13,marginTop:6}}>{p.plan_name} — <b style={{color:'var(--accent)'}}>{fmtP(p.price)}</b></p>
+        <p style={{fontSize:11,color:'var(--muted)',marginTop:2}}>Demandé le {new Date(p.created_at).toLocaleDateString('fr-FR')}</p>
+        <button className="btn-validate" onClick={()=>validate(p.id)} style={{marginTop:10}}>✓ Valider et activer l'abonnement</button></div>)}</>}
+
+    {tab==='gen'&&<div className="card"><h3 style={{fontSize:14,marginBottom:10}}>Générer les créneaux</h3>
+      <div className="input-group"><label>DÉBUT</label><input type="date" value={gs} onChange={e=>setGs(e.target.value)}/></div>
+      <div className="input-group"><label>FIN</label><input type="date" value={ge} onChange={e=>setGe(e.target.value)}/></div>
+      <button className="btn btn-primary" onClick={gen} disabled={ld}>{ld?'...':'Générer les créneaux'}</button></div>}
+  </div>);
+}
+
 function App(){
-  const[user,setUser]=useState(null);
-  const[view,setView]=useState('calendar');
-  const[slots,setSlots]=useState([]);
-  const[plans,setPlans]=useState([]);
-  const[bookings,setBookings]=useState([]);
-  const[subs,setSubs]=useState([]);
-  const[toastData,setToastData]=useState(null);
+  const[user,setUser]=useState(null);const[view,setView]=useState('calendar');
+  const[slots,setSlots]=useState([]);const[plans,setPlans]=useState([]);const[bookings,setBookings]=useState([]);const[subs,setSubs]=useState([]);
+  const[td,setTd]=useState(null);const toast=(m,t)=>setTd({msg:m,type:t,key:Date.now()});
 
-  const toast=(msg,type)=>setToastData({msg,type,key:Date.now()});
+  useEffect(()=>{const t=localStorage.getItem('aq_token');const u=localStorage.getItem('aq_user');if(t&&u){api.token=t;setUser(JSON.parse(u))}},[]);
 
-  // Auto login
-  useEffect(()=>{
-    const t=localStorage.getItem('aq_token');
-    const u=localStorage.getItem('aq_user');
-    if(t&&u){api.token=t;setUser(JSON.parse(u))}
-  },[]);
+  const fSlots=useCallback(async()=>{const s=new Date();s.setDate(s.getDate()-7);const e=new Date();e.setDate(e.getDate()+21);
+    const r=await api.get('/api/slots?start='+s.toISOString().split('T')[0]+'&end='+e.toISOString().split('T')[0]);if(r.ok)setSlots(r.slots)},[]);
+  const fBook=useCallback(async()=>{const r=await api.get('/api/my-bookings');if(r.ok)setBookings(r.bookings)},[]);
+  const fSubs=useCallback(async()=>{const r=await api.get('/api/my-subscriptions');if(r.ok)setSubs(r.subscriptions)},[]);
+  const refresh=useCallback(()=>{fSlots();fBook();fSubs()},[fSlots,fBook,fSubs]);
 
-  // Load data
-  const fetchSlots=useCallback(async()=>{
-    const days=getWeekDays(0);
-    // Fetch 2 weeks
-    const s=new Date();s.setDate(s.getDate()-7);
-    const e=new Date();e.setDate(e.getDate()+14);
-    const r=await api.get(`/api/slots?start=${s.toISOString().split('T')[0]}&end=${e.toISOString().split('T')[0]}`);
-    if(r.ok)setSlots(r.slots);
-  },[]);
+  useEffect(()=>{if(!user)return;api.get('/api/plans').then(r=>{if(r.ok)setPlans(r.plans)});refresh();
+    const es=new EventSource('/api/events');es.addEventListener('update',()=>fSlots());es.addEventListener('payment_validated',()=>{fSubs();toast('Abonnement activé !','success')});
+    const iv=setInterval(fSlots,20000);return()=>{es.close();clearInterval(iv)}},[user,refresh,fSlots,fSubs]);
 
-  const fetchBookings=useCallback(async()=>{
-    const r=await api.get('/api/my-bookings');
-    if(r.ok)setBookings(r.bookings);
-  },[]);
-
-  const fetchSubs=useCallback(async()=>{
-    const r=await api.get('/api/my-subscriptions');
-    if(r.ok)setSubs(r.subscriptions);
-  },[]);
-
-  useEffect(()=>{
-    if(!user)return;
-    api.get('/api/plans').then(r=>{if(r.ok)setPlans(r.plans)});
-    fetchSlots();fetchBookings();fetchSubs();
-    // SSE
-    const es=new EventSource('/api/events');
-    es.addEventListener('update',()=>fetchSlots());
-    // Polling fallback
-    const iv=setInterval(fetchSlots,20000);
-    return()=>{es.close();clearInterval(iv)};
-  },[user,fetchSlots,fetchBookings,fetchSubs]);
-
-  const handleBook=async(slotId)=>{
-    const r=await api.post('/api/book',{slot_id:slotId});
-    if(r.ok){toast(`Réservé ! Code: ${r.booking_code}`,'success');fetchSlots();fetchBookings();fetchSubs();return true}
-    else{toast(r.error||'Erreur','error');fetchSlots();return false}
-  };
-
+  const book=async id=>{const r=await api.post('/api/book',{slot_id:id});if(r.ok){toast('Réservé ! Code: '+r.booking_code,'success');refresh();return true}else{toast(r.error||'Erreur','error');fSlots();return false}};
+  const cancel=async id=>{const r=await api.post('/api/cancel',{booking_id:id});if(r.ok){toast('Annulée.','success');refresh();return true}else{toast(r.error||'Erreur','error');return false}};
   const logout=()=>{localStorage.removeItem('aq_token');localStorage.removeItem('aq_user');api.token=null;setUser(null)};
 
-  if(!user) return <AuthScreen onAuth={(u,t)=>setUser(u)}/>;
-
+  if(!user)return<AuthScreen onAuth={u=>setUser(u)}/>;
   return(<div className="app">
-    <div className="hdr">
-      <div className="hdr-logo">
-        <div className="hdr-icon">A</div>
-        <div><h1>Aquabike Evolution</h1><p>Réservation en ligne</p></div>
-      </div>
-      <div className="hdr-user" onClick={logout} style={{cursor:'pointer'}}>
-        <b>{user.full_name?.split(' ')[0]}</b>
-        <span style={{fontSize:10}}>Déconnexion</span>
-      </div>
-    </div>
-
+    <div className="hdr"><div className="hdr-logo"><div className="hdr-icon">A</div><div><h1>Aquabike Evolution</h1><p>Réservation en ligne</p></div></div><div className="hdr-user" onClick={logout}><b>{user.full_name?.split(' ')[0]}</b><span style={{fontSize:9}}>Déconnexion</span></div></div>
     <div className="page">
-      {view==='calendar'&&<CalendarView slots={slots} onBook={handleBook} myBookings={bookings}/>}
-      {view==='plans'&&<PlansView plans={plans} onSubscribe={()=>{fetchSubs();setView('bookings')}} toast={toast}/>}
-      {view==='bookings'&&<BookingsView bookings={bookings} subscriptions={subs} onCancel={()=>{fetchBookings();fetchSlots();fetchSubs()}} toast={toast}/>}
+      {view==='calendar'&&<CalendarView slots={slots} onBook={book} onCancel={cancel} myBookings={bookings}/>}
+      {view==='plans'&&<PlansView plans={plans} onSubscribe={()=>{fSubs();setView('bookings')}} toast={toast}/>}
+      {view==='bookings'&&<MyView bookings={bookings} subs={subs} onCancel={refresh} toast={toast}/>}
       {view==='admin'&&<AdminView user={user} toast={toast}/>}
     </div>
-
     <div className="bnav">
       <button className={view==='calendar'?'active':''} onClick={()=>setView('calendar')}><span className="icon">📅</span>Calendrier</button>
       <button className={view==='plans'?'active':''} onClick={()=>setView('plans')}><span className="icon">💎</span>Abonnements</button>
       <button className={view==='bookings'?'active':''} onClick={()=>setView('bookings')}><span className="icon">🎫</span>Mes séances</button>
-      <button className={view==='admin'?'active':''} onClick={()=>setView('admin')}><span className="icon">⚙️</span>Admin</button>
+      {user.role==='admin'&&<button className={view==='admin'?'active':''} onClick={()=>setView('admin')}><span className="icon">⚙️</span>Admin</button>}
     </div>
-
-    {toastData&&<Toast key={toastData.key} msg={toastData.msg} type={toastData.type} onDone={()=>setToastData(null)}/>}
+    {td&&<Toast key={td.key} msg={td.msg} type={td.type} onDone={()=>setTd(null)}/>}
   </div>);
 }
-
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 </body>
