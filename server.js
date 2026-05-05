@@ -173,15 +173,52 @@ app.post('/api/register', async (req, res) => {
 // POST /api/login
 app.post('/api/login', async (req, res) => {
   const { phone, pin } = req.body;
-  if (!phone || !pin) return res.status(400).json({ ok:false, error:'Téléphone et PIN requis.' });
+  if (!phone || !pin) return res.status(400).json({ ok:false, error:'Téléphone et mot de passe requis.' });
   try {
     const r = await pool.query('SELECT id,full_name,phone,pin_hash,role FROM users WHERE phone=$1', [phone.trim()]);
     if (!r.rows.length) return res.json({ ok:false, error:'Compte non trouvé.' });
     const user = r.rows[0];
     const valid = await bcrypt.compare(pin, user.pin_hash);
-    if (!valid) return res.json({ ok:false, error:'PIN incorrect.' });
+    if (!valid) return res.json({ ok:false, error:'Mot de passe incorrect.' });
     const token = jwt.sign({ id:user.id, phone:user.phone, role:user.role }, JWT_SECRET, { expiresIn:'30d' });
     res.json({ ok:true, token, user:{ id:user.id, full_name:user.full_name, phone:user.phone, role:user.role } });
+  } catch(e) { res.status(500).json({ ok:false, error:e.message }); }
+});
+
+// GET /api/me — user profile
+app.get('/api/me', auth, async (req, res) => {
+  try {
+    const r = await pool.query('SELECT id,full_name,phone,email,role,created_at FROM users WHERE id=$1', [req.user.id]);
+    if (!r.rows.length) return res.json({ ok:false, error:'Utilisateur non trouvé.' });
+    res.json({ ok:true, user:r.rows[0] });
+  } catch(e) { res.status(500).json({ ok:false, error:e.message }); }
+});
+
+// POST /api/change-password
+app.post('/api/change-password', auth, async (req, res) => {
+  const { current_password, new_password } = req.body;
+  if (!current_password || !new_password || new_password.length < 4) {
+    return res.status(400).json({ ok:false, error:'Mot de passe actuel et nouveau (4+ caractères) requis.' });
+  }
+  try {
+    const r = await pool.query('SELECT pin_hash FROM users WHERE id=$1', [req.user.id]);
+    if (!r.rows.length) return res.json({ ok:false, error:'Utilisateur non trouvé.' });
+    const valid = await bcrypt.compare(current_password, r.rows[0].pin_hash);
+    if (!valid) return res.json({ ok:false, error:'Mot de passe actuel incorrect.' });
+    const hash = await bcrypt.hash(new_password, 10);
+    await pool.query('UPDATE users SET pin_hash=$1 WHERE id=$2', [hash, req.user.id]);
+    res.json({ ok:true, message:'Mot de passe modifié avec succès.' });
+  } catch(e) { res.status(500).json({ ok:false, error:e.message }); }
+});
+
+// POST /api/update-profile
+app.post('/api/update-profile', auth, async (req, res) => {
+  const { full_name, email } = req.body;
+  try {
+    await pool.query('UPDATE users SET full_name=COALESCE($1,full_name), email=COALESCE($2,email) WHERE id=$3',
+      [full_name||null, email||null, req.user.id]);
+    const r = await pool.query('SELECT id,full_name,phone,email,role FROM users WHERE id=$1', [req.user.id]);
+    res.json({ ok:true, user:r.rows[0] });
   } catch(e) { res.status(500).json({ ok:false, error:e.message }); }
 });
 
