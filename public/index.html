@@ -197,7 +197,7 @@ function AuthScreen({onAuth}){
         <div className="input-group"><label>EMAIL (optionnel)</label><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="fatou@email.com"/></div></>}
 
         <div className="input-group"><label>TELEPHONE</label><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="77 123 45 67"/></div>
-        <div className="input-group"><label>CODE PIN (4 chiffres)</label><input type="password" inputMode="numeric" maxLength={6} value={pin} onChange={e=>setPin(e.target.value)} placeholder="****"/></div>
+        <div className="input-group"><label>MOT DE PASSE</label><input type="password" value={pin} onChange={e=>setPin(e.target.value)} placeholder="Votre mot de passe"/></div>
 
         {err&&<p style={{color:'var(--danger)',fontSize:13,marginBottom:12,textAlign:'center'}}>{err}</p>}
         <button className="btn btn-primary" onClick={submit} disabled={loading}>{loading?'Chargement...':mode==='login'?'Se connecter':'Créer mon compte'}</button>
