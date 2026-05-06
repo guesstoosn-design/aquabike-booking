@@ -17,24 +17,18 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}input,select{
 #root{height:100%;display:flex;flex-direction:column}
 .app{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .page{flex:1;overflow-y:auto;overflow-x:hidden;padding:14px 14px 90px;-webkit-overflow-scrolling:touch}.page::-webkit-scrollbar{display:none}
-
-/* ─ PAGE TRANSITIONS ─ */
-.page-enter{animation:pageIn .35s ease both}
-@keyframes pageIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-
+.page-enter{animation:pageIn .3s ease both}
+@keyframes pageIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .hdr{padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--glass);backdrop-filter:blur(16px);position:sticky;top:0;z-index:20}
 .hdr-logo{display:flex;align-items:center;gap:8px}
 .hdr-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Outfit';font-weight:800;font-size:15px;color:#000}
 .hdr h1{font-size:13px;font-weight:700}.hdr p{font-size:9px;color:var(--muted)}
-.bnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--glass);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:2px 4px;padding-bottom:max(2px,env(safe-area-inset-bottom));z-index:20}
-.bnav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 0;background:none;color:var(--dim);font-size:9px;font-weight:600;border-radius:8px;transition:color .2s}
-.bnav button.active{color:var(--accent)}
-.bnav .icon{font-size:17px;line-height:1;transition:transform .2s}
-.bnav button.active .icon{transform:scale(1.15)}
+.bnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--glass);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:2px 2px;padding-bottom:max(2px,env(safe-area-inset-bottom));z-index:20}
+.bnav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 0;background:none;color:var(--dim);font-size:8px;font-weight:600;border-radius:8px;transition:color .2s}
+.bnav button.active{color:var(--accent)}.bnav .icon{font-size:17px;line-height:1;transition:transform .2s}.bnav button.active .icon{transform:scale(1.15)}
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}
 .btn{display:block;width:100%;padding:13px;border-radius:12px;font-size:14px;font-weight:700;text-align:center;transition:all .12s}
-.btn-primary{background:linear-gradient(135deg,var(--accent),#00B89C);color:#000;box-shadow:0 4px 16px rgba(0,212,170,.2)}
-.btn-primary:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#00B89C);color:#000;box-shadow:0 4px 16px rgba(0,212,170,.2)}.btn-primary:active{transform:scale(.97)}
 .btn-danger{background:var(--dangerDim);color:var(--danger);border:1px solid rgba(255,87,87,.2)}
 .btn-outline{background:transparent;color:var(--accent);border:1px solid rgba(0,212,170,.25)}
 .btn-wave{background:linear-gradient(135deg,#1DC3F5,#1BA0D8);color:#fff}
@@ -42,10 +36,8 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}input,select{
 .btn-sm{padding:8px 14px;font-size:12px;width:auto;display:inline-block;border-radius:8px}
 .btn-validate{background:var(--accentDim);color:var(--accent);border:1px solid rgba(0,212,170,.25);padding:10px 18px;font-size:13px;font-weight:700;border-radius:10px;cursor:pointer;width:100%}
 .btn:disabled{opacity:.4;pointer-events:none}
-.input-group{margin-bottom:12px}
-.input-group label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:4px;letter-spacing:.5px}
-.input-group input,.input-group select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:14px}
-.input-group input:focus{border-color:var(--accent)}
+.input-group{margin-bottom:12px}.input-group label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:4px;letter-spacing:.5px}
+.input-group input,.input-group select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:14px}.input-group input:focus{border-color:var(--accent)}
 .act-tabs{display:flex;gap:5px;margin-bottom:10px;overflow-x:auto;padding-bottom:2px}.act-tabs::-webkit-scrollbar{display:none}
 .act-tab{padding:7px 12px;border-radius:18px;font-size:11px;font-weight:600;white-space:nowrap;background:var(--bg3);color:var(--muted);border:1px solid var(--border);flex-shrink:0;touch-action:manipulation;transition:all .2s}
 .act-tab.active{background:var(--accentDim);color:var(--accent);border-color:rgba(0,212,170,.3)}
@@ -55,25 +47,16 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}input,select{
 .cal-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}.cal-wrap::-webkit-scrollbar{display:none}
 .cal{display:grid;gap:3px}
 .day-head{text-align:center;padding:4px 0;border-radius:6px}.day-head.today{background:rgba(0,180,216,.1)}
-.day-head .dow{font-size:9px;font-weight:600;color:var(--muted);letter-spacing:1px}
-.day-head .dn{font-size:16px;font-weight:800;font-family:'Outfit'}.day-head.today .dn{color:var(--accent2)}
+.day-head .dow{font-size:9px;font-weight:600;color:var(--muted);letter-spacing:1px}.day-head .dn{font-size:16px;font-weight:800;font-family:'Outfit'}.day-head.today .dn{color:var(--accent2)}
 .slot-hour{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--dim);font-family:'Outfit'}
-
-/* ─ SLOT WITH + BUTTON ─ */
-.slot{border-radius:10px;padding:6px 2px;text-align:center;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1.5px solid transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;position:relative;transition:all .15s}
+.slot{border-radius:10px;padding:6px 2px;text-align:center;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1.5px solid transparent;touch-action:manipulation;user-select:none;position:relative;transition:all .15s}
 .slot .cnt{font-size:15px;font-weight:800;font-family:'Outfit'}.slot .lbl{font-size:8px;font-weight:600;opacity:.8;margin-top:1px}
 .slot .plus-btn{position:absolute;bottom:-1px;right:-1px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;transition:transform .15s}
-.slot .plus-btn:active{transform:scale(.85)}
-.slot.avail{background:rgba(0,212,170,.06);color:var(--accent);border-color:rgba(0,212,170,.12)}
-.slot.avail .plus-btn{background:var(--accent);color:#000}
-.slot.limited{background:var(--warnDim);color:var(--warn);border-color:rgba(255,184,48,.12)}
-.slot.limited .plus-btn{background:var(--warn);color:#000}
-.slot.full{background:var(--dangerDim);color:var(--danger);border-color:rgba(255,87,87,.08)}
-.slot.full .plus-btn{background:var(--danger);color:#fff;font-size:10px}
-.slot.mine{background:var(--accentDim);color:var(--accent);border-color:var(--accent)}
-.slot.mine .plus-btn{background:var(--accent);color:#000;font-size:11px}
+.slot.avail{background:rgba(0,212,170,.06);color:var(--accent);border-color:rgba(0,212,170,.12)}.slot.avail .plus-btn{background:var(--accent);color:#000}
+.slot.limited{background:var(--warnDim);color:var(--warn);border-color:rgba(255,184,48,.12)}.slot.limited .plus-btn{background:var(--warn);color:#000}
+.slot.full{background:var(--dangerDim);color:var(--danger);border-color:rgba(255,87,87,.08)}.slot.full .plus-btn{background:var(--danger);color:#fff;font-size:10px}
+.slot.mine{background:var(--accentDim);color:var(--accent);border-color:var(--accent)}.slot.mine .plus-btn{background:var(--accent);color:#000;font-size:11px}
 .slot.past{background:rgba(10,22,40,.5);color:var(--dim);opacity:.3}
-
 .modal-bg{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center}
 .modal{background:var(--bg2);border-top-left-radius:22px;border-top-right-radius:22px;padding:20px 18px 32px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;border:1px solid var(--border);border-bottom:none;animation:slideUp .3s cubic-bezier(.22,1,.36,1)}
 @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
@@ -81,8 +64,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}input,select{
 .cap-bar{height:6px;border-radius:3px;background:var(--bg);overflow:hidden;margin:6px 0 14px}.cap-fill{height:100%;border-radius:3px;transition:width .4s ease}
 .plan{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:14px;margin-bottom:8px;touch-action:manipulation;transition:all .2s}
 .plan.selected{border-color:var(--accent);background:rgba(0,212,170,.04);transform:scale(.98)}
-.plan-price{font-size:20px;font-weight:800;font-family:'Outfit';color:var(--accent)}.plan-name{font-size:14px;font-weight:700;margin-top:3px}
-.plan-desc{font-size:11px;color:var(--muted);margin-top:2px}
+.plan-price{font-size:20px;font-weight:800;font-family:'Outfit';color:var(--accent)}.plan-name{font-size:14px;font-weight:700;margin-top:3px}.plan-desc{font-size:11px;color:var(--muted);margin-top:2px}
 .plan-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-top:4px}
 .brow{display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;background:var(--card);border:1px solid var(--border);margin-bottom:6px;animation:rowIn .3s ease both}
 @keyframes rowIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
@@ -101,16 +83,40 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}input,select{
 .pending-card{padding:14px;border-radius:12px;background:var(--card);border:1px solid var(--warn);margin-bottom:8px;animation:pulseWarn 2s infinite}
 @keyframes pulseWarn{0%,100%{border-color:rgba(255,184,48,.4)}50%{border-color:rgba(255,184,48,.8)}}
 .section-title{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.5px;margin:16px 0 8px}
-.part-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;animation:rowIn .3s ease both}
-.part-row:last-child{border:none}
+.part-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;animation:rowIn .3s ease both}.part-row:last-child{border:none}
 .part-avatar{width:28px;height:28px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--accent);margin-right:8px;flex-shrink:0}
 .toast{position:fixed;top:14px;left:14px;right:14px;z-index:100;padding:12px 14px;border-radius:12px;font-size:13px;font-weight:600;text-align:center;animation:toastIn .35s cubic-bezier(.22,1,.36,1);box-shadow:0 8px 24px rgba(0,0,0,.4)}
-.toast-ok{background:rgba(0,212,170,.15);color:var(--accent);border:1px solid rgba(0,212,170,.3)}
-.toast-err{background:var(--dangerDim);color:var(--danger);border:1px solid rgba(255,87,87,.3)}
+.toast-ok{background:rgba(0,212,170,.15);color:var(--accent);border:1px solid rgba(0,212,170,.3)}.toast-err{background:var(--dangerDim);color:var(--danger);border:1px solid rgba(255,87,87,.3)}
 @keyframes toastIn{from{opacity:0;transform:translateY(-16px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
 .empty{text-align:center;padding:32px 16px;color:var(--dim)}.empty .em{font-size:36px;margin-bottom:8px}
 .profile-avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;font-family:'Outfit';color:#000;margin:0 auto 12px}
 .profile-info{text-align:center;margin-bottom:16px}.profile-info h2{font-size:18px}.profile-info p{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* ─ DATE PICKER SCROLL ─ */
+.date-scroll{display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px;-webkit-overflow-scrolling:touch}.date-scroll::-webkit-scrollbar{display:none}
+.date-pill{flex-shrink:0;width:56px;padding:8px 0;border-radius:12px;text-align:center;background:var(--bg3);border:1.5px solid var(--border);touch-action:manipulation;transition:all .2s}
+.date-pill.active{background:var(--accentDim);border-color:var(--accent)}
+.date-pill.past{opacity:.3;pointer-events:none}
+.date-pill .dp-day{font-size:9px;font-weight:600;color:var(--muted);letter-spacing:.5px}
+.date-pill .dp-num{font-size:20px;font-weight:800;font-family:'Outfit';color:var(--text)}
+.date-pill.active .dp-num{color:var(--accent)}
+.date-pill .dp-month{font-size:8px;color:var(--dim)}
+
+/* ─ SLOT ROW (for reservation view) ─ */
+.slot-row{display:flex;align-items:center;justify-content:space-between;padding:14px;border-radius:14px;background:var(--card);border:1px solid var(--border);margin-bottom:6px;animation:rowIn .3s ease both;touch-action:manipulation}
+.slot-row .sr-time{font-size:20px;font-weight:800;font-family:'Outfit';color:var(--text);width:60px}
+.slot-row .sr-info{flex:1;margin-left:10px}
+.slot-row .sr-places{font-size:12px;font-weight:600}
+.slot-row .sr-bar{height:4px;border-radius:2px;background:var(--bg);margin-top:4px;overflow:hidden;width:100px}
+.slot-row .sr-bar-fill{height:100%;border-radius:2px;transition:width .3s}
+.slot-row .sr-btn{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;transition:transform .12s;flex-shrink:0}
+.slot-row .sr-btn:active{transform:scale(.85)}
+.slot-row.sr-avail .sr-places{color:var(--accent)}.slot-row.sr-avail .sr-btn{background:var(--accent);color:#000}
+.slot-row.sr-limited .sr-places{color:var(--warn)}.slot-row.sr-limited .sr-btn{background:var(--warn);color:#000}
+.slot-row.sr-full .sr-places{color:var(--danger)}.slot-row.sr-full .sr-btn{background:var(--dangerDim);color:var(--danger);font-size:14px}
+.slot-row.sr-mine .sr-places{color:var(--accent)}.slot-row.sr-mine .sr-btn{background:var(--accentDim);color:var(--accent);font-size:16px}
+.slot-row.sr-past{opacity:.3;pointer-events:none}
+
 @media(min-width:600px){.page{max-width:480px;margin:0 auto}.bnav{max-width:480px;margin:0 auto;border-radius:14px 14px 0 0}}
 </style>
 </head>
@@ -121,73 +127,118 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}input,select{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.2/babel.min.js"></script>
 <script type="text/babel">
 const{useState,useEffect,useCallback,useMemo,useRef}=React;
-const DAYS=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],MF=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const DAYS=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],DAYSF=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],MF=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 const fmtD=d=>`${DAYS[d.getDay()]} ${d.getDate()} ${MF[d.getMonth()].slice(0,3)}`,fmtP=n=>n.toLocaleString('fr-FR')+'F',fmtDate=s=>fmtD(new Date(s+'T00:00:00'));
 const api={token:null,async get(u){return(await fetch(u,{headers:this.token?{Authorization:'Bearer '+this.token}:{}})).json()},async post(u,b){return(await fetch(u,{method:'POST',headers:{'Content-Type':'application/json',...(this.token?{Authorization:'Bearer '+this.token}:{})},body:JSON.stringify(b)})).json()}};
 function getWD(off){const n=new Date();n.setDate(n.getDate()+off*7);const d=n.getDay(),m=new Date(n);m.setDate(n.getDate()-(d===0?6:d-1));const a=[];for(let i=0;i<7;i++){const x=new Date(m);x.setDate(m.getDate()+i);a.push(x)}return a}
 function Toast({msg,type,onDone}){useEffect(()=>{const t=setTimeout(onDone,3000);return()=>clearTimeout(t)},[]);return<div className={`toast toast-${type==='success'?'ok':'err'}`}>{msg}</div>}
-function PageWrap({k,children}){return<div className="page-enter" key={k}>{children}</div>}
+function PW({k,children}){return<div className="page-enter" key={k}>{children}</div>}
 
-function AuthScreen({onAuth}){
-  const[mode,setMode]=useState('login'),[phone,setPhone]=useState(''),[pin,setPin]=useState(''),[name,setName]=useState(''),[email,setEmail]=useState('');
-  const[err,setErr]=useState(''),[ld,setLd]=useState(false);
-  const go=async()=>{setErr('');setLd(true);const r=mode==='login'?await api.post('/api/login',{phone,pin}):await api.post('/api/register',{full_name:name,phone,pin,email});setLd(false);
-    if(r.ok){api.token=r.token;localStorage.setItem('aq_token',r.token);localStorage.setItem('aq_user',JSON.stringify(r.user));onAuth(r.user)}else setErr(r.error||'Erreur')};
+function AuthScreen({onAuth}){const[mode,setMode]=useState('login'),[phone,setPhone]=useState(''),[pin,setPin]=useState(''),[name,setName]=useState(''),[email,setEmail]=useState(''),[err,setErr]=useState(''),[ld,setLd]=useState(false);
+  const go=async()=>{setErr('');setLd(true);const r=mode==='login'?await api.post('/api/login',{phone,pin}):await api.post('/api/register',{full_name:name,phone,pin,email});setLd(false);if(r.ok){api.token=r.token;localStorage.setItem('aq_token',r.token);localStorage.setItem('aq_user',JSON.stringify(r.user));onAuth(r.user)}else setErr(r.error||'Erreur')};
   return(<div style={{minHeight:'100vh',display:'flex',flexDirection:'column',justifyContent:'center',padding:'36px 18px',background:'linear-gradient(160deg,#050B18,#0A1628 40%,#0D2137)'}}>
-    <div style={{textAlign:'center',marginBottom:24}}>
-      <div style={{width:50,height:50,borderRadius:14,background:'linear-gradient(135deg,#00D4AA,#00B4D8)',display:'inline-flex',alignItems:'center',justifyContent:'center',fontSize:22,fontWeight:800,color:'#000',fontFamily:'Outfit',marginBottom:8}}>A</div>
+    <div style={{textAlign:'center',marginBottom:24}}><div style={{width:50,height:50,borderRadius:14,background:'linear-gradient(135deg,#00D4AA,#00B4D8)',display:'inline-flex',alignItems:'center',justifyContent:'center',fontSize:22,fontWeight:800,color:'#000',fontFamily:'Outfit',marginBottom:8}}>A</div>
       <h1 style={{fontSize:20}}>Aquabike Evolution</h1><p style={{color:'var(--muted)',fontSize:12,marginTop:2}}>Dakar — Réservation en ligne</p></div>
     <div className="card"><div style={{display:'flex',gap:4,marginBottom:12}}>
       <button onPointerUp={()=>setMode('login')} className={`btn-sm ${mode==='login'?'btn-primary':'btn-outline'}`} style={{flex:1}}>Connexion</button>
       <button onPointerUp={()=>setMode('register')} className={`btn-sm ${mode==='register'?'btn-primary':'btn-outline'}`} style={{flex:1}}>Inscription</button></div>
-      {mode==='register'&&<><div className="input-group"><label>NOM COMPLET</label><input value={name} onChange={e=>setName(e.target.value)} placeholder="Fatou Diallo"/></div>
-      <div className="input-group"><label>EMAIL (optionnel)</label><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="fatou@email.com"/></div></>}
+      {mode==='register'&&<><div className="input-group"><label>NOM COMPLET</label><input value={name} onChange={e=>setName(e.target.value)} placeholder="Fatou Diallo"/></div><div className="input-group"><label>EMAIL (optionnel)</label><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="fatou@email.com"/></div></>}
       <div className="input-group"><label>TÉLÉPHONE</label><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="77 123 45 67"/></div>
       <div className="input-group"><label>MOT DE PASSE</label><input type="password" value={pin} onChange={e=>setPin(e.target.value)} placeholder="Votre mot de passe" onKeyDown={e=>e.key==='Enter'&&go()}/></div>
       {err&&<p style={{color:'var(--danger)',fontSize:12,marginBottom:8,textAlign:'center'}}>{err}</p>}
       <button className="btn btn-primary" onPointerUp={go} disabled={ld}>{ld?'Chargement...':mode==='login'?'Se connecter':'Créer mon compte'}</button></div></div>);
 }
 
-function SlotModal({slot,myBookings,onClose,onBook,onCancel,isAdmin}){
-  const[ld,setLd]=useState(false),[parts,setParts]=useState(null);
+function SlotModal({slot,myBookings,onClose,onBook,onCancel,isAdmin}){const[ld,setLd]=useState(false),[parts,setParts]=useState(null);
   const rem=parseInt(slot.remaining),bk=parseInt(slot.booked||0),d=new Date(slot.date_slot+'T00:00:00');
   const myB=(myBookings||[]).find(b=>b.status===1&&b.date_slot===slot.date_slot&&String(b.hour_start)===String(slot.hour_start)&&b.activity===slot.activity);
   useEffect(()=>{api.get('/api/slot/'+slot.id+'/participants').then(r=>{if(r.ok)setParts(r.participants)}).catch(()=>{})},[slot.id]);
   const st=new Date(slot.date_slot+'T'+String(slot.hour_start).padStart(2,'0')+':00:00'),isPast=st<new Date(),canC=myB&&!isPast&&(st-new Date())>=7200000;
-  const confirmed=parts?parts.filter(p=>p.status===1):[];
+  const conf=parts?parts.filter(p=>p.status===1):[];
   return(<div className="modal-bg" onPointerUp={e=>{if(e.target===e.currentTarget)onClose()}}><div className="modal">
     <div className="modal-handle"/>
-    <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:12}}>
-      <div style={{width:44,height:44,borderRadius:12,background:'linear-gradient(135deg,var(--accent),var(--accent2))',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}}>🏊</div>
-      <div><p style={{fontSize:10,fontWeight:600,color:'var(--muted)',letterSpacing:1}}>{slot.activity?.toUpperCase()}</p>
-      <h2 style={{fontSize:17,fontFamily:'Outfit'}}>{fmtD(d)} — {slot.hour_start}h00</h2></div>
-    </div>
-    <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'var(--muted)',marginBottom:4}}>
-      <span>Places</span><span style={{fontWeight:700,color:rem<=0?'var(--danger)':rem<=3?'var(--warn)':'var(--accent)'}}>{rem} / {slot.max_capacity} disponibles</span></div>
+    <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:12}}><div style={{width:44,height:44,borderRadius:12,background:'linear-gradient(135deg,var(--accent),var(--accent2))',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}}>🏊</div>
+      <div><p style={{fontSize:10,fontWeight:600,color:'var(--muted)',letterSpacing:1}}>{slot.activity?.toUpperCase()}</p><h2 style={{fontSize:17,fontFamily:'Outfit'}}>{fmtD(d)} — {slot.hour_start}h00</h2></div></div>
+    <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'var(--muted)',marginBottom:4}}><span>Places</span><span style={{fontWeight:700,color:rem<=0?'var(--danger)':rem<=3?'var(--warn)':'var(--accent)'}}>{rem} / {slot.max_capacity}</span></div>
     <div className="cap-bar"><div className="cap-fill" style={{width:`${(bk/slot.max_capacity)*100}%`,background:rem<=2?'var(--danger)':rem<=4?'var(--warn)':'var(--accent)'}}/></div>
-
-    {confirmed.length>0&&<div style={{marginBottom:14}}>
-      <p style={{fontSize:11,fontWeight:600,color:'var(--muted)',marginBottom:6}}>PARTICIPANTS ({confirmed.length}/{slot.max_capacity})</p>
-      {confirmed.map((p,i)=><div key={p.id} className="part-row" style={{animationDelay:i*50+'ms'}}>
-        <div style={{display:'flex',alignItems:'center'}}><div className="part-avatar">{p.full_name[0]}</div><div><b style={{fontSize:13}}>{p.full_name}</b>{isAdmin&&<span style={{fontSize:11,color:'var(--dim)',marginLeft:6}}>{p.phone}</span>}</div></div>
-        {isAdmin&&<span className="brow-code">{p.booking_code}</span>}
-      </div>)}</div>}
-
+    {conf.length>0&&<div style={{marginBottom:14}}><p style={{fontSize:11,fontWeight:600,color:'var(--muted)',marginBottom:6}}>PARTICIPANTS ({conf.length}/{slot.max_capacity})</p>
+      {conf.map((p,i)=><div key={p.id} className="part-row" style={{animationDelay:i*50+'ms'}}><div style={{display:'flex',alignItems:'center'}}><div className="part-avatar">{p.full_name[0]}</div><div><b style={{fontSize:13}}>{p.full_name}</b>{isAdmin&&<span style={{fontSize:11,color:'var(--dim)',marginLeft:6}}>{p.phone}</span>}</div></div>{isAdmin&&<span className="brow-code">{p.booking_code}</span>}</div>)}</div>}
     {isPast?<div className="btn" style={{background:'var(--bg3)',color:'var(--dim)'}}>Créneau passé</div>
-    :myB?<><div style={{background:'var(--accentDim)',border:'1px solid rgba(0,212,170,.2)',borderRadius:12,padding:12,textAlign:'center',marginBottom:10}}>
-      <span style={{color:'var(--accent)',fontWeight:700,fontSize:14}}>✓ Vous êtes inscrit(e)</span><br/><span style={{fontSize:12,color:'var(--muted)'}}>Code : <b>{myB.booking_code}</b></span></div>
-      {canC?<button className="btn btn-danger" onPointerUp={async()=>{if(confirm('Annuler cette réservation ?')){setLd(true);await onCancel(myB.id);setLd(false)}}} disabled={ld}>{ld?'...':'✕ Annuler ma réservation'}</button>
-      :<p style={{textAlign:'center',fontSize:12,color:'var(--dim)'}}>🔒 Annulation impossible (moins de 2h)</p>}</>
-    :rem<=0?<div className="btn" style={{background:'var(--dangerDim)',color:'var(--danger)',fontSize:13}}>Créneau complet — 0 place restante</div>
+    :myB?<><div style={{background:'var(--accentDim)',border:'1px solid rgba(0,212,170,.2)',borderRadius:12,padding:12,textAlign:'center',marginBottom:10}}><span style={{color:'var(--accent)',fontWeight:700,fontSize:14}}>✓ Vous êtes inscrit(e)</span><br/><span style={{fontSize:12,color:'var(--muted)'}}>Code : <b>{myB.booking_code}</b></span></div>
+      {canC?<button className="btn btn-danger" onPointerUp={async()=>{if(confirm('Annuler ?')){setLd(true);await onCancel(myB.id);setLd(false)}}} disabled={ld}>{ld?'...':'✕ Annuler ma réservation'}</button>:<p style={{textAlign:'center',fontSize:12,color:'var(--dim)'}}>🔒 Annulation impossible (&lt;2h)</p>}</>
+    :rem<=0?<div className="btn" style={{background:'var(--dangerDim)',color:'var(--danger)',fontSize:13}}>Créneau complet</div>
     :<button className="btn btn-primary" onPointerUp={async()=>{setLd(true);await onBook(slot.id);setLd(false)}} disabled={ld} style={{fontSize:15}}>{ld?'...':'+ Réserver cette séance'}</button>}
-    <p style={{fontSize:10,color:'var(--dim)',textAlign:'center',marginTop:10}}>⏱ Annulation possible jusqu'à 2h avant le début</p>
+    <p style={{fontSize:10,color:'var(--dim)',textAlign:'center',marginTop:10}}>⏱ Annulation possible jusqu'à 2h avant</p>
   </div></div>);
 }
 
+/* ─── RESERVATION VIEW (NEW) ─────────────────── */
+function ReservationView({slots,myBookings,onBook,onCancel,toast,isAdmin}){
+  const[act,setAct]=useState('Aquabike');
+  const[selDate,setSelDate]=useState(new Date().toISOString().split('T')[0]);
+  const[modal,setModal]=useState(null);
+  const scrollRef=useRef(null);
+  const now=new Date();
+
+  // Generate next 21 days
+  const dates=useMemo(()=>{const a=[];for(let i=0;i<21;i++){const d=new Date();d.setDate(d.getDate()+i);a.push(d)}return a},[]);
+
+  const isRN=act==='Rééducation'||act==='Natation';
+
+  // Filter slots for selected date + activity
+  const daySlots=useMemo(()=>{
+    return(slots||[]).filter(s=>s.date_slot===selDate&&s.activity===act).sort((a,b)=>a.hour_start-b.hour_start);
+  },[slots,selDate,act]);
+
+  const myMap=useMemo(()=>{const m={};(myBookings||[]).filter(b=>b.status===1).forEach(b=>{m[b.date_slot+'_'+b.hour_start+'_'+b.activity]=b});return m},[myBookings]);
+
+  const doBook=async id=>{const ok=await onBook(id);if(ok&&modal)setModal(null);return ok};
+  const doCancel=async id=>{const ok=await onCancel(id);if(ok&&modal)setModal(null);return ok};
+
+  const selDateObj=new Date(selDate+'T00:00:00');
+
+  return(<div>
+    <h2 style={{fontSize:18,marginBottom:2}}>Réserver une séance</h2>
+    <p style={{fontSize:12,color:'var(--muted)',marginBottom:12}}>Choisissez l'activité, la date et l'heure</p>
+
+    <div className="act-tabs">{['Aquabike','Aquagym','Rééducation','Natation'].map(a=><button key={a} className={'act-tab'+(act===a?' active':'')} onPointerUp={()=>setAct(a)}>{a==='Rééducation'?'Rééduc.':a}</button>)}</div>
+
+    <p className="section-title">📅 CHOISIR UNE DATE</p>
+    <div className="date-scroll" ref={scrollRef}>
+      {dates.map((d,i)=>{const iso=d.toISOString().split('T')[0];const isToday=i===0;
+        return<div key={iso} className={'date-pill'+(selDate===iso?' active':'')} onPointerUp={()=>setSelDate(iso)}>
+          <div className="dp-day">{isToday?'AUJ.':DAYS[d.getDay()]}</div>
+          <div className="dp-num">{d.getDate()}</div>
+          <div className="dp-month">{MF[d.getMonth()].slice(0,3)}</div>
+        </div>})}
+    </div>
+
+    <p className="section-title" style={{marginTop:8}}>🕐 {DAYSF[selDateObj.getDay()].toUpperCase()} {selDateObj.getDate()} {MF[selDateObj.getMonth()].toUpperCase()} — CRÉNEAUX</p>
+
+    {daySlots.length===0?<div className="empty" style={{padding:20}}><div className="em">😔</div>Aucun créneau disponible<br/><span style={{fontSize:11}}>Essayez une autre date ou activité</span></div>
+    :daySlots.map((s,i)=>{
+      const rem=parseInt(s.remaining),isMine=!!myMap[s.date_slot+'_'+s.hour_start+'_'+act];
+      const st=new Date(s.date_slot+'T'+String(s.hour_start).padStart(2,'0')+':00:00'),isPast=st<now;
+      let cls='slot-row ';if(isPast)cls+='sr-past';else if(isMine)cls+='sr-mine';else if(rem<=0)cls+='sr-full';else if(rem<=3)cls+='sr-limited';else cls+='sr-avail';
+      const myB=isMine?myMap[s.date_slot+'_'+s.hour_start+'_'+act]:null;
+
+      return<div key={s.id} className={cls} style={{animationDelay:i*50+'ms'}} onPointerUp={()=>{if(!isPast)setModal(s)}}>
+        <div className="sr-time">{s.hour_start}h</div>
+        <div className="sr-info">
+          <div className="sr-places">{isMine?'✓ Réservé':rem<=0?'Complet':rem+' place'+(rem>1?'s':'')}</div>
+          <div className="sr-bar"><div className="sr-bar-fill" style={{width:`${(parseInt(s.booked||0)/s.max_capacity)*100}%`,background:rem<=2?'var(--danger)':rem<=4?'var(--warn)':'var(--accent)'}}/></div>
+        </div>
+        <div className="sr-btn">{isPast?'—':isMine?'✓':rem<=0?'✕':'+'}</div>
+      </div>})}
+
+    {modal&&<SlotModal slot={(slots||[]).find(s=>s.id===modal.id)||modal} myBookings={myBookings} isAdmin={isAdmin} onClose={()=>setModal(null)} onBook={doBook} onCancel={doCancel}/>}
+  </div>);
+}
+
+/* ─── CALENDAR ─────────────────────────────────── */
 function CalendarView({slots,onBook,onCancel,myBookings,isAdmin}){
   const[wo,setWo]=useState(0),[act,setAct]=useState('Aquabike'),[modal,setModal]=useState(null);
-  const days=useMemo(()=>getWD(wo),[wo]);const td=new Date().toISOString().split('T')[0];
-  const isRN=act==='Rééducation'||act==='Natation';
+  const days=useMemo(()=>getWD(wo),[wo]);const td=new Date().toISOString().split('T')[0];const isRN=act==='Rééducation'||act==='Natation';
   const hours=useMemo(()=>isRN?[13,14,15,16]:[8,9,10,11,12,17,18,19],[isRN]);
   const sm=useMemo(()=>{const m={};(slots||[]).filter(s=>s.activity===act).forEach(s=>{m[s.date_slot+'_'+s.hour_start]=s});return m},[slots,act]);
   const myMap=useMemo(()=>{const m={};(myBookings||[]).filter(b=>b.status===1).forEach(b=>{m[b.date_slot+'_'+b.hour_start+'_'+b.activity]=b});return m},[myBookings]);
@@ -197,161 +248,108 @@ function CalendarView({slots,onBook,onCancel,myBookings,isAdmin}){
     <div className="cal-wrap"><div className="cal" style={{gridTemplateColumns:'42px repeat(7,1fr)',minWidth:isRN?360:500}}>
       <div/>{days.map((d,i)=>{const iso=d.toISOString().split('T')[0];return<div key={i} className={'day-head'+(iso===td?' today':'')}><div className="dow">{DAYS[d.getDay()]}</div><div className="dn">{d.getDate()}</div></div>})}
       {hours.map(h=><React.Fragment key={h}><div className="slot-hour">{String(h).padStart(2,'0')}h</div>
-        {days.map((d,i)=>{const ds=d.toISOString().split('T')[0],dow=d.getDay(),isWE=dow===0||dow===6;
-          let valid=true;if(!isRN){if(isWE&&(h<10||h>12))valid=false;if(!isWE&&h>=13&&h<17)valid=false}
+        {days.map((d,i)=>{const ds=d.toISOString().split('T')[0],dow=d.getDay(),isWE=dow===0||dow===6;let valid=true;if(!isRN){if(isWE&&(h<10||h>12))valid=false;if(!isWE&&h>=13&&h<17)valid=false}
           const k=ds+'_'+h,s=sm[k],now=new Date(),st=new Date(ds+'T'+String(h).padStart(2,'0')+':00:00'),isPast=st<now;
           if(!valid||!s)return<div key={k} className="slot past"><span className="cnt" style={{fontSize:10}}>—</span></div>;
           const rem=parseInt(s.remaining),isMine=!!myMap[ds+'_'+h+'_'+act];
           let cls='slot ';if(isPast)cls+='past';else if(isMine)cls+='mine';else if(rem<=0)cls+='full';else if(rem<=3)cls+='limited';else cls+='avail';
-          const plusIcon=isPast?null:isMine?'✓':rem<=0?'•':'+';
-          return<div key={k} className={cls} onPointerUp={()=>{if(!isPast)setModal({...s})}}>
-            <span className="cnt">{isPast?'—':rem}</span>
-            <span className="lbl">{isPast?'':isMine?'Réservé':rem<=0?'Complet':rem<=3?'Vite !':''}</span>
-            {!isPast&&<span className="plus-btn">{plusIcon}</span>}
-          </div>})}</React.Fragment>)}
+          return<div key={k} className={cls} onPointerUp={()=>{if(!isPast)setModal({...s})}}><span className="cnt">{isPast?'—':rem}</span><span className="lbl">{isPast?'':isMine?'Réservé':rem<=0?'Complet':rem<=3?rem+' pl.':''}</span>{!isPast&&<span className="plus-btn">{isMine?'✓':rem<=0?'•':'+'}</span>}</div>})}</React.Fragment>)}
     </div></div>
     {modal&&<SlotModal slot={sm[modal.date_slot+'_'+modal.hour_start]||modal} myBookings={myBookings} isAdmin={isAdmin} onClose={()=>setModal(null)}
-      onBook={async id=>{const ok=await onBook(id);if(ok)setModal(null);return ok}}
-      onCancel={async id=>{const ok=await onCancel(id);if(ok)setModal(null);return ok}}/>}
+      onBook={async id=>{const ok=await onBook(id);if(ok)setModal(null);return ok}} onCancel={async id=>{const ok=await onCancel(id);if(ok)setModal(null);return ok}}/>}
   </div>);
 }
 
-function PlansView({plans,onSubscribe,toast}){
-  const[sel,setSel]=useState(null),[pm,setPm]=useState(false),[ld,setLd]=useState(false);
-  const sub=async m=>{if(!sel)return;setLd(true);const r=await api.post('/api/subscribe',{plan_id:sel.id,payment_method:m});setLd(false);
-    if(r.ok){if(r.payment_url)window.open(r.payment_url,'_blank');toast(m==='cash'?'Demande envoyée ! En attente de validation.':'Abonnement activé !','success');setPm(false);setSel(null);onSubscribe()}else toast(r.error||'Erreur','error')};
-  return(<div><h2 style={{fontSize:17,marginBottom:3}}>Nos abonnements</h2><p style={{fontSize:11,color:'var(--muted)',marginBottom:12}}>Choisissez votre formule et payez</p>
+function PlansView({plans,onSubscribe,toast}){const[sel,setSel]=useState(null),[pm,setPm]=useState(false),[ld,setLd]=useState(false);
+  const sub=async m=>{if(!sel)return;setLd(true);const r=await api.post('/api/subscribe',{plan_id:sel.id,payment_method:m});setLd(false);if(r.ok){if(r.payment_url)window.open(r.payment_url,'_blank');toast(m==='cash'?'Demande envoyée !':'Abonnement activé !','success');setPm(false);setSel(null);onSubscribe()}else toast(r.error||'Erreur','error')};
+  return(<div><h2 style={{fontSize:17,marginBottom:3}}>Nos abonnements</h2><p style={{fontSize:11,color:'var(--muted)',marginBottom:12}}>Choisissez votre formule</p>
     {plans.map((p,i)=><div key={p.id} className={'plan'+(sel?.id===p.id?' selected':'')} onPointerUp={()=>{setSel(p);setPm(true)}} style={{animationDelay:i*60+'ms'}}>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}><div><div className="plan-name">{p.name}</div><div className="plan-desc">{p.desc}</div></div><div className="plan-price">{fmtP(p.price)}</div></div>
       <span className="plan-badge" style={{background:p.limit_type==='weekly'?'rgba(0,180,216,.1)':'var(--warnDim)',color:p.limit_type==='weekly'?'var(--accent2)':'var(--warn)'}}>{p.limit_type==='weekly'?p.limit_value+'x/sem':p.limit_value+' séances'} · {p.duration_days}j</span></div>)}
-    {pm&&sel&&<div className="modal-bg" onPointerUp={e=>{if(e.target===e.currentTarget)setPm(false)}}><div className="modal">
-      <div className="modal-handle"/><h2 style={{fontSize:17,fontFamily:'Outfit',marginBottom:3}}>{sel.name}</h2><p style={{color:'var(--muted)',fontSize:12,marginBottom:3}}>{sel.desc}</p><p className="plan-price" style={{marginBottom:14}}>{fmtP(sel.price)}</p>
+    {pm&&sel&&<div className="modal-bg" onPointerUp={e=>{if(e.target===e.currentTarget)setPm(false)}}><div className="modal"><div className="modal-handle"/><h2 style={{fontSize:17,fontFamily:'Outfit',marginBottom:3}}>{sel.name}</h2><p style={{color:'var(--muted)',fontSize:12,marginBottom:3}}>{sel.desc}</p><p className="plan-price" style={{marginBottom:14}}>{fmtP(sel.price)}</p>
       <p style={{fontSize:11,fontWeight:600,color:'var(--muted)',marginBottom:8}}>MODE DE PAIEMENT</p>
       <button className="btn btn-wave" onPointerUp={()=>sub('wave')} disabled={ld} style={{marginBottom:6}}>💳 Wave</button>
       <button className="btn btn-om" onPointerUp={()=>sub('orange_money')} disabled={ld} style={{marginBottom:6}}>📱 Orange Money</button>
-      <button className="btn btn-outline" onPointerUp={()=>sub('cash')} disabled={ld}>💵 Espèces (sur place)</button>
-      <p style={{fontSize:10,color:'var(--dim)',textAlign:'center',marginTop:8}}>Espèces = validation admin requise</p></div></div>}
-  </div>);
+      <button className="btn btn-outline" onPointerUp={()=>sub('cash')} disabled={ld}>💵 Espèces (sur place)</button></div></div>}</div>);
 }
 
-function SeancesView({bookings,onCancel,toast}){
-  const now=new Date(),active=(bookings||[]).filter(b=>b.status===1),past=(bookings||[]).filter(b=>b.status!==1);
+function SeancesView({bookings,onCancel,toast}){const now=new Date(),active=(bookings||[]).filter(b=>b.status===1),past=(bookings||[]).filter(b=>b.status!==1);
   const cancel=async id=>{if(!confirm('Annuler ?'))return;const r=await api.post('/api/cancel',{booking_id:id});if(r.ok){toast('Annulée.','success');onCancel()}else toast(r.error||'Erreur','error')};
   return(<div><h2 style={{fontSize:17,marginBottom:12}}>Mes séances</h2>
-    {active.length===0&&past.length===0&&<div className="empty"><div className="em">📅</div>Aucune réservation<br/><span style={{fontSize:11}}>Réservez depuis le calendrier</span></div>}
-    {active.map((b,i)=>{const st=new Date(b.date_slot+'T'+String(b.hour_start).padStart(2,'0')+':00:00'),cc=b.status===1&&st>now&&(st-now)>=7200000;
+    {active.length===0&&past.length===0&&<div className="empty"><div className="em">📅</div>Aucune réservation</div>}
+    {active.map((b,i)=>{const st=new Date(b.date_slot+'T'+String(b.hour_start).padStart(2,'0')+':00:00'),cc=st>now&&(st-now)>=7200000;
       return<div key={b.id} className="brow" style={{animationDelay:i*50+'ms'}}><div className="brow-icon" style={{background:'var(--accentDim)'}}>🏊</div><div className="brow-info"><h4>{fmtDate(b.date_slot)} — {b.hour_start}h</h4><p>{b.activity}</p><span className="brow-code">{b.booking_code}</span></div>
       {cc?<button className="btn-sm btn-danger" onPointerUp={()=>cancel(b.id)}>Annuler</button>:<span style={{fontSize:10,color:'var(--dim)'}}>🔒</span>}</div>})}
-    {past.length>0&&<><p className="section-title">HISTORIQUE</p>{past.slice(0,20).map(b=><div key={b.id} className="brow cancelled"><div className="brow-icon" style={{background:'var(--dangerDim)'}}>✕</div><div className="brow-info"><h4>{fmtDate(b.date_slot)} — {b.hour_start}h</h4><p>{b.activity} — Annulée</p></div></div>)}</>}
-  </div>);
+    {past.length>0&&<><p className="section-title">HISTORIQUE</p>{past.slice(0,20).map(b=><div key={b.id} className="brow cancelled"><div className="brow-icon" style={{background:'var(--dangerDim)'}}>✕</div><div className="brow-info"><h4>{fmtDate(b.date_slot)} — {b.hour_start}h</h4><p>{b.activity} — Annulée</p></div></div>)}</>}</div>);
 }
 
-function AccountView({user,subs,toast,onLogout,onRefresh}){
-  const[tab,setTab]=useState('profile'),[curPwd,setCurPwd]=useState(''),[newPwd,setNewPwd]=useState(''),[ld,setLd]=useState(false),[profile,setProfile]=useState(null);
+function AccountView({user,subs,toast,onLogout}){const[tab,setTab]=useState('profile'),[curPwd,setCurPwd]=useState(''),[newPwd,setNewPwd]=useState(''),[ld,setLd]=useState(false),[profile,setProfile]=useState(null);
   useEffect(()=>{api.get('/api/me').then(r=>{if(r.ok)setProfile(r.user)})},[]);
-  const aSubs=(subs||[]).filter(s=>s.status==='active'),pSubs=(subs||[]).filter(s=>s.status==='pending'),eSubs=(subs||[]).filter(s=>s.status!=='active'&&s.status!=='pending');
-  const changePwd=async()=>{if(!curPwd||!newPwd||newPwd.length<4){toast('4 caractères minimum','error');return}setLd(true);const r=await api.post('/api/change-password',{current_password:curPwd,new_password:newPwd});setLd(false);
-    if(r.ok){toast('Mot de passe modifié !','success');setCurPwd('');setNewPwd('')}else toast(r.error||'Erreur','error')};
-  return(<div>
-    <div className="profile-avatar">{(user.full_name||'?')[0].toUpperCase()}</div>
-    <div className="profile-info"><h2>{user.full_name}</h2><p>{profile?.phone||user.phone}{profile?.email?' · '+profile.email:''}</p>
-      <p style={{fontSize:11,color:'var(--dim)',marginTop:4}}>Membre depuis {profile?new Date(profile.created_at).toLocaleDateString('fr-FR'):''}</p></div>
+  const aS=(subs||[]).filter(s=>s.status==='active'),pS=(subs||[]).filter(s=>s.status==='pending'),eS=(subs||[]).filter(s=>s.status!=='active'&&s.status!=='pending');
+  const chPwd=async()=>{if(!curPwd||!newPwd||newPwd.length<4){toast('4 car. minimum','error');return}setLd(true);const r=await api.post('/api/change-password',{current_password:curPwd,new_password:newPwd});setLd(false);if(r.ok){toast('Mot de passe modifié !','success');setCurPwd('');setNewPwd('')}else toast(r.error||'Erreur','error')};
+  return(<div><div className="profile-avatar">{(user.full_name||'?')[0].toUpperCase()}</div>
+    <div className="profile-info"><h2>{user.full_name}</h2><p>{profile?.phone||user.phone}{profile?.email?' · '+profile.email:''}</p></div>
     <div className="act-tabs" style={{marginBottom:12}}>{[{id:'profile',l:'Profil'},{id:'abos',l:'Abonnements'},{id:'password',l:'Mot de passe'}].map(t=><button key={t.id} className={'act-tab'+(tab===t.id?' active':'')} onPointerUp={()=>setTab(t.id)}>{t.l}</button>)}</div>
-    {tab==='profile'&&<PageWrap k="prof"><div className="card" style={{textAlign:'center'}}>
-      <span className={'badge '+(user.role==='admin'?'badge-ok':'badge-pending')} style={{fontSize:12,padding:'4px 14px'}}>{user.role==='admin'?'Administrateur':'Client'}</span></div>
-      <div className="stat-grid" style={{gridTemplateColumns:'1fr 1fr'}}>
-        <div className="stat-card"><div className="stat-val" style={{color:'var(--accent)'}}>{aSubs.length}</div><div className="stat-lbl">Abo. actif(s)</div></div>
-        <div className="stat-card"><div className="stat-val" style={{color:'var(--accent2)'}}>{aSubs.reduce((a,s)=>a+Math.max(0,s.limit_value-s.sessions_used),0)}</div><div className="stat-lbl">Séances restantes</div></div></div>
-      <button className="btn btn-danger" onPointerUp={onLogout} style={{marginTop:8}}>Déconnexion</button></PageWrap>}
-    {tab==='abos'&&<PageWrap k="abos">
-      {pSubs.length>0&&<><p className="section-title">⏳ EN ATTENTE</p>{pSubs.map(s=><div key={s.id} className="sub-card" style={{borderColor:'var(--warn)'}}><div style={{display:'flex',justifyContent:'space-between'}}><b style={{fontSize:13}}>{s.plan_name}</b><span className="badge badge-pending">Attente</span></div><p style={{fontSize:11,color:'var(--muted)',marginTop:3}}>Paiement {s.payment_method==='cash'?'espèces':'en ligne'}</p></div>)}</>}
-      {aSubs.length>0&&<><p className="section-title">✅ ACTIFS</p>{aSubs.map(s=><div key={s.id} className="sub-card"><div style={{display:'flex',justifyContent:'space-between'}}><b style={{fontSize:13}}>{s.plan_name}</b><span className="badge badge-ok">Actif</span></div><p style={{fontSize:11,color:'var(--muted)',marginTop:2}}>Expire le {new Date(s.expires_at).toLocaleDateString('fr-FR')}</p><div className="sub-dots">{Array.from({length:s.limit_value}).map((_,i)=><div key={i} className={'sub-dot'+(i<s.sessions_used?' used':'')}/>)}</div><p style={{fontSize:10,color:'var(--muted)',marginTop:3}}>{s.sessions_used}/{s.limit_value} séances · {fmtP(s.price)}</p></div>)}</>}
-      {eSubs.length>0&&<><p className="section-title">📜 EXPIRÉS</p>{eSubs.map(s=><div key={s.id} className="sub-card" style={{opacity:.5}}><div style={{display:'flex',justifyContent:'space-between'}}><b style={{fontSize:13}}>{s.plan_name}</b><span className="badge badge-expired">Expiré</span></div><p style={{fontSize:11,color:'var(--muted)',marginTop:2}}>{s.sessions_used}/{s.limit_value} séances · {fmtP(s.price)}</p></div>)}</>}
-      {!aSubs.length&&!pSubs.length&&!eSubs.length&&<div className="empty"><div className="em">💎</div>Aucun abonnement</div>}
-    </PageWrap>}
-    {tab==='password'&&<PageWrap k="pwd"><div className="card"><h3 style={{fontSize:14,marginBottom:12}}>Changer mon mot de passe</h3>
-      <div className="input-group"><label>MOT DE PASSE ACTUEL</label><input type="password" value={curPwd} onChange={e=>setCurPwd(e.target.value)} placeholder="Actuel"/></div>
+    {tab==='profile'&&<PW k="prof"><div className="stat-grid" style={{gridTemplateColumns:'1fr 1fr'}}><div className="stat-card"><div className="stat-val" style={{color:'var(--accent)'}}>{aS.length}</div><div className="stat-lbl">Abo. actif(s)</div></div><div className="stat-card"><div className="stat-val" style={{color:'var(--accent2)'}}>{aS.reduce((a,s)=>a+Math.max(0,s.limit_value-s.sessions_used),0)}</div><div className="stat-lbl">Séances restantes</div></div></div>
+      <button className="btn btn-danger" onPointerUp={onLogout} style={{marginTop:8}}>Déconnexion</button></PW>}
+    {tab==='abos'&&<PW k="abos">{pS.length>0&&<><p className="section-title">⏳ EN ATTENTE</p>{pS.map(s=><div key={s.id} className="sub-card" style={{borderColor:'var(--warn)'}}><div style={{display:'flex',justifyContent:'space-between'}}><b style={{fontSize:13}}>{s.plan_name}</b><span className="badge badge-pending">Attente</span></div></div>)}</>}
+      {aS.length>0&&<><p className="section-title">✅ ACTIFS</p>{aS.map(s=><div key={s.id} className="sub-card"><div style={{display:'flex',justifyContent:'space-between'}}><b style={{fontSize:13}}>{s.plan_name}</b><span className="badge badge-ok">Actif</span></div><p style={{fontSize:11,color:'var(--muted)',marginTop:2}}>Expire le {new Date(s.expires_at).toLocaleDateString('fr-FR')}</p><div className="sub-dots">{Array.from({length:s.limit_value}).map((_,i)=><div key={i} className={'sub-dot'+(i<s.sessions_used?' used':'')}/>)}</div><p style={{fontSize:10,color:'var(--muted)',marginTop:3}}>{s.sessions_used}/{s.limit_value} · {fmtP(s.price)}</p></div>)}</>}
+      {eS.length>0&&<><p className="section-title">📜 EXPIRÉS</p>{eS.map(s=><div key={s.id} className="sub-card" style={{opacity:.5}}><div style={{display:'flex',justifyContent:'space-between'}}><b style={{fontSize:13}}>{s.plan_name}</b><span className="badge badge-expired">Expiré</span></div><p style={{fontSize:11,color:'var(--muted)}}>{s.sessions_used}/{s.limit_value} · {fmtP(s.price)}</p></div>)}</>}
+      {!aS.length&&!pS.length&&!eS.length&&<div className="empty"><div className="em">💎</div>Aucun abonnement</div>}</PW>}
+    {tab==='password'&&<PW k="pwd"><div className="card"><h3 style={{fontSize:14,marginBottom:12}}>Changer mon mot de passe</h3>
+      <div className="input-group"><label>ACTUEL</label><input type="password" value={curPwd} onChange={e=>setCurPwd(e.target.value)} placeholder="Mot de passe actuel"/></div>
       <div className="input-group"><label>NOUVEAU</label><input type="password" value={newPwd} onChange={e=>setNewPwd(e.target.value)} placeholder="Nouveau (4+ car.)"/></div>
-      <button className="btn btn-primary" onPointerUp={changePwd} disabled={ld}>{ld?'...':'Modifier'}</button></div></PageWrap>}
-  </div>);
+      <button className="btn btn-primary" onPointerUp={chPwd} disabled={ld}>{ld?'...':'Modifier'}</button></div></PW>}</div>);
 }
 
-function AdminView({user,toast}){
-  const[data,setData]=useState(null),[ld,setLd]=useState(false),[tab,setTab]=useState('overview');
-  const[gs,setGs]=useState(new Date().toISOString().split('T')[0]),[ge,setGe]=useState(new Date(Date.now()+30*86400000).toISOString().split('T')[0]);
-  const fd=useCallback(async()=>{const r=await api.get('/api/admin/dashboard');if(r.ok)setData(r)},[]);
-  useEffect(()=>{if(user.role==='admin')fd()},[user,fd]);
-  const gen=async()=>{setLd(true);const r=await api.post('/api/admin/generate-slots',{date_start:gs,date_end:ge,activities:['Aquabike','Aquagym','Rééducation','Natation']});setLd(false);if(r.ok){toast(r.created+' créneaux !','success');fd()}else toast(r.error||'Erreur','error')};
-  const validate=async id=>{const r=await api.post('/api/admin/validate-payment',{subscription_id:id});if(r.ok){toast('Paiement validé !','success');fd()}else toast('Erreur','error')};
-  if(user.role!=='admin')return<div className="card" style={{textAlign:'center',padding:20}}><p style={{color:'var(--muted)'}}>Accès admin requis</p></div>;
+function AdminView({user,toast}){const[data,setData]=useState(null),[ld,setLd]=useState(false),[tab,setTab]=useState('overview'),[gs,setGs]=useState(new Date().toISOString().split('T')[0]),[ge,setGe]=useState(new Date(Date.now()+30*86400000).toISOString().split('T')[0]);
+  const fd=useCallback(async()=>{const r=await api.get('/api/admin/dashboard');if(r.ok)setData(r)},[]);useEffect(()=>{if(user.role==='admin')fd()},[user,fd]);
+  const gen=async()=>{setLd(true);const r=await api.post('/api/admin/generate-slots',{date_start:gs,date_end:ge,activities:['Aquabike','Aquagym','Rééducation','Natation']});setLd(false);if(r.ok){toast(r.created+' créneaux !','success');fd()}else toast(r.error,'error')};
+  const val=async id=>{const r=await api.post('/api/admin/validate-payment',{subscription_id:id});if(r.ok){toast('Validé !','success');fd()}else toast('Erreur','error')};
+  if(user.role!=='admin')return<div className="card" style={{textAlign:'center'}}><p style={{color:'var(--muted)'}}>Admin requis</p></div>;
   if(!data)return<div className="empty"><div className="em">⏳</div>Chargement...</div>;
-  return(<div>
-    <div className="act-tabs" style={{marginBottom:12}}>{[{id:'overview',l:'Résumé'},{id:'bookings',l:'Réservations'},{id:'subs',l:'Abonnements'},{id:'pending',l:'💵 ('+data.pending_payments.length+')'},{id:'gen',l:'Créneaux'}].map(t=><button key={t.id} className={'act-tab'+(tab===t.id?' active':'')} onPointerUp={()=>setTab(t.id)}>{t.l}</button>)}</div>
-    <PageWrap k={tab}>
-    {tab==='overview'&&<><div className="stat-grid">
-      <div className="stat-card" style={{animationDelay:'0ms'}}><div className="stat-val" style={{color:'var(--accent2)'}}>{data.stats.total_users}</div><div className="stat-lbl">Inscrits</div></div>
-      <div className="stat-card" style={{animationDelay:'80ms'}}><div className="stat-val" style={{color:'var(--accent)'}}>{data.stats.active_subscriptions}</div><div className="stat-lbl">Abonnés</div></div>
-      <div className="stat-card" style={{animationDelay:'160ms'}}><div className="stat-val" style={{color:'var(--warn)'}}>{data.stats.today_bookings}</div><div className="stat-lbl">Résa. today</div></div></div>
-      <p className="section-title">CRÉNEAUX AUJOURD'HUI</p>
-      {data.today_slots.length===0?<p style={{fontSize:12,color:'var(--dim)'}}>Aucun créneau</p>
-      :data.today_slots.map((s,i)=><div key={i} className="brow" style={{animationDelay:i*40+'ms'}}>
-        <div className="brow-icon" style={{background:parseInt(s.remaining)<=0?'var(--dangerDim)':parseInt(s.remaining)<=3?'var(--warnDim)':'var(--accentDim)',fontSize:13,fontWeight:700,fontFamily:'Outfit',color:parseInt(s.remaining)<=0?'var(--danger)':parseInt(s.remaining)<=3?'var(--warn)':'var(--accent)'}}>{s.booked}/{s.max_capacity}</div>
-        <div className="brow-info"><h4>{s.hour_start}h — {s.activity}</h4><p>{s.remaining} place(s)</p></div></div>)}</>}
-    {tab==='bookings'&&<><p className="section-title">RÉSERVATIONS SEMAINE</p>
-      {data.week_bookings.filter(b=>b.booking_status===1).map((b,i)=><div key={i} className="brow" style={{animationDelay:i*40+'ms'}}><div className="brow-icon" style={{background:'var(--accentDim)'}}>🏊</div>
-        <div className="brow-info"><h4>{fmtDate(b.date_slot)} {b.hour_start}h · {b.activity}</h4><p><b>{b.full_name}</b> — {b.phone}</p><span className="brow-code">{b.booking_code}</span></div></div>)}</>}
-    {tab==='subs'&&<><p className="section-title">ABONNEMENTS</p>
-      {data.subscriptions.map((s,i)=><div key={i} className="sub-card" style={{animation:`rowIn .3s ${i*40}ms ease both`}}>
-        <div style={{display:'flex',justifyContent:'space-between'}}><div><b style={{fontSize:13}}>{s.full_name}</b><br/><span style={{fontSize:11,color:'var(--muted)'}}>{s.phone}</span></div>
-        <span className={'badge badge-'+(s.status==='active'?'ok':s.status==='pending'?'pending':'expired')}>{s.status==='active'?'Actif':s.status==='pending'?'Attente':'Expiré'}</span></div>
-        <p style={{fontSize:12,marginTop:4}}>{s.plan_name} — <b>{fmtP(s.price)}</b> · {s.payment_method} · {s.sessions_used}/{s.limit_value}</p></div>)}</>}
-    {tab==='pending'&&<><p className="section-title">💵 ESPÈCES À VALIDER</p>
-      {data.pending_payments.length===0?<div className="empty"><div className="em">✅</div>Aucun paiement en attente</div>
-      :data.pending_payments.map(p=><div key={p.id} className="pending-card">
-        <div style={{display:'flex',justifyContent:'space-between'}}><div><b style={{fontSize:14}}>{p.full_name}</b><br/><span style={{fontSize:12,color:'var(--muted)'}}>{p.phone}</span></div><span className="badge badge-pending">Attente</span></div>
-        <p style={{fontSize:13,marginTop:6}}>{p.plan_name} — <b style={{color:'var(--accent)'}}>{fmtP(p.price)}</b></p>
-        <button className="btn-validate" onPointerUp={()=>validate(p.id)} style={{marginTop:10}}>✓ Valider et activer</button></div>)}</>}
-    {tab==='gen'&&<div className="card"><h3 style={{fontSize:14,marginBottom:10}}>Générer les créneaux</h3>
-      <div className="input-group"><label>DÉBUT</label><input type="date" value={gs} onChange={e=>setGs(e.target.value)}/></div>
-      <div className="input-group"><label>FIN</label><input type="date" value={ge} onChange={e=>setGe(e.target.value)}/></div>
-      <button className="btn btn-primary" onPointerUp={gen} disabled={ld}>{ld?'...':'Générer les créneaux'}</button></div>}
-    </PageWrap>
-  </div>);
+  return(<div><div className="act-tabs" style={{marginBottom:12}}>{[{id:'overview',l:'Résumé'},{id:'bookings',l:'Réserv.'},{id:'subs',l:'Abos'},{id:'pending',l:'💵('+data.pending_payments.length+')'},{id:'gen',l:'Créneaux'}].map(t=><button key={t.id} className={'act-tab'+(tab===t.id?' active':'')} onPointerUp={()=>setTab(t.id)}>{t.l}</button>)}</div>
+    <PW k={tab}>
+    {tab==='overview'&&<><div className="stat-grid"><div className="stat-card"><div className="stat-val" style={{color:'var(--accent2)'}}>{data.stats.total_users}</div><div className="stat-lbl">Inscrits</div></div><div className="stat-card"><div className="stat-val" style={{color:'var(--accent)'}}>{data.stats.active_subscriptions}</div><div className="stat-lbl">Abonnés</div></div><div className="stat-card"><div className="stat-val" style={{color:'var(--warn)'}}>{data.stats.today_bookings}</div><div className="stat-lbl">Résa. today</div></div></div>
+      <p className="section-title">CRÉNEAUX AUJOURD'HUI</p>{data.today_slots.map((s,i)=><div key={i} className="brow" style={{animationDelay:i*40+'ms'}}><div className="brow-icon" style={{background:parseInt(s.remaining)<=0?'var(--dangerDim)':parseInt(s.remaining)<=3?'var(--warnDim)':'var(--accentDim)',fontSize:13,fontWeight:700,fontFamily:'Outfit',color:parseInt(s.remaining)<=0?'var(--danger)':parseInt(s.remaining)<=3?'var(--warn)':'var(--accent)'}}>{s.booked}/{s.max_capacity}</div><div className="brow-info"><h4>{s.hour_start}h — {s.activity}</h4><p>{s.remaining} place(s)</p></div></div>)}</>}
+    {tab==='bookings'&&<>{data.week_bookings.filter(b=>b.booking_status===1).map((b,i)=><div key={i} className="brow" style={{animationDelay:i*40+'ms'}}><div className="brow-icon" style={{background:'var(--accentDim)'}}>🏊</div><div className="brow-info"><h4>{fmtDate(b.date_slot)} {b.hour_start}h · {b.activity}</h4><p><b>{b.full_name}</b> — {b.phone}</p><span className="brow-code">{b.booking_code}</span></div></div>)}</>}
+    {tab==='subs'&&<>{data.subscriptions.map((s,i)=><div key={i} className="sub-card" style={{animation:`rowIn .3s ${i*40}ms ease both`}}><div style={{display:'flex',justifyContent:'space-between'}}><div><b style={{fontSize:13}}>{s.full_name}</b><br/><span style={{fontSize:11,color:'var(--muted)'}}>{s.phone}</span></div><span className={'badge badge-'+(s.status==='active'?'ok':s.status==='pending'?'pending':'expired')}>{s.status==='active'?'Actif':s.status==='pending'?'Attente':'Exp.'}</span></div><p style={{fontSize:12,marginTop:4}}>{s.plan_name} — <b>{fmtP(s.price)}</b> · {s.sessions_used}/{s.limit_value}</p></div>)}</>}
+    {tab==='pending'&&<>{data.pending_payments.length===0?<div className="empty"><div className="em">✅</div>Aucun paiement en attente</div>:data.pending_payments.map(p=><div key={p.id} className="pending-card"><div style={{display:'flex',justifyContent:'space-between'}}><div><b>{p.full_name}</b><br/><span style={{fontSize:12,color:'var(--muted)'}}>{p.phone}</span></div><span className="badge badge-pending">Attente</span></div><p style={{fontSize:13,marginTop:6}}>{p.plan_name} — <b style={{color:'var(--accent)'}}>{fmtP(p.price)}</b></p><button className="btn-validate" onPointerUp={()=>val(p.id)} style={{marginTop:10}}>✓ Valider</button></div>)}</>}
+    {tab==='gen'&&<div className="card"><h3 style={{fontSize:14,marginBottom:10}}>Générer</h3><div className="input-group"><label>DÉBUT</label><input type="date" value={gs} onChange={e=>setGs(e.target.value)}/></div><div className="input-group"><label>FIN</label><input type="date" value={ge} onChange={e=>setGe(e.target.value)}/></div><button className="btn btn-primary" onPointerUp={gen} disabled={ld}>{ld?'...':'Générer'}</button></div>}
+    </PW></div>);
 }
 
-function App(){
-  const[user,setUser]=useState(null),[view,setView]=useState('calendar'),[viewKey,setViewKey]=useState(0);
+function App(){const[user,setUser]=useState(null),[view,setView]=useState('reserve'),[vk,setVk]=useState(0);
   const[slots,setSlots]=useState([]),[plans,setPlans]=useState([]),[bookings,setBookings]=useState([]),[subs,setSubs]=useState([]);
-  const[td,setTd]=useState(null);const toast=(m,t)=>setTd({msg:m,type:t,key:Date.now()});
-  const switchView=v=>{setView(v);setViewKey(k=>k+1)};
-
+  const[td,setTd]=useState(null);const toast=(m,t)=>setTd({msg:m,type:t,key:Date.now()});const sw=v=>{setView(v);setVk(k=>k+1)};
   useEffect(()=>{const t=localStorage.getItem('aq_token'),u=localStorage.getItem('aq_user');if(t&&u){api.token=t;setUser(JSON.parse(u))}},[]);
-  const fSlots=useCallback(async()=>{const s=new Date();s.setDate(s.getDate()-7);const e=new Date();e.setDate(e.getDate()+21);const r=await api.get('/api/slots?start='+s.toISOString().split('T')[0]+'&end='+e.toISOString().split('T')[0]);if(r.ok)setSlots(r.slots)},[]);
-  const fBook=useCallback(async()=>{const r=await api.get('/api/my-bookings');if(r.ok)setBookings(r.bookings)},[]);
-  const fSubs=useCallback(async()=>{const r=await api.get('/api/my-subscriptions');if(r.ok)setSubs(r.subscriptions)},[]);
-  const refresh=useCallback(()=>{fSlots();fBook();fSubs()},[fSlots,fBook,fSubs]);
-  useEffect(()=>{if(!user)return;api.get('/api/plans').then(r=>{if(r.ok)setPlans(r.plans)});refresh();
-    const es=new EventSource('/api/events');es.addEventListener('update',()=>fSlots());es.addEventListener('payment_validated',()=>{fSubs();toast('Abonnement activé !','success')});
-    const iv=setInterval(fSlots,20000);return()=>{es.close();clearInterval(iv)}},[user,refresh,fSlots,fSubs]);
-  const book=async id=>{const r=await api.post('/api/book',{slot_id:id});if(r.ok){toast('Réservé ! Code: '+r.booking_code,'success');refresh();return true}else{toast(r.error||'Erreur','error');fSlots();return false}};
-  const cancel=async id=>{const r=await api.post('/api/cancel',{booking_id:id});if(r.ok){toast('Annulée.','success');refresh();return true}else{toast(r.error||'Erreur','error');return false}};
-  const logout=()=>{localStorage.removeItem('aq_token');localStorage.removeItem('aq_user');api.token=null;setUser(null);setView('calendar')};
+  const fS=useCallback(async()=>{const s=new Date();s.setDate(s.getDate()-7);const e=new Date();e.setDate(e.getDate()+21);const r=await api.get('/api/slots?start='+s.toISOString().split('T')[0]+'&end='+e.toISOString().split('T')[0]);if(r.ok)setSlots(r.slots)},[]);
+  const fB=useCallback(async()=>{const r=await api.get('/api/my-bookings');if(r.ok)setBookings(r.bookings)},[]);
+  const fSu=useCallback(async()=>{const r=await api.get('/api/my-subscriptions');if(r.ok)setSubs(r.subscriptions)},[]);
+  const ref=useCallback(()=>{fS();fB();fSu()},[fS,fB,fSu]);
+  useEffect(()=>{if(!user)return;api.get('/api/plans').then(r=>{if(r.ok)setPlans(r.plans)});ref();const es=new EventSource('/api/events');es.addEventListener('update',()=>fS());es.addEventListener('payment_validated',()=>{fSu();toast('Abonnement activé !','success')});const iv=setInterval(fS,20000);return()=>{es.close();clearInterval(iv)}},[user,ref,fS,fSu]);
+  const book=async id=>{const r=await api.post('/api/book',{slot_id:id});if(r.ok){toast('Réservé ! Code: '+r.booking_code,'success');ref();return true}else{toast(r.error||'Erreur','error');fS();return false}};
+  const cancel=async id=>{const r=await api.post('/api/cancel',{booking_id:id});if(r.ok){toast('Annulée.','success');ref();return true}else{toast(r.error||'Erreur','error');return false}};
+  const logout=()=>{localStorage.removeItem('aq_token');localStorage.removeItem('aq_user');api.token=null;setUser(null);setView('reserve')};
   if(!user)return<AuthScreen onAuth={u=>setUser(u)}/>;
+  const isAdm=user.role==='admin';
   return(<div className="app">
     <div className="hdr"><div className="hdr-logo"><div className="hdr-icon">A</div><div><h1>Aquabike Evolution</h1><p>Réservation en ligne</p></div></div></div>
-    <div className="page"><PageWrap k={viewKey}>
-      {view==='calendar'&&<CalendarView slots={slots} onBook={book} onCancel={cancel} myBookings={bookings} isAdmin={user.role==='admin'}/>}
-      {view==='plans'&&<PlansView plans={plans} onSubscribe={()=>{fSubs();switchView('account')}} toast={toast}/>}
-      {view==='seances'&&<SeancesView bookings={bookings} onCancel={refresh} toast={toast}/>}
-      {view==='account'&&<AccountView user={user} subs={subs} toast={toast} onLogout={logout} onRefresh={refresh}/>}
+    <div className="page"><PW k={vk}>
+      {view==='reserve'&&<ReservationView slots={slots} myBookings={bookings} onBook={book} onCancel={cancel} toast={toast} isAdmin={isAdm}/>}
+      {view==='calendar'&&<CalendarView slots={slots} onBook={book} onCancel={cancel} myBookings={bookings} isAdmin={isAdm}/>}
+      {view==='plans'&&<PlansView plans={plans} onSubscribe={()=>{fSu();sw('account')}} toast={toast}/>}
+      {view==='seances'&&<SeancesView bookings={bookings} onCancel={ref} toast={toast}/>}
+      {view==='account'&&<AccountView user={user} subs={subs} toast={toast} onLogout={logout}/>}
       {view==='admin'&&<AdminView user={user} toast={toast}/>}
-    </PageWrap></div>
+    </PW></div>
     <div className="bnav">
-      <button className={view==='calendar'?'active':''} onPointerUp={()=>switchView('calendar')}><span className="icon">📅</span>Calendrier</button>
-      <button className={view==='plans'?'active':''} onPointerUp={()=>switchView('plans')}><span className="icon">💎</span>Formules</button>
-      <button className={view==='seances'?'active':''} onPointerUp={()=>switchView('seances')}><span className="icon">🎫</span>Séances</button>
-      <button className={view==='account'?'active':''} onPointerUp={()=>switchView('account')}><span className="icon">👤</span>Compte</button>
-      {user.role==='admin'&&<button className={view==='admin'?'active':''} onPointerUp={()=>switchView('admin')}><span className="icon">⚙️</span>Admin</button>}
+      <button className={view==='reserve'?'active':''} onPointerUp={()=>sw('reserve')}><span className="icon">➕</span>Réserver</button>
+      <button className={view==='calendar'?'active':''} onPointerUp={()=>sw('calendar')}><span className="icon">📅</span>Calendrier</button>
+      <button className={view==='plans'?'active':''} onPointerUp={()=>sw('plans')}><span className="icon">💎</span>Formules</button>
+      <button className={view==='seances'?'active':''} onPointerUp={()=>sw('seances')}><span className="icon">🎫</span>Séances</button>
+      <button className={view==='account'?'active':''} onPointerUp={()=>sw('account')}><span className="icon">👤</span>Compte</button>
+      {isAdm&&<button className={view==='admin'?'active':''} onPointerUp={()=>sw('admin')}><span className="icon">⚙️</span>Admin</button>}
     </div>
     {td&&<Toast key={td.key} msg={td.msg} type={td.type} onDone={()=>setTd(null)}/>}
   </div>);
