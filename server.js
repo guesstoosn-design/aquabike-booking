@@ -418,6 +418,107 @@ app.get('/api/slot/:id/participants', auth, async (req, res) => {
   } catch(e) { res.status(500).json({ ok:false, error:e.message }); }
 });
 
+// GET /api/admin/slots — list all slots with filters
+app.get('/api/admin/slots', auth, async (req, res) => {
+  if (req.user.role !== 'admin') return res.status(403).json({ ok:false });
+  const { start, end, activity } = req.query;
+  const dateStart = start || new Date().toISOString().split('T')[0];
+  const dateEnd = end || new Date(Date.now() + 14 * 86400000).toISOString().split('T')[0];
+  try {
+    let sql = `SELECT s.id, s.date_slot, s.hour_start, s.activity, s.max_capacity, s.status,
+      COUNT(b.id) FILTER(WHERE b.status=1) AS booked
+      FROM slots s LEFT JOIN bookings b ON b.slot_id=s.id
+      WHERE s.date_slot>=$1 AND s.date_slot<=$2`;
+    const params = [dateStart, dateEnd];
+    if (activity) { sql += ' AND s.activity=$3'; params.push(activity); }
+    sql += ' GROUP BY s.id ORDER BY s.date_slot, s.hour_start, s.activity';
+    const r = await pool.query(sql, params);
+    res.json({ ok:true, slots:r.rows });
+  } catch(e) { res.status(500).json({ ok:false, error:e.message }); }
+});
+
+// PUT /api/admin/slot/:id — update a slot
+app.put('/api/admin/slot/:id', auth, async (req, res) => {
+  if (req.user.role !== 'admin') return res.status(403).json({ ok:false });
+  const { max_capacity, status, hour_start, activity } = req.body;
+  try {
+    const updates = [];
+    const vals = [];
+    let idx = 1;
+    if (max_capacity !== undefined) { updates.push('max_capacity=$'+idx); vals.push(parseInt(max_capacity)); idx++; }
+    if (status !== undefined) { updates.push('status=$'+idx); vals.push(parseInt(status)); idx++; }
+    if (hour_start !== undefined) { updates.push('hour_start=$'+idx); vals.push(parseInt(hour_start)); idx++; }
+    if (activity !== undefined) { updates.push('activity=$'+idx); vals.push(activity); idx++; }
+    if (updates.length === 0) return res.json({ ok:false, error:'Rien à modifier' });
+    vals.push(parseInt(req.params.id));
+    await pool.query('UPDATE slots SET '+updates.join(',')+' WHERE id=$'+idx, vals);
+    res.json({ ok:true });
+  } catch(e) { res.status(500).json({ ok:false, error:e.message }); }
+});
+
+// DELETE /api/admin/slot/:id — delete a slot (only if no active bookings)
+app.delete('/api/admin/slot/:id', auth, async (req, res) => {
+  if (req.user.role !== 'admin') return res.status(403).json({ ok:false });
+  try {
+    const check = await pool.query('SELECT COUNT(*) as nb FROM bookings WHERE slot_id=$1 AND status=1', [req.params.id]);
+    if (parseInt(check.rows[0].nb) > 0) return res.json({ ok:false, error:'Impossible : des réservations actives existent.' });
+    await pool.query('DELETE FROM bookings WHERE slot_id=$1', [req.params.id]);
+    await pool.query('DELETE FROM slots WHERE id=$1', [req.params.id]);
+    res.json({ ok:true });
+  } catch(e) { res.status(500).json({ ok:false, error:e.message }); }
+});
+
+// GET /api/admin/slots — list all slots with filters
+app.get('/api/admin/slots', auth, async (req, res) => {
+  if (req.user.role !== 'admin') return res.status(403).json({ ok:false });
+  const { start, end, activity } = req.query;
+  try {
+    let sql = `SELECT s.id, s.date_slot, s.hour_start, s.activity, s.max_capacity, s.status,
+      COUNT(b.id) FILTER(WHERE b.status=1) AS booked
+      FROM slots s LEFT JOIN bookings b ON b.slot_id=s.id
+      WHERE 1=1`;
+    const params = [];
+    let idx = 1;
+    if (start) { sql += ` AND s.date_slot >= $${idx++}`; params.push(start); }
+    if (end) { sql += ` AND s.date_slot <= $${idx++}`; params.push(end); }
+    if (activity) { sql += ` AND s.activity = $${idx++}`; params.push(activity); }
+    sql += ` GROUP BY s.id ORDER BY s.date_slot DESC, s.hour_start ASC LIMIT 200`;
+    const r = await pool.query(sql, params);
+    res.json({ ok:true, slots:r.rows });
+  } catch(e) { res.status(500).json({ ok:false, error:e.message }); }
+});
+
+// PUT /api/admin/slots/:id — update a slot
+app.put('/api/admin/slots/:id', auth, async (req, res) => {
+  if (req.user.role !== 'admin') return res.status(403).json({ ok:false });
+  const { max_capacity, activity, status, hour_start } = req.body;
+  try {
+    const fields = [];
+    const params = [];
+    let idx = 1;
+    if (max_capacity !== undefined) { fields.push(`max_capacity=$${idx++}`); params.push(parseInt(max_capacity)); }
+    if (activity !== undefined) { fields.push(`activity=$${idx++}`); params.push(activity); }
+    if (status !== undefined) { fields.push(`status=$${idx++}`); params.push(parseInt(status)); }
+    if (hour_start !== undefined) { fields.push(`hour_start=$${idx++}`); params.push(parseInt(hour_start)); }
+    if (fields.length === 0) return res.json({ ok:false, error:'Rien à modifier.' });
+    params.push(parseInt(req.params.id));
+    await pool.query(`UPDATE slots SET ${fields.join(',')} WHERE id=$${idx}`, params);
+    res.json({ ok:true });
+  } catch(e) { res.status(500).json({ ok:false, error:e.message }); }
+});
+
+// DELETE /api/admin/slots/:id — delete a slot (only if no active bookings)
+app.delete('/api/admin/slots/:id', auth, async (req, res) => {
+  if (req.user.role !== 'admin') return res.status(403).json({ ok:false });
+  try {
+    const check = await pool.query('SELECT COUNT(*) as nb FROM bookings WHERE slot_id=$1 AND status=1', [req.params.id]);
+    if (parseInt(check.rows[0].nb) > 0) return res.json({ ok:false, error:'Impossible : des réservations actives existent.' });
+    await pool.query('DELETE FROM bookings WHERE slot_id=$1', [req.params.id]);
+    await pool.query('DELETE FROM slots WHERE id=$1', [req.params.id]);
+    res.json({ ok:true });
+  } catch(e) { res.status(500).json({ ok:false, error:e.message }); }
+});
+
 // ─── SLOTS ──────────────────────────────────────────────
 
 app.get('/api/slots', async (req, res) => {
