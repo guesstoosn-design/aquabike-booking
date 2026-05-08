@@ -19,7 +19,7 @@ h1,h2,h3{font-family:'Outfit',sans-serif;font-weight:700}button{font-family:inhe
 .hdr-logo{display:flex;align-items:center;gap:8px}.hdr-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Outfit';font-weight:800;font-size:15px;color:#000}
 .hdr h1{font-size:13px}.hdr p{font-size:9px;color:var(--muted)}
 .bnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--glass);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:2px;padding-bottom:max(2px,env(safe-area-inset-bottom));z-index:20}
-.bnav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 0;background:none;color:var(--dim);font-size:8px;font-weight:600}.bnav button.active{color:var(--accent)}.bnav .icon{font-size:17px}
+.bnav button,.bnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 0;background:none;color:var(--dim);font-size:8px;font-weight:600;text-decoration:none}.bnav button.active,.bnav a.active{color:var(--accent)}.bnav .icon{font-size:17px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}
 .btn{display:block;width:100%;padding:13px;border-radius:12px;font-size:14px;font-weight:700;text-align:center}
 .btn-primary{background:linear-gradient(135deg,var(--accent),#00B89C);color:#000}.btn-primary:active{transform:scale(.97)}
@@ -123,13 +123,13 @@ function AuthScreen({onAuth}){const[mode,setMode]=useState('login'),[phone,setPh
     <div style={{textAlign:'center',marginBottom:24}}><div style={{width:50,height:50,borderRadius:14,background:'linear-gradient(135deg,#00D4AA,#00B4D8)',display:'inline-flex',alignItems:'center',justifyContent:'center',fontSize:22,fontWeight:800,color:'#000',fontFamily:'Outfit',marginBottom:8}}>A</div>
       <h1 style={{fontSize:20}}>Aquabike Evolution</h1><p style={{color:'var(--muted)',fontSize:12,marginTop:2}}>Dakar — Réservation en ligne</p></div>
     <div className="card"><div style={{display:'flex',gap:4,marginBottom:12}}>
-      <button onPointerUp={()=>setMode('login')} className={'btn-sm '+(mode==='login'?'btn-primary':'btn-outline')} style={{flex:1}}>Connexion</button>
-      <button onPointerUp={()=>setMode('register')} className={'btn-sm '+(mode==='register'?'btn-primary':'btn-outline')} style={{flex:1}}>Inscription</button></div>
+      <button onClick={()=>setMode('login')} className={'btn-sm '+(mode==='login'?'btn-primary':'btn-outline')} style={{flex:1}}>Connexion</button>
+      <button onClick={()=>setMode('register')} className={'btn-sm '+(mode==='register'?'btn-primary':'btn-outline')} style={{flex:1}}>Inscription</button></div>
       {mode==='register'&&<><div className="input-group"><label>NOM COMPLET</label><input value={name} onChange={e=>setName(e.target.value)} placeholder="Fatou Diallo"/></div><div className="input-group"><label>EMAIL (optionnel)</label><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="fatou@email.com"/></div></>}
       <div className="input-group"><label>TÉLÉPHONE</label><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="77 123 45 67"/></div>
       <div className="input-group"><label>MOT DE PASSE</label><input type="password" value={pin} onChange={e=>setPin(e.target.value)} placeholder="Votre mot de passe" onKeyDown={e=>e.key==='Enter'&&go()}/></div>
       {err&&<p style={{color:'var(--danger)',fontSize:12,marginBottom:8,textAlign:'center'}}>{err}</p>}
-      <button className="btn btn-primary" onPointerUp={go} disabled={ld}>{ld?'Chargement...':mode==='login'?'Se connecter':'Créer mon compte'}</button></div></div>);
+      <button className="btn btn-primary" onClick={go} disabled={ld}>{ld?'Chargement...':mode==='login'?'Se connecter':'Créer mon compte'}</button></div></div>);
 }
 
 function SlotModal({slot,myBookings,onClose,onBook,onCancel,isAdmin}){
@@ -139,7 +139,7 @@ function SlotModal({slot,myBookings,onClose,onBook,onCancel,isAdmin}){
   useEffect(()=>{api.get('/api/slot/'+slot.id+'/participants').then(r=>{if(r.ok)setParts(r.participants)})},[slot.id]);
   const st=new Date(slot.date_slot+'T'+String(slot.hour_start).padStart(2,'0')+':00:00'),isPast=st<new Date(),canC=myB&&!isPast&&(st-new Date())>=7200000;
   const conf=parts?parts.filter(p=>p.status===1):[];
-  return(<div className="modal-bg" onPointerUp={e=>{if(e.target===e.currentTarget)onClose()}}><div className="modal">
+  return(<div className="modal-bg" onClick={e=>{if(e.target===e.currentTarget)onClose()}}><div className="modal">
     <div className="mh"/>
     <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:12}}><div style={{width:44,height:44,borderRadius:12,background:'linear-gradient(135deg,var(--accent),var(--accent2))',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}}>🏊</div>
       <div><p style={{fontSize:10,fontWeight:600,color:'var(--muted)',letterSpacing:1}}>{slot.activity}</p><h2 style={{fontSize:17,fontFamily:'Outfit'}}>{fD(d)} — {slot.hour_start}h00</h2></div></div>
@@ -149,9 +149,9 @@ function SlotModal({slot,myBookings,onClose,onBook,onCancel,isAdmin}){
       {conf.map((p,i)=><div key={p.id} className="pr" style={{animationDelay:i*50+'ms'}}><div style={{display:'flex',alignItems:'center'}}><div className="pa2">{p.full_name[0]}</div><b style={{fontSize:13}}>{p.full_name}</b>{isAdmin&&<span style={{fontSize:11,color:'var(--dim)',marginLeft:6}}>{p.phone}</span>}</div>{isAdmin&&<span className="rcode">{p.booking_code}</span>}</div>)}</div>}
     {isPast?<div className="btn" style={{background:'var(--bg3)',color:'var(--dim)'}}>Créneau passé</div>
     :myB?<><div style={{background:'var(--accentDim)',border:'1px solid rgba(0,212,170,.2)',borderRadius:12,padding:12,textAlign:'center',marginBottom:10}}><span style={{color:'var(--accent)',fontWeight:700}}>✓ Inscrit(e) — Code : {myB.booking_code}</span></div>
-      {canC?<button className="btn btn-danger" onPointerUp={async()=>{if(confirm('Annuler ?')){setLd(true);await onCancel(myB.id);setLd(false)}}} disabled={ld}>{ld?'...':'✕ Annuler'}</button>:<p style={{textAlign:'center',fontSize:12,color:'var(--dim)'}}>🔒 Annulation impossible (&lt;2h)</p>}</>
+      {canC?<button className="btn btn-danger" onClick={async()=>{if(confirm('Annuler ?')){setLd(true);await onCancel(myB.id);setLd(false)}}} disabled={ld}>{ld?'...':'✕ Annuler'}</button>:<p style={{textAlign:'center',fontSize:12,color:'var(--dim)'}}>🔒 Annulation impossible (&lt;2h)</p>}</>
     :rem<=0?<div className="btn" style={{background:'var(--dangerDim)',color:'var(--danger)'}}>Complet</div>
-    :<button className="btn btn-primary" onPointerUp={async()=>{setLd(true);await onBook(slot.id);setLd(false)}} disabled={ld} style={{fontSize:15}}>{ld?'...':'+ Réserver (1 séance)'}</button>}
+    :<button className="btn btn-primary" onClick={async()=>{setLd(true);await onBook(slot.id);setLd(false)}} disabled={ld} style={{fontSize:15}}>{ld?'...':'+ Réserver (1 séance)'}</button>}
   </div></div>);
 }
 
@@ -168,10 +168,10 @@ function ReserveView({slots,myBookings,onBook,onCancel,toast,isAdmin}){
   return(<div>
     <h2 style={{fontSize:18,marginBottom:2}}>Réserver une séance</h2>
     <p style={{fontSize:12,color:'var(--muted)',marginBottom:12}}>Choisissez activité, date et heure</p>
-    <div className="tabs">{['Aquabike','Aquagym','Rééducation','Natation'].map(a=><button key={a} className={'tab'+(act===a?' on':'')} onPointerUp={()=>setAct(a)}>{a==='Rééducation'?'Rééduc.':a}</button>)}</div>
+    <select value={act} onChange={e=>setAct(e.target.value)} style={{width:'100%',padding:10,borderRadius:10,border:'1px solid var(--border)',background:'var(--bg3)',color:'var(--text)',fontSize:14,marginBottom:10,fontWeight:600}}><option value="Aquabike">🏊 Aquabike</option><option value="Aquagym">🏋️ Aquagym</option><option value="Rééducation">💪 Rééducation</option><option value="Natation">🏊 Natation</option></select>
     <p className="st">📅 DATE</p>
     <div className="ds">{dates.map((d,i)=>{const iso=d.toISOString().split('T')[0];
-      return<div key={iso} className={'dp'+(selDate===iso?' on':'')} onPointerUp={()=>setSelDate(iso)}><div className="dd">{i===0?'AUJ.':DY[d.getDay()]}</div><div className="dnum">{d.getDate()}</div><div className="dm">{MO[d.getMonth()].slice(0,3)}</div></div>})}</div>
+      return<div key={iso} className={'dp'+(selDate===iso?' on':'')} onClick={()=>setSelDate(iso)}><div className="dd">{i===0?'AUJ.':DY[d.getDay()]}</div><div className="dnum">{d.getDate()}</div><div className="dm">{MO[d.getMonth()].slice(0,3)}</div></div>})}</div>
     <p className="st">🕐 {DYF[selObj.getDay()]} {selObj.getDate()} {MO[selObj.getMonth()]}</p>
 
     {daySlots.length===0?<div className="emp" style={{padding:20}}><div className="em">😔</div><b>Aucun créneau disponible</b><br/><span style={{fontSize:12}}>Pas de créneaux pour cette date/activité.<br/>Essayez une autre date ou activité.</span></div>
@@ -180,7 +180,7 @@ function ReserveView({slots,myBookings,onBook,onCancel,toast,isAdmin}){
       const st2=new Date(s.date_slot+'T'+String(s.hour_start).padStart(2,'0')+':00:00'),isPast=st2<now;
       let cls='sr ';if(isPast)cls+='srpa';else if(isMine)cls+='srm';else if(rem<=0)cls+='srf';else if(rem<=3)cls+='srl';else cls+='sra';
 
-      return<div key={s.id} className={cls} style={{animationDelay:i*60+'ms'}} onPointerUp={function(){if(!isPast)openSlot(s)}}>
+      return<div key={s.id} className={cls} style={{animationDelay:i*60+'ms'}} onClick={function(){if(!isPast)openSlot(s)}}>
         <div className="srt">{s.hour_start}h</div>
         <div className="sri">
           <div className="srp">{isMine?'✓ Réservé':rem<=0?'Complet':rem+' place'+(rem>1?'s':'')}</div>
@@ -201,8 +201,8 @@ function CalView({slots,onBook,onCancel,myBookings,isAdmin}){
   const sm=useMemo(()=>{const m={};(slots||[]).filter(s=>s.activity===act).forEach(s=>{m[s.date_slot+'_'+s.hour_start]=s});return m},[slots,act]);
   const myMap=useMemo(()=>{const m={};(myBookings||[]).filter(b=>b.status===1).forEach(b=>{m[b.date_slot+'_'+b.hour_start+'_'+b.activity]=b});return m},[myBookings]);
   return(<div>
-    <div className="tabs">{['Aquabike','Aquagym','Rééducation','Natation'].map(a=><button key={a} className={'tab'+(act===a?' on':'')} onPointerUp={()=>setAct(a)}>{a==='Rééducation'?'Rééduc.':a}</button>)}</div>
-    <div className="week-nav"><button onPointerUp={()=>setWo(w=>w-1)}>◂ Préc.</button><span className="week-label">{MO[days[0].getMonth()].toUpperCase()} {days[0].getFullYear()}</span><button onPointerUp={()=>setWo(w=>w+1)}>Suiv. ▸</button></div>
+    <select value={act} onChange={e=>setAct(e.target.value)} style={{width:'100%',padding:10,borderRadius:10,border:'1px solid var(--border)',background:'var(--bg3)',color:'var(--text)',fontSize:14,marginBottom:10,fontWeight:600}}><option value="Aquabike">🏊 Aquabike</option><option value="Aquagym">🏋️ Aquagym</option><option value="Rééducation">💪 Rééducation</option><option value="Natation">🏊 Natation</option></select>
+    <div className="week-nav"><button onClick={()=>setWo(w=>w-1)}>◂ Préc.</button><span className="week-label">{MO[days[0].getMonth()].toUpperCase()} {days[0].getFullYear()}</span><button onClick={()=>setWo(w=>w+1)}>Suiv. ▸</button></div>
     <div className="cal-wrap"><div className="cal" style={{gridTemplateColumns:'42px repeat(7,1fr)',minWidth:isRN?360:500}}>
       <div/>{days.map((d,i)=>{const iso=d.toISOString().split('T')[0];return<div key={i} className={'dh'+(iso===td?' today':'')}><div className="dow">{DY[d.getDay()]}</div><div className="dn">{d.getDate()}</div></div>})}
       {hours.map(h=><React.Fragment key={h}><div className="sh">{String(h).padStart(2,'0')}h</div>
@@ -211,7 +211,7 @@ function CalView({slots,onBook,onCancel,myBookings,isAdmin}){
           if(!valid||!s)return<div key={k} className="sl pa"><span className="cn" style={{fontSize:10}}>—</span></div>;
           const rem=parseInt(s.remaining),isMine=!!myMap[ds+'_'+h+'_'+act];
           let cls='sl ';if(isPast)cls+='pa';else if(isMine)cls+='mi';else if(rem<=0)cls+='fu';else if(rem<=3)cls+='lm';else cls+='av';
-          return<div key={k} className={cls} onPointerUp={()=>{if(!isPast)setModal({...s})}}><span className="cn">{isPast?'—':rem}</span><span className="lb">{isPast?'':isMine?'Réservé':rem<=0?'Complet':rem<=3?rem+' pl.':''}</span>{!isPast&&<span className="pb">{isMine?'✓':rem<=0?'•':'+'}</span>}</div>})}</React.Fragment>)}
+          return<div key={k} className={cls} onClick={()=>{if(!isPast)setModal({...s})}}><span className="cn">{isPast?'—':rem}</span><span className="lb">{isPast?'':isMine?'Réservé':rem<=0?'Complet':rem<=3?rem+' pl.':''}</span>{!isPast&&<span className="pb">{isMine?'✓':rem<=0?'•':'+'}</span>}</div>})}</React.Fragment>)}
     </div></div>
     {modal&&<SlotModal slot={sm[modal.date_slot+'_'+modal.hour_start]||modal} myBookings={myBookings} isAdmin={isAdmin} onClose={()=>setModal(null)}
       onBook={async id=>{const ok=await onBook(id);if(ok)setModal(null);return ok}} onCancel={async id=>{const ok=await onCancel(id);if(ok)setModal(null);return ok}}/>}
@@ -221,13 +221,13 @@ function CalView({slots,onBook,onCancel,myBookings,isAdmin}){
 function PlansV({plans,onDone,toast}){const[sel,setSel]=useState(null),[pm,setPm]=useState(false),[ld,setLd]=useState(false);
   const sub=async m=>{if(!sel)return;setLd(true);const r=await api.post('/api/subscribe',{plan_id:sel.id,payment_method:m});setLd(false);if(r.ok){if(r.payment_url)window.open(r.payment_url,'_blank');toast(m==='cash'?'Demande envoyée !':'Activé !','success');setPm(false);setSel(null);onDone()}else toast(r.error||'Erreur','error')};
   return(<div><h2 style={{fontSize:17,marginBottom:12}}>Nos abonnements</h2>
-    {plans.map(p=><div key={p.id} className={'plan'+(sel?.id===p.id?' sel':'')} onPointerUp={()=>{setSel(p);setPm(true)}}>
+    {plans.map(p=><div key={p.id} className={'plan'+(sel?.id===p.id?' sel':'')} onClick={()=>{setSel(p);setPm(true)}}>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}><div><div className="plan-name">{p.name}</div><div className="plan-desc">{p.desc}</div></div><div className="plan-price">{fP(p.price)}</div></div>
       <span className="plan-badge" style={{background:p.limit_type==='weekly'?'rgba(0,180,216,.1)':'var(--warnDim)',color:p.limit_type==='weekly'?'var(--accent2)':'var(--warn)'}}>{p.limit_type==='weekly'?p.limit_value+'x/sem':p.limit_value+' séances'} · {p.duration_days}j</span></div>)}
-    {pm&&sel&&<div className="modal-bg" onPointerUp={e=>{if(e.target===e.currentTarget)setPm(false)}}><div className="modal"><div className="mh"/><h2 style={{fontSize:17,fontFamily:'Outfit'}}>{sel.name}</h2><p style={{color:'var(--muted)',fontSize:12}}>{sel.desc}</p><p className="plan-price" style={{marginBottom:14}}>{fP(sel.price)}</p>
-      <button className="btn btn-wave" onPointerUp={()=>sub('wave')} disabled={ld} style={{marginBottom:6}}>💳 Wave</button>
-      <button className="btn btn-om" onPointerUp={()=>sub('orange_money')} disabled={ld} style={{marginBottom:6}}>📱 Orange Money</button>
-      <button className="btn btn-outline" onPointerUp={()=>sub('cash')} disabled={ld}>💵 Espèces</button></div></div>}</div>);
+    {pm&&sel&&<div className="modal-bg" onClick={e=>{if(e.target===e.currentTarget)setPm(false)}}><div className="modal"><div className="mh"/><h2 style={{fontSize:17,fontFamily:'Outfit'}}>{sel.name}</h2><p style={{color:'var(--muted)',fontSize:12}}>{sel.desc}</p><p className="plan-price" style={{marginBottom:14}}>{fP(sel.price)}</p>
+      <button className="btn btn-wave" onClick={()=>sub('wave')} disabled={ld} style={{marginBottom:6}}>💳 Wave</button>
+      <button className="btn btn-om" onClick={()=>sub('orange_money')} disabled={ld} style={{marginBottom:6}}>📱 Orange Money</button>
+      <button className="btn btn-outline" onClick={()=>sub('cash')} disabled={ld}>💵 Espèces</button></div></div>}</div>);
 }
 
 function SeancesV({bookings,onCancel,toast}){const now=new Date(),act=(bookings||[]).filter(b=>b.status===1),past=(bookings||[]).filter(b=>b.status!==1);
@@ -236,7 +236,7 @@ function SeancesV({bookings,onCancel,toast}){const now=new Date(),act=(bookings|
     {act.length===0&&past.length===0&&<div className="emp"><div className="em">📅</div>Aucune réservation</div>}
     {act.map((b,i)=>{const st=new Date(b.date_slot+'T'+String(b.hour_start).padStart(2,'0')+':00:00'),cc=st>now&&(st-now)>=7200000;
       return<div key={b.id} className="row" style={{animationDelay:i*50+'ms'}}><div className="ri" style={{background:'var(--accentDim)'}}>🏊</div><div className="rinfo"><h4>{fDt(b.date_slot)} — {b.hour_start}h</h4><p>{b.activity}</p><span className="rcode">{b.booking_code}</span></div>
-      {cc?<button className="btn-sm btn-danger" onPointerUp={()=>cancel(b.id)}>Annuler</button>:<span style={{fontSize:10,color:'var(--dim)'}}>🔒</span>}</div>})}
+      {cc?<button className="btn-sm btn-danger" onClick={()=>cancel(b.id)}>Annuler</button>:<span style={{fontSize:10,color:'var(--dim)'}}>🔒</span>}</div>})}
     {past.length>0&&<><p className="st">HISTORIQUE</p>{past.slice(0,20).map(b=><div key={b.id} className="row x"><div className="ri" style={{background:'var(--dangerDim)'}}>✕</div><div className="rinfo"><h4>{fDt(b.date_slot)} — {b.hour_start}h</h4><p>{b.activity}</p></div></div>)}</>}</div>);
 }
 
@@ -246,9 +246,9 @@ function AccountV({user,subs,toast,onLogout}){const[tab,setTab]=useState('profil
   const chg=async()=>{if(!cp||!np||np.length<4){toast('4 car. min','error');return}setLd(true);const r=await api.post('/api/change-password',{current_password:cp,new_password:np});setLd(false);if(r.ok){toast('Modifié !','success');setCp('');setNp('')}else toast(r.error||'Erreur','error')};
   return(<div><div className="pav">{(user.full_name||'?')[0].toUpperCase()}</div>
     <div className="pinf"><h2>{user.full_name}</h2><p>{profile?.phone||user.phone}</p></div>
-    <div className="tabs" style={{marginBottom:12}}>{[{id:'profile',l:'Profil'},{id:'abos',l:'Abonnements'},{id:'password',l:'Mot de passe'}].map(t=><button key={t.id} className={'tab'+(tab===t.id?' on':'')} onPointerUp={()=>setTab(t.id)}>{t.l}</button>)}</div>
+    <select value={tab} onChange={e=>setTab(e.target.value)} style={{width:'100%',padding:10,borderRadius:10,border:'1px solid var(--border)',background:'var(--bg3)',color:'var(--text)',fontSize:14,marginBottom:12,fontWeight:600}}><option value="profile">👤 Profil</option><option value="abos">💎 Abonnements</option><option value="password">🔒 Mot de passe</option></select>
     {tab==='profile'&&<PW k="p"><div className="sg" style={{gridTemplateColumns:'1fr 1fr'}}><div className="sc"><div className="sv" style={{color:'var(--accent)'}}>{aS.length}</div><div className="slb">Abo. actifs</div></div><div className="sc"><div className="sv" style={{color:'var(--accent2)'}}>{aS.reduce((a,s)=>a+Math.max(0,s.limit_value-s.sessions_used),0)}</div><div className="slb">Séances restantes</div></div></div>
-      <button className="btn btn-danger" onPointerUp={onLogout}>Déconnexion</button></PW>}
+      <button className="btn btn-danger" onClick={onLogout}>Déconnexion</button></PW>}
     {tab==='abos'&&<PW k="a">{pS.map(s=><div key={s.id} className="subc" style={{borderColor:'var(--warn)'}}><div style={{display:'flex',justifyContent:'space-between'}}><b style={{fontSize:13}}>{s.plan_name}</b><span className="bg bg-pe">Attente</span></div></div>)}
       {aS.map(s=><div key={s.id} className="subc"><div style={{display:'flex',justifyContent:'space-between'}}><b style={{fontSize:13}}>{s.plan_name}</b><span className="bg bg-ok">Actif</span></div><p style={{fontSize:11,color:'var(--muted)',marginTop:2}}>Expire le {new Date(s.expires_at).toLocaleDateString('fr-FR')}</p><div className="sdt">{Array.from({length:s.limit_value}).map((_,i)=><div key={i} className={'sdd'+(i<s.sessions_used?' u':'')}/> )}</div><p style={{fontSize:10,color:'var(--muted)',marginTop:3}}>{s.sessions_used}/{s.limit_value} · {fP(s.price)}</p></div>)}
       {eS.map(s=><div key={s.id} className="subc" style={{opacity:.5}}><div style={{display:'flex',justifyContent:'space-between'}}><b style={{fontSize:13}}>{s.plan_name}</b><span className="bg bg-ex">Expiré</span></div></div>)}
@@ -256,7 +256,7 @@ function AccountV({user,subs,toast,onLogout}){const[tab,setTab]=useState('profil
     {tab==='password'&&<PW k="pw"><div className="card"><h3 style={{fontSize:14,marginBottom:12}}>Changer le mot de passe</h3>
       <div className="input-group"><label>ACTUEL</label><input type="password" value={cp} onChange={e=>setCp(e.target.value)} placeholder="Actuel"/></div>
       <div className="input-group"><label>NOUVEAU</label><input type="password" value={np} onChange={e=>setNp(e.target.value)} placeholder="Nouveau (4+ car.)"/></div>
-      <button className="btn btn-primary" onPointerUp={chg} disabled={ld}>{ld?'...':'Modifier'}</button></div></PW>}</div>);
+      <button className="btn btn-primary" onClick={chg} disabled={ld}>{ld?'...':'Modifier'}</button></div></PW>}</div>);
 }
 
 function AdminV({user,toast}){const[data,setData]=useState(null),[ld,setLd]=useState(false),[tab,setTab]=useState('overview');
@@ -272,19 +272,26 @@ function AdminV({user,toast}){const[data,setData]=useState(null),[ld,setLd]=useS
 
   if(user.role!=='admin')return<div className="card" style={{textAlign:'center'}}><p style={{color:'var(--muted)'}}>Admin requis</p></div>;
   if(!data)return<div className="emp"><div className="em">⏳</div>Chargement...</div>;
-  return(<div><div className="tabs" style={{marginBottom:12}}>{[{id:'overview',l:'Résumé'},{id:'bookings',l:'Réserv.'},{id:'subs',l:'Abos'},{id:'pending',l:'💵('+data.pending_payments.length+')'},{id:'slots',l:'Créneaux'},{id:'gen',l:'+ Générer'}].map(t=><button key={t.id} className={'tab'+(tab===t.id?' on':'')} onPointerUp={()=>setTab(t.id)}>{t.l}</button>)}</div>
+  return(<div><select value={tab} onChange={e=>setTab(e.target.value)} style={{width:'100%',padding:10,borderRadius:10,border:'1px solid var(--border)',background:'var(--bg3)',color:'var(--text)',fontSize:14,marginBottom:12,fontFamily:'Outfit',fontWeight:600}}>
+      <option value="overview">📊 Résumé</option>
+      <option value="bookings">📅 Réservations</option>
+      <option value="subs">💎 Abonnements</option>
+      <option value="pending">💵 Paiements espèces ({data.pending_payments.length})</option>
+      <option value="slots">⚙️ Créneaux existants</option>
+      <option value="gen">➕ Générer créneaux</option>
+    </select>
     <PW k={tab}>
     {tab==='overview'&&<><div className="sg"><div className="sc"><div className="sv" style={{color:'var(--accent2)'}}>{data.stats.total_users}</div><div className="slb">Inscrits</div></div><div className="sc"><div className="sv" style={{color:'var(--accent)'}}>{data.stats.active_subscriptions}</div><div className="slb">Abonnés</div></div><div className="sc"><div className="sv" style={{color:'var(--warn)'}}>{data.stats.today_bookings}</div><div className="slb">Résa. today</div></div></div>
       <p className="st">CRÉNEAUX AUJOURD'HUI</p>{data.today_slots.map((s,i)=><div key={i} className="row" style={{animationDelay:i*40+'ms'}}><div className="ri" style={{background:parseInt(s.remaining)<=0?'var(--dangerDim)':parseInt(s.remaining)<=3?'var(--warnDim)':'var(--accentDim)',fontSize:13,fontWeight:700,fontFamily:'Outfit',color:parseInt(s.remaining)<=0?'var(--danger)':parseInt(s.remaining)<=3?'var(--warn)':'var(--accent)'}}>{s.booked}/{s.max_capacity}</div><div className="rinfo"><h4>{s.hour_start}h — {s.activity}</h4><p>{s.remaining} place(s)</p></div></div>)}</>}
     {tab==='bookings'&&<>{data.week_bookings.filter(b=>b.booking_status===1).map((b,i)=><div key={i} className="row" style={{animationDelay:i*40+'ms'}}><div className="ri" style={{background:'var(--accentDim)'}}>🏊</div><div className="rinfo"><h4>{fDt(b.date_slot)} {b.hour_start}h · {b.activity}</h4><p><b>{b.full_name}</b> — {b.phone}</p><span className="rcode">{b.booking_code}</span></div></div>)}</>}
     {tab==='subs'&&<>{data.subscriptions.map((s,i)=><div key={i} className="subc"><div style={{display:'flex',justifyContent:'space-between'}}><div><b style={{fontSize:13}}>{s.full_name}</b><br/><span style={{fontSize:11,color:'var(--muted)'}}>{s.phone}</span></div><span className={'bg bg-'+(s.status==='active'?'ok':s.status==='pending'?'pe':'ex')}>{s.status==='active'?'Actif':'Attente'}</span></div><p style={{fontSize:12,marginTop:4}}>{s.plan_name} — <b>{fP(s.price)}</b> · {s.sessions_used}/{s.limit_value}</p></div>)}</>}
-    {tab==='pending'&&<>{data.pending_payments.length===0?<div className="emp"><div className="em">✅</div>Aucun paiement en attente</div>:data.pending_payments.map(p=><div key={p.id} className="pcard"><div style={{display:'flex',justifyContent:'space-between'}}><div><b>{p.full_name}</b><br/><span style={{fontSize:12,color:'var(--muted)'}}>{p.phone}</span></div><span className="bg bg-pe">Attente</span></div><p style={{fontSize:13,marginTop:6}}>{p.plan_name} — <b style={{color:'var(--accent)'}}>{fP(p.price)}</b></p><button className="btn-validate" onPointerUp={()=>val(p.id)} style={{marginTop:10}}>✓ Valider</button></div>)}</>}
+    {tab==='pending'&&<>{data.pending_payments.length===0?<div className="emp"><div className="em">✅</div>Aucun paiement en attente</div>:data.pending_payments.map(p=><div key={p.id} className="pcard"><div style={{display:'flex',justifyContent:'space-between'}}><div><b>{p.full_name}</b><br/><span style={{fontSize:12,color:'var(--muted)'}}>{p.phone}</span></div><span className="bg bg-pe">Attente</span></div><p style={{fontSize:13,marginTop:6}}>{p.plan_name} — <b style={{color:'var(--accent)'}}>{fP(p.price)}</b></p><button className="btn-validate" onClick={()=>val(p.id)} style={{marginTop:10}}>✓ Valider</button></div>)}</>}
     {tab==='slots'&&<div>
       <p className="st">CRÉNEAUX EXISTANTS</p>
       <div style={{display:'flex',gap:6,marginBottom:12}}>
         <div className="input-group" style={{flex:1,marginBottom:0}}><input type="date" value={gs} onChange={e=>setGs(e.target.value)} style={{padding:8,fontSize:12}}/></div>
         <div className="input-group" style={{flex:1,marginBottom:0}}><input type="date" value={ge} onChange={e=>setGe(e.target.value)} style={{padding:8,fontSize:12}}/></div>
-        <button className="btn-sm btn-outline" onPointerUp={fAdSlots}>Filtrer</button>
+        <button className="btn-sm btn-outline" onClick={fAdSlots}>Filtrer</button>
       </div>
       <p style={{fontSize:11,color:'var(--muted)',marginBottom:8}}>{adSlots.length} créneau(x)</p>
       {adSlots.map(s=><div key={s.id} className="aslot">
@@ -295,11 +302,11 @@ function AdminV({user,toast}){const[data,setData]=useState(null),[ld,setLd]=useS
         <div className="abtns">
           {editSlot===s.id?<>
             <input type="number" value={editCap} onChange={e=>setEditCap(e.target.value)} style={{width:50,padding:4,borderRadius:4,border:'1px solid var(--border)',background:'var(--bg2)',color:'var(--text)',fontSize:12,textAlign:'center'}}/>
-            <button className="abtn" onPointerUp={()=>updSlot(s.id,editCap)}>OK</button>
-            <button className="abtn" onPointerUp={()=>setEditSlot(null)}>✕</button>
+            <button className="abtn" onClick={()=>updSlot(s.id,editCap)}>OK</button>
+            <button className="abtn" onClick={()=>setEditSlot(null)}>✕</button>
           </>:<>
-            <button className="abtn" onPointerUp={()=>{setEditSlot(s.id);setEditCap(String(s.max_capacity))}}>Modifier</button>
-            {parseInt(s.booked)===0&&<button className="abtn abtn-del" onPointerUp={()=>delSlot(s.id)}>Suppr.</button>}
+            <button className="abtn" onClick={()=>{setEditSlot(s.id);setEditCap(String(s.max_capacity))}}>Modifier</button>
+            {parseInt(s.booked)===0&&<button className="abtn abtn-del" onClick={()=>delSlot(s.id)}>Suppr.</button>}
           </>}
         </div>
       </div>)}
@@ -308,13 +315,22 @@ function AdminV({user,toast}){const[data,setData]=useState(null),[ld,setLd]=useS
       <div className="input-group"><label>DÉBUT</label><input type="date" value={gs} onChange={e=>setGs(e.target.value)}/></div>
       <div className="input-group"><label>FIN</label><input type="date" value={ge} onChange={e=>setGe(e.target.value)}/></div>
       <p style={{fontSize:11,color:'var(--muted)',marginBottom:10}}>Génère automatiquement tous les créneaux (Aquabike, Aquagym, Rééduc., Natation) selon les horaires configurés.</p>
-      <button className="btn btn-primary" onPointerUp={gen} disabled={ld}>{ld?'Génération...':'Générer les créneaux'}</button></div>}
+      <button className="btn btn-primary" onClick={gen} disabled={ld}>{ld?'Génération...':'Générer les créneaux'}</button></div>}
     </PW></div>);
 }
 
-function App(){const[user,setUser]=useState(null),[view,setView]=useState('reserve'),[vk,setVk]=useState(0);
+function App(){const[user,setUser]=useState(null);
   const[slots,setSlots]=useState([]),[plans,setPlans]=useState([]),[bookings,setBookings]=useState([]),[subs,setSubs]=useState([]);
-  const[td,setTd]=useState(null);const toast=(m,t)=>setTd({msg:m,type:t,key:Date.now()});const sw=v=>{setView(v);setVk(k=>k+1)};
+  const[td,setTd]=useState(null);const toast=(m,t)=>setTd({msg:m,type:t,key:Date.now()});
+
+  // Hash-based routing - works on ALL mobile browsers
+  const getPage=()=>(window.location.hash||'#reserve').replace('#','');
+  const[view,setView]=useState(getPage);
+  useEffect(()=>{
+    const onHash=()=>setView(getPage());
+    window.addEventListener('hashchange',onHash);
+    return()=>window.removeEventListener('hashchange',onHash);
+  },[]);
 
   useEffect(()=>{try{const t=localStorage.getItem('aq_token'),u=localStorage.getItem('aq_user');if(t&&u){api.token=t;setUser(JSON.parse(u))}}catch(e){localStorage.removeItem('aq_token');localStorage.removeItem('aq_user')}},[]);
 
@@ -323,7 +339,7 @@ function App(){const[user,setUser]=useState(null),[view,setView]=useState('reser
   const fSu=useCallback(async()=>{const r=await api.get('/api/my-subscriptions');if(r.ok)setSubs(r.subscriptions)},[]);
   const ref=useCallback(()=>{fS();fB();fSu()},[fS,fB,fSu]);
 
-  useEffect(()=>{if(!user)return;api.get('/api/plans').then(r=>{if(r.ok)setPlans(r.plans)});ref();
+  useEffect(()=>{if(!user)return;api.get('/api/plans').then(r=>{if(r.ok)setPlans(r.plans)}).catch(()=>{});ref();
     let es;try{es=new EventSource('/api/events');es.addEventListener('update',()=>fS());es.addEventListener('payment_validated',()=>{fSu();toast('Abonnement activé !','success')})}catch(e){}
     const iv=setInterval(fS,20000);return()=>{if(es)es.close();clearInterval(iv)}},[user,ref,fS,fSu]);
 
@@ -335,21 +351,21 @@ function App(){const[user,setUser]=useState(null),[view,setView]=useState('reser
   const isAdm=user.role==='admin';
   return(<div className="app">
     <div className="hdr"><div className="hdr-logo"><div className="hdr-icon">A</div><div><h1>Aquabike Evolution</h1><p>Réservation en ligne</p></div></div></div>
-    <div className="page"><PW k={vk}>
+    <div className="page">
       {view==='reserve'&&<ReserveView slots={slots} myBookings={bookings} onBook={book} onCancel={cancel} toast={toast} isAdmin={isAdm}/>}
       {view==='calendar'&&<CalView slots={slots} onBook={book} onCancel={cancel} myBookings={bookings} isAdmin={isAdm}/>}
-      {view==='plans'&&<PlansV plans={plans} onDone={()=>{fSu();sw('account')}} toast={toast}/>}
+      {view==='plans'&&<PlansV plans={plans} onDone={()=>{fSu();window.location.hash='account'}} toast={toast}/>}
       {view==='seances'&&<SeancesV bookings={bookings} onCancel={ref} toast={toast}/>}
       {view==='account'&&<AccountV user={user} subs={subs} toast={toast} onLogout={logout}/>}
       {view==='admin'&&<AdminV user={user} toast={toast}/>}
-    </PW></div>
+    </div>
     <div className="bnav">
-      <button className={view==='reserve'?'active':''} onPointerUp={()=>sw('reserve')}><span className="icon">➕</span>Réserver</button>
-      <button className={view==='calendar'?'active':''} onPointerUp={()=>sw('calendar')}><span className="icon">📅</span>Calendrier</button>
-      <button className={view==='plans'?'active':''} onPointerUp={()=>sw('plans')}><span className="icon">💎</span>Formules</button>
-      <button className={view==='seances'?'active':''} onPointerUp={()=>sw('seances')}><span className="icon">🎫</span>Séances</button>
-      <button className={view==='account'?'active':''} onPointerUp={()=>sw('account')}><span className="icon">👤</span>Compte</button>
-      {isAdm&&<button className={view==='admin'?'active':''} onPointerUp={()=>sw('admin')}><span className="icon">⚙️</span>Admin</button>}
+      <a href="#reserve" className={view==='reserve'?'active':''}><span className="icon">➕</span>Réserver</a>
+      <a href="#calendar" className={view==='calendar'?'active':''}><span className="icon">📅</span>Calendrier</a>
+      <a href="#plans" className={view==='plans'?'active':''}><span className="icon">💎</span>Formules</a>
+      <a href="#seances" className={view==='seances'?'active':''}><span className="icon">🎫</span>Séances</a>
+      <a href="#account" className={view==='account'?'active':''}><span className="icon">👤</span>Compte</a>
+      {isAdm&&<a href="#admin" className={view==='admin'?'active':''}><span className="icon">⚙️</span>Admin</a>}
     </div>
     {td&&<Toast key={td.key} msg={td.msg} type={td.type} onDone={()=>setTd(null)}/>}
   </div>);
