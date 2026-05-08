@@ -50,12 +50,12 @@ const CONFIG = {
 
 // ─── Subscription Plans ─────────────────────────────────
 const PLANS = [
-  { id:'mensuel_3x', name:'Mensuel 3x/semaine', desc:'Aquabike & Aquagym — 3 séances/semaine', price:65000, activities:['Aquabike','Aquagym'], limit_type:'weekly', limit_value:3, duration_days:30 },
-  { id:'mensuel_5x', name:'Mensuel 5x/semaine', desc:'Aquabike & Aquagym — 5 séances/semaine', price:80000, activities:['Aquabike','Aquagym'], limit_type:'weekly', limit_value:5, duration_days:30 },
-  { id:'carte_10', name:'Carte 10 séances', desc:'Aquabike & Aquagym — 10 séances sur 3 mois', price:75000, activities:['Aquabike','Aquagym'], limit_type:'total', limit_value:10, duration_days:90 },
+  { id:'mensuel_3x', name:'Mensuel 3x/semaine', desc:'Aquabike/Aquagym — 3 séances/semaine', price:65000, activities:['Aquabike/Aquagym'], limit_type:'weekly', limit_value:3, duration_days:30 },
+  { id:'mensuel_5x', name:'Mensuel 5x/semaine', desc:'Aquabike/Aquagym — 5 séances/semaine', price:80000, activities:['Aquabike/Aquagym'], limit_type:'weekly', limit_value:5, duration_days:30 },
+  { id:'carte_10', name:'Carte 10 séances', desc:'Aquabike/Aquagym — 10 séances sur 3 mois', price:75000, activities:['Aquabike/Aquagym'], limit_type:'total', limit_value:10, duration_days:90 },
   { id:'reeduc_10', name:'Rééducation 10 séances', desc:'Rééducation aquatique — 10 séances', price:200000, activities:['Rééducation'], limit_type:'total', limit_value:10, duration_days:180 },
   { id:'natation_10', name:'Natation 10 séances', desc:'Carnet de 10 séances de natation', price:80000, activities:['Natation'], limit_type:'total', limit_value:10, duration_days:180 },
-  { id:'test', name:'Séance test', desc:'Découverte — 1 séance d\'essai', price:10000, activities:['Aquabike','Aquagym','Rééducation','Natation'], limit_type:'total', limit_value:1, duration_days:30 },
+  { id:'test', name:'Séance test', desc:'Découverte — 1 séance d\'essai', price:10000, activities:['Aquabike/Aquagym','Rééducation','Natation'], limit_type:'total', limit_value:1, duration_days:30 },
 ];
 
 // ─── Schedule Rules ─────────────────────────────────────
@@ -64,7 +64,7 @@ function getActivityHours(activity, dayOfWeek) {
   if (activity === 'Rééducation' || activity === 'Natation') {
     return [13, 14, 15, 16]; // 13h-17h every day
   }
-  // Aquabike & Aquagym
+  // Aquabike/Aquagym
   if (isWeekend) return [10, 11, 12]; // 10h-13h
   return [8, 9, 10, 11, 12, 17, 18, 19]; // 8h-13h + 17h-20h
 }
@@ -141,6 +141,15 @@ async function initDB() {
       CREATE INDEX IF NOT EXISTS idx_slots_date ON slots(date_slot, hour_start);
       CREATE INDEX IF NOT EXISTS idx_subs_user ON subscriptions(user_id) WHERE status='active';
     `);
+    // Normalize old data after merging Aquabike + Aquagym into one activity
+    await client.query("UPDATE slots SET activity='Aquabike/Aquagym' WHERE activity IN ('Aquabike','Aquagym')");
+    await client.query(`UPDATE subscriptions
+      SET activities=ARRAY['Aquabike/Aquagym']::TEXT[]
+      WHERE plan_id IN ('mensuel_3x','mensuel_5x','carte_10')`);
+    await client.query(`UPDATE subscriptions
+      SET activities=ARRAY['Aquabike/Aquagym','Rééducation','Natation']::TEXT[]
+      WHERE plan_id='test'`);
+
     console.log('[DB] Tables ready');
 
     // Auto-create admin account if configured
@@ -689,7 +698,7 @@ app.get('/api/my-bookings', auth, async (req, res) => {
 app.post('/api/admin/generate-slots', auth, async (req, res) => {
   if (req.user.role !== 'admin') return res.status(403).json({ ok:false, error:'Admin requis.' });
   const { date_start, date_end, activities } = req.body;
-  const acts = activities || ['Aquabike','Aquagym','Rééducation','Natation'];
+  const acts = activities || ['Aquabike/Aquagym','Rééducation','Natation'];
   let count = 0;
   try {
     const current = new Date(date_start);
