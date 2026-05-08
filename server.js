@@ -2,6 +2,7 @@ const express = require('express');
 const { Pool } = require('pg');
 const helmet = require('helmet');
 const compression = require('compression');
+const cors = require('cors');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -18,8 +19,19 @@ const pool = new Pool({
 
 // ─── Middleware ──────────────────────────────────────────
 app.use(compression());
+app.use(cors());
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.json());
+
+// Healthcheck Render — must stay before the SPA fallback
+app.get('/health', async (req, res) => {
+  try {
+    await pool.query('SELECT 1');
+    res.json({ ok: true, db: true });
+  } catch (e) {
+    res.status(500).json({ ok: false, db: false, error: e.message });
+  }
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ─── Config ─────────────────────────────────────────────
@@ -341,7 +353,7 @@ app.get('/api/admin/dashboard', auth, async (req, res) => {
     // Today's bookings by slot
     const today = new Date().toISOString().split('T')[0];
     const todayBookings = await pool.query(
-      `SELECT s.date_slot, s.hour_start, s.activity, s.max_capacity,
+      `SELECT TO_CHAR(s.date_slot, 'YYYY-MM-DD') AS date_slot, s.hour_start, s.activity, s.max_capacity,
         COUNT(b.id) FILTER(WHERE b.status=1) AS booked,
         (s.max_capacity - COUNT(b.id) FILTER(WHERE b.status=1)) AS remaining
        FROM slots s LEFT JOIN bookings b ON b.slot_id=s.id
@@ -356,7 +368,7 @@ app.get('/api/admin/dashboard', auth, async (req, res) => {
     weekEnd.setDate(weekEnd.getDate() + 6);
 
     const weekBookings = await pool.query(
-      `SELECT s.date_slot, s.hour_start, s.activity,
+      `SELECT TO_CHAR(s.date_slot, 'YYYY-MM-DD') AS date_slot, s.hour_start, s.activity,
         b.id as booking_id, b.booking_code, b.status as booking_status, b.created_at,
         u.full_name, u.phone
        FROM bookings b
@@ -425,7 +437,7 @@ app.get('/api/admin/slots', auth, async (req, res) => {
   const dateStart = start || new Date().toISOString().split('T')[0];
   const dateEnd = end || new Date(Date.now() + 14 * 86400000).toISOString().split('T')[0];
   try {
-    let sql = `SELECT s.id, s.date_slot, s.hour_start, s.activity, s.max_capacity, s.status,
+    let sql = `SELECT s.id, TO_CHAR(s.date_slot, 'YYYY-MM-DD') AS date_slot, s.hour_start, s.activity, s.max_capacity, s.status,
       COUNT(b.id) FILTER(WHERE b.status=1) AS booked
       FROM slots s LEFT JOIN bookings b ON b.slot_id=s.id
       WHERE s.date_slot>=$1 AND s.date_slot<=$2`;
@@ -473,7 +485,7 @@ app.get('/api/admin/slots', auth, async (req, res) => {
   if (req.user.role !== 'admin') return res.status(403).json({ ok:false });
   const { start, end, activity } = req.query;
   try {
-    let sql = `SELECT s.id, s.date_slot, s.hour_start, s.activity, s.max_capacity, s.status,
+    let sql = `SELECT s.id, TO_CHAR(s.date_slot, 'YYYY-MM-DD') AS date_slot, s.hour_start, s.activity, s.max_capacity, s.status,
       COUNT(b.id) FILTER(WHERE b.status=1) AS booked
       FROM slots s LEFT JOIN bookings b ON b.slot_id=s.id
       WHERE 1=1`;
@@ -525,7 +537,7 @@ app.get('/api/slots', async (req, res) => {
   const { start, end, activity } = req.query;
   if (!start || !end) return res.status(400).json({ ok:false });
   try {
-    let sql = `SELECT s.id, s.date_slot, s.hour_start, s.activity, s.max_capacity,
+    let sql = `SELECT s.id, TO_CHAR(s.date_slot, 'YYYY-MM-DD') AS date_slot, s.hour_start, s.activity, s.max_capacity,
       COUNT(b.id) FILTER(WHERE b.status=1) AS booked,
       (s.max_capacity - COUNT(b.id) FILTER(WHERE b.status=1)) AS remaining
       FROM slots s LEFT JOIN bookings b ON b.slot_id=s.id
@@ -549,7 +561,11 @@ app.post('/api/book', auth, async (req, res) => {
     await client.query('BEGIN');
 
     // Lock slot
-    const slotRes = await client.query('SELECT * FROM slots WHERE id=$1 FOR UPDATE', [slot_id]);
+    const slotRes = await client.query(
+      `SELECT id, TO_CHAR(date_slot, 'YYYY-MM-DD') AS date_slot, hour_start, activity, max_capacity, status
+       FROM slots WHERE id=$1 FOR UPDATE`,
+      [slot_id]
+    );
     if (!slotRes.rows.length) { await client.query('ROLLBACK'); return res.json({ ok:false, error:'SLOT_NOT_FOUND' }); }
     const slot = slotRes.rows[0];
 
@@ -624,7 +640,7 @@ app.post('/api/cancel', auth, async (req, res) => {
   try {
     await client.query('BEGIN');
     const bRes = await client.query(
-      `SELECT b.*,s.date_slot,s.hour_start,s.max_capacity,s.activity FROM bookings b JOIN slots s ON s.id=b.slot_id WHERE b.id=$1 AND b.user_id=$2 FOR UPDATE`,
+      `SELECT b.*, TO_CHAR(s.date_slot, 'YYYY-MM-DD') AS date_slot, s.hour_start, s.max_capacity, s.activity FROM bookings b JOIN slots s ON s.id=b.slot_id WHERE b.id=$1 AND b.user_id=$2 FOR UPDATE`,
       [booking_id, req.user.id]
     );
     if (!bRes.rows.length) { await client.query('ROLLBACK'); return res.json({ ok:false, error:'Réservation non trouvée.' }); }
@@ -660,7 +676,7 @@ app.get('/api/my-bookings', auth, async (req, res) => {
   try {
     const r = await pool.query(
       `SELECT b.id,b.booking_code,b.status,b.created_at,b.cancelled_at,
-        s.date_slot,s.hour_start,s.activity
+        TO_CHAR(s.date_slot, 'YYYY-MM-DD') AS date_slot,s.hour_start,s.activity
        FROM bookings b JOIN slots s ON s.id=b.slot_id
        WHERE b.user_id=$1 ORDER BY s.date_slot DESC,s.hour_start DESC LIMIT 50`,
       [req.user.id]
@@ -684,13 +700,14 @@ app.post('/api/admin/generate-slots', auth, async (req, res) => {
       for (const act of acts) {
         const hours = getActivityHours(act, dow);
         for (const h of hours) {
-          try {
-            await pool.query(
-              'INSERT INTO slots(date_slot,hour_start,activity,max_capacity) VALUES($1,$2,$3,$4) ON CONFLICT DO NOTHING',
-              [dateStr, h, act, CONFIG.MAX_CAPACITY]
-            );
-            count++;
-          } catch(e) { /* duplicate */ }
+          const insert = await pool.query(
+            `INSERT INTO slots(date_slot,hour_start,activity,max_capacity)
+             VALUES($1,$2,$3,$4)
+             ON CONFLICT DO NOTHING
+             RETURNING id`,
+            [dateStr, h, act, CONFIG.MAX_CAPACITY]
+          );
+          if (insert.rows.length) count++;
         }
       }
       current.setDate(current.getDate() + 1);
@@ -715,17 +732,8 @@ app.get('/api/events', (req, res) => {
   req.on('close', () => sseClients.delete(res));
 });
 
-app.get('/health', async (req, res) => {
-  try {
-    await pool.query('SELECT 1');
-    res.json({ ok: true, db: true });
-  } catch (e) {
-    res.status(500).json({ ok: false, db: false, error: e.message });
-  }
-});
-
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
 initDB().then(() => {
   app.listen(PORT, '0.0.0.0', () => console.log(`[Aquabike] Port ${PORT}`));
-}).catch(e => { console.error('[FATAL]', e.message); process.exit(1); });
+}).catch(e => { console.error('[FATAL]', e); process.exit(1); });
