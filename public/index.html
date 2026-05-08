@@ -157,7 +157,7 @@ function SlotModal({slot,myBookings,onClose,onBook,onCancel,isAdmin}){
 }
 
 function ReserveView({slots,myBookings,onBook,onCancel,toast,isAdmin}){
-  const[act,setAct]=useState('Aquabike'),[selDate,setSelDate]=useState(new Date().toISOString().split('T')[0]),[modal,setModal]=useState(null);
+  const[act,setAct]=useState('Aquabike/Aquagym'),[selDate,setSelDate]=useState(new Date().toISOString().split('T')[0]),[modal,setModal]=useState(null);
   const now=new Date();
   const dates=useMemo(()=>{const a=[];for(let i=0;i<21;i++){const d=new Date();d.setDate(d.getDate()+i);a.push(d)}return a},[]);
   const daySlots=useMemo(()=>(slots||[]).filter(s=>s.date_slot===selDate&&s.activity===act).sort((a,b)=>a.hour_start-b.hour_start),[slots,selDate,act]);
@@ -169,7 +169,7 @@ function ReserveView({slots,myBookings,onBook,onCancel,toast,isAdmin}){
   return(<div>
     <h2 style={{fontSize:18,marginBottom:2}}>Réserver une séance</h2>
     <p style={{fontSize:12,color:'var(--muted)',marginBottom:12}}>Choisissez activité, date et heure</p>
-    <select value={act} onChange={e=>setAct(e.target.value)} style={{width:'100%',padding:10,borderRadius:10,border:'1px solid var(--border)',background:'var(--bg3)',color:'var(--text)',fontSize:14,marginBottom:10,fontWeight:600}}><option value="Aquabike">🏊 Aquabike</option><option value="Aquagym">🏋️ Aquagym</option><option value="Rééducation">💪 Rééducation</option><option value="Natation">🏊 Natation</option></select>
+    <select value={act} onChange={e=>setAct(e.target.value)} style={{width:'100%',padding:10,borderRadius:10,border:'1px solid var(--border)',background:'var(--bg3)',color:'var(--text)',fontSize:14,marginBottom:10,fontWeight:600}}><option value="Aquabike/Aquagym">🏊 Aquabike/Aquagym</option><option value="Rééducation">💪 Rééducation</option><option value="Natation">🏊 Natation</option></select>
     <p className="st">📅 DATE</p>
     <div className="ds">{dates.map((d,i)=>{const iso=d.toISOString().split('T')[0];
       return<div key={iso} className={'dp'+(selDate===iso?' on':'')} onClick={()=>setSelDate(iso)}><div className="dd">{i===0?'AUJ.':DY[d.getDay()]}</div><div className="dnum">{d.getDate()}</div><div className="dm">{MO[d.getMonth()].slice(0,3)}</div></div>})}</div>
@@ -196,13 +196,13 @@ function ReserveView({slots,myBookings,onBook,onCancel,toast,isAdmin}){
 }
 
 function CalView({slots,onBook,onCancel,myBookings,isAdmin}){
-  const[wo,setWo]=useState(0),[act,setAct]=useState('Aquabike'),[modal,setModal]=useState(null);
+  const[wo,setWo]=useState(0),[act,setAct]=useState('Aquabike/Aquagym'),[modal,setModal]=useState(null);
   const days=useMemo(()=>gWD(wo),[wo]);const td=new Date().toISOString().split('T')[0];const isRN=act==='Rééducation'||act==='Natation';
   const hours=useMemo(()=>isRN?[13,14,15,16]:[8,9,10,11,12,17,18,19],[isRN]);
   const sm=useMemo(()=>{const m={};(slots||[]).filter(s=>s.activity===act).forEach(s=>{m[s.date_slot+'_'+s.hour_start]=s});return m},[slots,act]);
   const myMap=useMemo(()=>{const m={};(myBookings||[]).filter(b=>b.status===1).forEach(b=>{m[b.date_slot+'_'+b.hour_start+'_'+b.activity]=b});return m},[myBookings]);
   return(<div>
-    <select value={act} onChange={e=>setAct(e.target.value)} style={{width:'100%',padding:10,borderRadius:10,border:'1px solid var(--border)',background:'var(--bg3)',color:'var(--text)',fontSize:14,marginBottom:10,fontWeight:600}}><option value="Aquabike">🏊 Aquabike</option><option value="Aquagym">🏋️ Aquagym</option><option value="Rééducation">💪 Rééducation</option><option value="Natation">🏊 Natation</option></select>
+    <select value={act} onChange={e=>setAct(e.target.value)} style={{width:'100%',padding:10,borderRadius:10,border:'1px solid var(--border)',background:'var(--bg3)',color:'var(--text)',fontSize:14,marginBottom:10,fontWeight:600}}><option value="Aquabike/Aquagym">🏊 Aquabike/Aquagym</option><option value="Rééducation">💪 Rééducation</option><option value="Natation">🏊 Natation</option></select>
     <div className="week-nav"><button onClick={()=>setWo(w=>w-1)}>◂ Préc.</button><span className="week-label">{MO[days[0].getMonth()].toUpperCase()} {days[0].getFullYear()}</span><button onClick={()=>setWo(w=>w+1)}>Suiv. ▸</button></div>
     <div className="cal-wrap"><div className="cal" style={{gridTemplateColumns:'42px repeat(7,1fr)',minWidth:isRN?360:500}}>
       <div/>{days.map((d,i)=>{const iso=d.toISOString().split('T')[0];return<div key={i} className={'dh'+(iso===td?' today':'')}><div className="dow">{DY[d.getDay()]}</div><div className="dn">{d.getDate()}</div></div>})}
@@ -266,13 +266,19 @@ function AdminV({user,toast}){const[data,setData]=useState(null),[ld,setLd]=useS
   const fd=useCallback(async()=>{const r=await api.get('/api/admin/dashboard');if(r.ok)setData(r)},[]);
   const fAdSlots=useCallback(async()=>{const r=await api.get('/api/admin/slots?start='+gs+'&end='+ge);if(r.ok)setAdSlots(r.slots)},[gs,ge]);
   useEffect(()=>{if(user.role==='admin'){fd();fAdSlots()}},[user,fd,fAdSlots]);
-  const gen=async()=>{setLd(true);const r=await api.post('/api/admin/generate-slots',{date_start:gs,date_end:ge,activities:['Aquabike','Aquagym','Rééducation','Natation']});setLd(false);if(r.ok){toast((r.created||0)+' nouveau(x) créneau(x) généré(s).','success');await fd();await fAdSlots();setTab('slots')}else toast(r.error||'Erreur génération','error')};
+  const gen=async()=>{setLd(true);const r=await api.post('/api/admin/generate-slots',{date_start:gs,date_end:ge,activities:['Aquabike/Aquagym','Rééducation','Natation']});setLd(false);if(r.ok){toast((r.created||0)+' nouveau(x) créneau(x) généré(s).','success');await fd();await fAdSlots();setTab('slots')}else toast(r.error||'Erreur génération','error')};
   const val=async id=>{const r=await api.post('/api/admin/validate-payment',{subscription_id:id});if(r.ok){toast('Validé !','success');fd()}else toast('Erreur','error')};
   const delSlot=async id=>{if(!confirm('Supprimer ce créneau ?'))return;const r=await api.del('/api/admin/slots/'+id);if(r.ok){toast('Supprimé','success');fAdSlots()}else toast(r.error||'Erreur','error')};
   const updSlot=async(id,cap)=>{const r=await api.put('/api/admin/slots/'+id,{max_capacity:cap});if(r.ok){toast('Modifié','success');fAdSlots();setEditSlot(null)}else toast('Erreur','error')};
 
   if(user.role!=='admin')return<div className="card" style={{textAlign:'center'}}><p style={{color:'var(--muted)'}}>Admin requis</p></div>;
   if(!data)return<div className="emp"><div className="em">⏳</div>Chargement...</div>;
+  const bookingGroups=Object.values((data.week_bookings||[]).filter(b=>b.booking_status===1).reduce((acc,b)=>{
+    const k=b.date_slot+'_'+b.hour_start+'_'+b.activity;
+    if(!acc[k])acc[k]={date_slot:b.date_slot,hour_start:b.hour_start,activity:b.activity,people:[]};
+    acc[k].people.push(b);
+    return acc;
+  },{})).sort((a,b)=>(a.date_slot+a.hour_start).localeCompare(b.date_slot+b.hour_start));
   return(<div><select value={tab} onChange={e=>setTab(e.target.value)} style={{width:'100%',padding:10,borderRadius:10,border:'1px solid var(--border)',background:'var(--bg3)',color:'var(--text)',fontSize:14,marginBottom:12,fontFamily:'Outfit',fontWeight:600}}>
       <option value="overview">📊 Résumé</option>
       <option value="bookings">📅 Réservations</option>
@@ -284,7 +290,7 @@ function AdminV({user,toast}){const[data,setData]=useState(null),[ld,setLd]=useS
     <PW k={tab}>
     {tab==='overview'&&<><div className="sg"><div className="sc"><div className="sv" style={{color:'var(--accent2)'}}>{data.stats.total_users}</div><div className="slb">Inscrits</div></div><div className="sc"><div className="sv" style={{color:'var(--accent)'}}>{data.stats.active_subscriptions}</div><div className="slb">Abonnés</div></div><div className="sc"><div className="sv" style={{color:'var(--warn)'}}>{data.stats.today_bookings}</div><div className="slb">Résa. today</div></div></div>
       <p className="st">CRÉNEAUX AUJOURD'HUI</p>{data.today_slots.map((s,i)=><div key={i} className="row" style={{animationDelay:i*40+'ms'}}><div className="ri" style={{background:parseInt(s.remaining)<=0?'var(--dangerDim)':parseInt(s.remaining)<=3?'var(--warnDim)':'var(--accentDim)',fontSize:13,fontWeight:700,fontFamily:'Outfit',color:parseInt(s.remaining)<=0?'var(--danger)':parseInt(s.remaining)<=3?'var(--warn)':'var(--accent)'}}>{s.booked}/{s.max_capacity}</div><div className="rinfo"><h4>{s.hour_start}h — {s.activity}</h4><p>{s.remaining} place(s)</p></div></div>)}</>}
-    {tab==='bookings'&&<>{data.week_bookings.filter(b=>b.booking_status===1).map((b,i)=><div key={i} className="row" style={{animationDelay:i*40+'ms'}}><div className="ri" style={{background:'var(--accentDim)'}}>🏊</div><div className="rinfo"><h4>{fDt(b.date_slot)} {b.hour_start}h · {b.activity}</h4><p><b>{b.full_name}</b> — {b.phone}</p><span className="rcode">{b.booking_code}</span></div></div>)}</>}
+    {tab==='bookings'&&<>{bookingGroups.length===0?<div className="emp"><div className="em">📅</div>Aucune réservation cette semaine</div>:bookingGroups.map((g,i)=><div key={g.date_slot+'_'+g.hour_start+'_'+g.activity} className="row" style={{animationDelay:i*40+'ms',alignItems:'flex-start'}}><div className="ri" style={{background:'var(--accentDim)',fontSize:12,fontWeight:800,fontFamily:'Outfit',color:'var(--accent)'}}>{g.people.length}</div><div className="rinfo"><h4>{fDt(g.date_slot)} {g.hour_start}h · {g.activity}</h4><p style={{marginTop:4}}>{g.people.map(p=><span key={p.booking_id} style={{display:'block',marginBottom:3}}><b>{p.full_name}</b> — {p.phone} <span className="rcode">{p.booking_code}</span></span>)}</p></div></div>)}</>}
     {tab==='subs'&&<>{data.subscriptions.map((s,i)=><div key={i} className="subc"><div style={{display:'flex',justifyContent:'space-between'}}><div><b style={{fontSize:13}}>{s.full_name}</b><br/><span style={{fontSize:11,color:'var(--muted)'}}>{s.phone}</span></div><span className={'bg bg-'+(s.status==='active'?'ok':s.status==='pending'?'pe':'ex')}>{s.status==='active'?'Actif':'Attente'}</span></div><p style={{fontSize:12,marginTop:4}}>{s.plan_name} — <b>{fP(s.price)}</b> · {s.sessions_used}/{s.limit_value}</p></div>)}</>}
     {tab==='pending'&&<>{data.pending_payments.length===0?<div className="emp"><div className="em">✅</div>Aucun paiement en attente</div>:data.pending_payments.map(p=><div key={p.id} className="pcard"><div style={{display:'flex',justifyContent:'space-between'}}><div><b>{p.full_name}</b><br/><span style={{fontSize:12,color:'var(--muted)'}}>{p.phone}</span></div><span className="bg bg-pe">Attente</span></div><p style={{fontSize:13,marginTop:6}}>{p.plan_name} — <b style={{color:'var(--accent)'}}>{fP(p.price)}</b></p><button className="btn-validate" onClick={()=>val(p.id)} style={{marginTop:10}}>✓ Valider</button></div>)}</>}
     {tab==='slots'&&<div>
@@ -316,7 +322,7 @@ function AdminV({user,toast}){const[data,setData]=useState(null),[ld,setLd]=useS
     {tab==='gen'&&<div className="card"><h3 style={{fontSize:14,marginBottom:10}}>Générer des créneaux</h3>
       <div className="input-group"><label>DÉBUT</label><input type="date" value={gs} onChange={e=>setGs(e.target.value)}/></div>
       <div className="input-group"><label>FIN</label><input type="date" value={ge} onChange={e=>setGe(e.target.value)}/></div>
-      <p style={{fontSize:11,color:'var(--muted)',marginBottom:10}}>Génère automatiquement tous les créneaux (Aquabike, Aquagym, Rééduc., Natation) selon les horaires configurés.</p>
+      <p style={{fontSize:11,color:'var(--muted)',marginBottom:10}}>Génère automatiquement tous les créneaux (Aquabike/Aquagym, Rééduc., Natation) selon les horaires configurés.</p>
       <button className="btn btn-primary" onClick={gen} disabled={ld}>{ld?'Génération...':'Générer les créneaux'}</button></div>}
     </PW></div>);
 }
