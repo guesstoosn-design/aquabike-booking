@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#050B18">
 <title>Aquabike Evolution Dakar</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -265,7 +266,7 @@ function AdminV({user,toast}){const[data,setData]=useState(null),[ld,setLd]=useS
   const fd=useCallback(async()=>{const r=await api.get('/api/admin/dashboard');if(r.ok)setData(r)},[]);
   const fAdSlots=useCallback(async()=>{const r=await api.get('/api/admin/slots?start='+gs+'&end='+ge);if(r.ok)setAdSlots(r.slots)},[gs,ge]);
   useEffect(()=>{if(user.role==='admin'){fd();fAdSlots()}},[user,fd,fAdSlots]);
-  const gen=async()=>{setLd(true);const r=await api.post('/api/admin/generate-slots',{date_start:gs,date_end:ge,activities:['Aquabike','Aquagym','Rééducation','Natation']});setLd(false);if(r.ok){toast(r.created+' créneaux !','success');fd();fAdSlots()}else toast('Erreur','error')};
+  const gen=async()=>{setLd(true);const r=await api.post('/api/admin/generate-slots',{date_start:gs,date_end:ge,activities:['Aquabike','Aquagym','Rééducation','Natation']});setLd(false);if(r.ok){toast((r.created||0)+' nouveau(x) créneau(x) généré(s).','success');await fd();await fAdSlots();setTab('slots')}else toast(r.error||'Erreur génération','error')};
   const val=async id=>{const r=await api.post('/api/admin/validate-payment',{subscription_id:id});if(r.ok){toast('Validé !','success');fd()}else toast('Erreur','error')};
   const delSlot=async id=>{if(!confirm('Supprimer ce créneau ?'))return;const r=await api.del('/api/admin/slots/'+id);if(r.ok){toast('Supprimé','success');fAdSlots()}else toast(r.error||'Erreur','error')};
   const updSlot=async(id,cap)=>{const r=await api.put('/api/admin/slots/'+id,{max_capacity:cap});if(r.ok){toast('Modifié','success');fAdSlots();setEditSlot(null)}else toast('Erreur','error')};
@@ -294,6 +295,7 @@ function AdminV({user,toast}){const[data,setData]=useState(null),[ld,setLd]=useS
         <button className="btn-sm btn-outline" onClick={fAdSlots}>Filtrer</button>
       </div>
       <p style={{fontSize:11,color:'var(--muted)',marginBottom:8}}>{adSlots.length} créneau(x)</p>
+      {adSlots.length===0&&<div className="emp" style={{padding:20}}><div className="em">📅</div>Aucun créneau sur cette période</div>}
       {adSlots.map(s=><div key={s.id} className="aslot">
         <div className="asl">
           <b>{fDt(s.date_slot)} — {s.hour_start}h</b>
